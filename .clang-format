@@ -1,0 +1,8 @@
+---
+BasedOnStyle: Google
+IndentWidth: 4
+ColumnLimit: 64
+---
+Language: Cpp
+AlignAfterOpenBracket: AlwaysBreak
+AlignEscapedNewlines: Right
