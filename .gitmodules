@@ -1,0 +1,9 @@
+[submodule "src/engine/vendor/spdlog"]
+	path = src/engine/vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "src/engine/vendor/glfw"]
+	path = src/engine/vendor/glfw
+	url = https://github.com/glfw/glfw
+[submodule "src/vendor/googletest"]
+	path = src/vendor/googletest
+	url = https://github.com/google/googletest
