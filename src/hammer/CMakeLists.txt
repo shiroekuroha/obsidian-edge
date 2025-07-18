@@ -14,7 +14,7 @@ target_compile_definitions(obsidian-engine
 target_include_directories(obsidian-hammer
     PUBLIC
 
-    ${CMAKE_SOURCE_DIR}/../src/engine/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/engine/include
 )
 
 target_compile_options(obsidian-hammer

@@ -1,7 +1,15 @@
 #pragma once
 
-namespace ObsidianEdge {
-enum class EventType {
+#include <cstdint>
+#include <string_view>
+
+#define BIT(x) (1 << x)
+
+namespace ObsidianEdge
+{
+
+enum class EventType
+{
     None = 0,
 
     // Windows Events
@@ -11,24 +19,29 @@ enum class EventType {
     WindowResized,
     WindowClosed,
 
-    // App Events
-    AppTick,
-    AppUpdate,
-    AppRender,
-
     // Key Events
     KeyPressed,
     KeyReleased,
-    KeyTyped,
 
     // Mouse Events
     MouseButtonPressed,
     MouseButtonReleased,
     MouseMoved,
     MouseScrolled,
+
+    // Gamepad Events
+    GamepadButtonPressed,
+    GamepadButtonReleased,
+
+    /// Gamepad Axis Events
+    GamepadLeftJoystickMoved,
+    GamepadRightJoystickMoved,
+    GamepadLeftTriggerPulled,
+    GamepadRightTriggerPulled,
 };
 
-enum EventCategory {
+enum EventCategory
+{
     None = 0,
 
     EventCategoryApplication = 0b0000001,
@@ -37,60 +50,76 @@ enum EventCategory {
     EventCategoryMouse = 0b0001000,
     EventCategoryMouseButton = 0b0010000,
     EventCategoryGamepad = 0b0100000,
-    EventCategoryGamepadButton = 0b1000000
+    EventCategoryGamepadButton = 0b1000000,
 };
 
-class Event {
-   public:
-    Event() = default;
-    virtual ~Event() = default;
+/**
+ * @brief Base class for events
+ */
+class Event
+{
+  public:
+    Event () = default;
+    virtual ~Event () = default;
 
-    virtual EventType getEventType() const = 0;
-    virtual int getEventCategoryFlags() const = 0;
-    virtual const char *getEventName() const = 0;
-    virtual std::string toString() const {
-        return getEventName();
-    }
+    // For debugging purposes, use getEventType to resolve event!
+    virtual std::string_view getEventName () const = 0;
 
-    bool isInCategory(EventCategory category) {
-        return getEventCategoryFlags() & category;
-    }
+    virtual EventType getEventType () const = 0;
+    virtual EventCategory getEventCategories () const = 0;
 
-    bool handled = false;
+    bool isInCategory (EventCategory category) const;
+
+    // For debugging purposes, do not use on production build
+    virtual std::string toString () const = 0;
+
+    bool isHandled = false;
 };
 
-class EventDispatcher {
-   public:
-    EventDispatcher(Event &event) : m_event(event) {}
-
+/**
+ * @brief Event resolver, marking the event resolved
+ */
+class EventDispatcher
+{
+  public:
+    EventDispatcher (Event &event) : m_event (event) {}
     template <typename T, typename F>
-    bool dispatch(const F &func) {
-        if (m_event.getEventType() == T::getStaticType()) {
-            m_event.handled |= func(static_cast<T &>(m_event));
-
-            return true;
-        }
-
+    bool
+    dispatch (const F &func)
+    {
+        if (m_event.getEventType () == T::getStaticType ())
+            {
+                m_event.isHandled |= func (static_cast<T &> (m_event));
+                return true;
+            }
         return false;
     }
 
-   private:
+  private:
     Event &m_event;
 };
 
-#define EVENT_CLASS_TYPE(type)                                 \
-    static EventType getStaticType() {                         \
-        return EventType::type;                                \
-    }                                                          \
-    virtual EventType getEventType() const override {          \
-        return getStaticType();                                \
-    }                                                          \
-    virtual const char *getEventName() const override {        \
-        return #type;                                          \
+#define EVENT_DECLARE_HELPER(eventType)                                       \
+    virtual std::string_view getEventName () const override;                  \
+                                                                              \
+    virtual EventType getEventType () const override;                         \
+    virtual EventCategory getEventCategories () const override;               \
+                                                                              \
+    static EventType getStaticType () { return EventType::eventType; }        \
+                                                                              \
+    virtual std::string toString () const override;
+
+#define EVENT_DEFINE_HELPER(eventName, eventClass, categoryFlags)             \
+    std::string_view eventClass::getEventName () const { return #eventName; } \
+                                                                              \
+    EventType eventClass::getEventType () const                               \
+    {                                                                         \
+        return EventType::eventName;                                          \
+    }                                                                         \
+                                                                              \
+    EventCategory eventClass::getEventCategories () const                     \
+    {                                                                         \
+        return static_cast<EventCategory> (categoryFlags);                    \
     }
 
-#define EVENT_CLASS_CATEGORY(category)                         \
-    virtual int getEventCategoryFlags() const override {       \
-        return category;                                       \
-    }
-}  // namespace ObsidianEdge
+} // namespace ObsidianEdge

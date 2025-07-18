@@ -2,13 +2,16 @@
 
 #include <cstdint>
 
-namespace ObsidianEdge {
-namespace Input {
+namespace ObsidianEdge
+{
+namespace Input
+{
 using KeyCode = uint16_t;
 using MouseCode = uint16_t;
 using GamepadCode = uint16_t;
 
-enum : KeyCode {
+enum : KeyCode
+{
     // From glfw3.h
     Space = 32,
     Apostrophe = 39, /* ' */
@@ -142,7 +145,8 @@ enum : KeyCode {
     Menu = 348
 };
 
-enum : MouseCode {
+enum : MouseCode
+{
     Button0 = 0,
     Button1 = 1,
     Button2 = 2,
@@ -158,7 +162,8 @@ enum : MouseCode {
     ButtonMiddle = Button2
 };
 
-enum : GamepadCode {
+enum : GamepadCode
+{
     Button_A = 0,
     Button_B = 1,
     Button_X = 2,
@@ -185,5 +190,5 @@ enum : GamepadCode {
     Button_SQUARE = Button_X,
     Button_TRIANGLE = Button_Y,
 };
-}  // namespace Input
-}  // namespace ObsidianEdge
+} // namespace Input
+} // namespace ObsidianEdge

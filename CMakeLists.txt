@@ -12,10 +12,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Dist")
 set(CMAKE_BUILD_TYPE Debug)
 
-set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build/int/${CMAKE_BUILD_TYPE}-${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_PROCESSOR})
+set(CMAKE_CURRENT_BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build/int/${CMAKE_BUILD_TYPE}-${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_PROCESSOR})
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/build/bin/${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${CMAKE_PROJECT_NAME})
-set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/build/bin/${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${CMAKE_PROJECT_NAME})
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/build/bin/${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${CMAKE_PROJECT_NAME})
+set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/build/bin/${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${CMAKE_PROJECT_NAME})
 
 # Platform dependant configs
 
@@ -30,11 +30,37 @@ elseif(UNIX)
     message("Configuring for Unix-like platform...")
 endif()
 
+# Documentations
+
+option(BUILD_DOC "Build documentation" OFF)
+
+# check if Doxygen is installed
+find_package(Doxygen)
+if (${DOXYGEN_FOUND} STREQUAL "YES" AND ${BUILD_DOC} STREQUAL "ON")
+    # set input and output files
+    set(DOXYFILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in")
+    set(DOXYFILE_OUT "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile")
+
+    # request to configure the file
+    configure_file(${DOXYFILE_IN} ${DOXYFILE_OUT} @ONLY)
+    message("Doxygen build started")
+
+    # note the option ALL which allows to build the docs together with the application
+    add_custom_target( doc_doxygen ALL
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM )
+
+else ()
+  message("Doxygen need to be installed to generate the doxygen documentation")
+endif (${DOXYGEN_FOUND} STREQUAL "YES" AND ${BUILD_DOC} STREQUAL "ON")
+
 # Add submodules
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/engine)
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/hammer)
-add_subdirectory(${CMAKE_SOURCE_DIR}/src/vendor/googletest)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/engine)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/hammer)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/vendor/googletest)
 
 # Testing
 
@@ -60,7 +86,7 @@ add_test(NAME StandAlone_Memcheck COMMAND valgrind
 )
 
 # If, for somereason, valgrind fatal error for memcmp
-# Change DEBUGINFOD server:
+# Change DEBUGINFOD_URLS server:
 #   https://sourceware.org/elfutils/Debuginfod.html
 #   https://debuginfod.archlinux.org/
 #   https://debuginfod.elfutils.org/

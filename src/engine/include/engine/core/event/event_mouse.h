@@ -3,93 +3,63 @@
 #include "engine/core/event/event.h"
 #include "engine/core/event/input_codes.h"
 
-namespace ObsidianEdge {
-class MouseMovedEvent : public Event {
-   public:
-    MouseMovedEvent(const float x, const float y)
-        : m_mouseX(x), m_mouseY(y) {}
+namespace ObsidianEdge
+{
+class MouseButtonPressedEvent : public Event
+{
+  public:
+    MouseButtonPressedEvent () = delete;
+    MouseButtonPressedEvent (Input::MouseCode mouseCode);
 
-    float GetX() const { return m_mouseX; }
-    float GetY() const { return m_mouseY; }
+    EVENT_DECLARE_HELPER (MouseButtonPressed)
 
-    std::string toString() const override {
-        std::stringstream ss;
-        ss << "MouseMovedEvent: " << m_mouseX << ", "
-           << m_mouseY;
-        return ss.str();
-    }
+    Input::MouseCode getMouseCode () const;
 
-    EVENT_CLASS_TYPE(MouseMoved)
-    EVENT_CLASS_CATEGORY(
-        EventCategoryMouse | EventCategoryInput)
-
-   private:
-    float m_mouseX, m_mouseY;
+  private:
+    Input::MouseCode m_mouseCode;
 };
 
-class MouseScrolledEvent : public Event {
-   public:
-    MouseScrolledEvent(const float xOffset, const float yOffset)
-        : m_xOffset(xOffset), m_yOffset(yOffset) {}
+class MouseButtonReleasedEvent : public Event
+{
+  public:
+    MouseButtonReleasedEvent () = delete;
+    MouseButtonReleasedEvent (Input::MouseCode mouseCode);
 
-    float getXOffset() const { return m_xOffset; }
-    float getYOffset() const { return m_yOffset; }
+    EVENT_DECLARE_HELPER (MouseButtonReleased)
 
-    std::string toString() const override {
-        std::stringstream ss;
-        ss << "MouseScrolledEvent: " << getXOffset() << ", "
-           << getYOffset();
-        return ss.str();
-    }
+    Input::MouseCode getMouseCode () const;
 
-    EVENT_CLASS_TYPE(MouseScrolled)
-    EVENT_CLASS_CATEGORY(
-        EventCategoryMouse | EventCategoryInput)
-
-   private:
-    float m_xOffset, m_yOffset;
+  private:
+    Input::MouseCode m_mouseCode;
 };
 
-class MouseButtonEvent : public Event {
-   public:
-    MouseButtonEvent(const Input::MouseCode button)
-        : m_button(button) {}
+class MouseMovedEvent : public Event
+{
+  public:
+    MouseMovedEvent () = delete;
+    MouseMovedEvent (float x, float y);
 
-    Input::MouseCode getMouseButton() const { return m_button; }
+    EVENT_DECLARE_HELPER (MouseMoved)
 
-    EVENT_CLASS_CATEGORY(
-        EventCategoryMouse | EventCategoryInput |
-        EventCategoryMouseButton)
+    float getX () const;
+    float getY () const;
 
-   protected:
-    Input::MouseCode m_button;
+  private:
+    float x, y;
 };
 
-class MouseButtonPressedEvent : public MouseButtonEvent {
-   public:
-    MouseButtonPressedEvent(const Input::MouseCode button)
-        : MouseButtonEvent(button) {}
+class MouseScrolledEvent : public Event
+{
+  public:
+    MouseScrolledEvent () = delete;
+    MouseScrolledEvent (float xOffset, float yOffset);
 
-    std::string toString() const override {
-        std::stringstream ss;
-        ss << "MouseButtonPressedEvent: " << m_button;
-        return ss.str();
-    }
+    EVENT_DECLARE_HELPER (MouseScrolled)
 
-    EVENT_CLASS_TYPE(MouseButtonPressed)
+    float getXOffset () const;
+    float getYOffset () const;
+
+  private:
+    float xOffset, yOffset;
 };
-
-class MouseButtonReleasedEvent : public MouseButtonEvent {
-   public:
-    MouseButtonReleasedEvent(const Input::MouseCode button)
-        : MouseButtonEvent(button) {}
-
-    std::string toString() const override {
-        std::stringstream ss;
-        ss << "MouseButtonReleasedEvent: " << m_button;
-        return ss.str();
-    }
-
-    EVENT_CLASS_TYPE(MouseButtonReleased)
-};
-}  // namespace ObsidianEdge
+}

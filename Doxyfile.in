@@ -1,0 +1,10 @@
+PROJECT_NAME           = "Obsidian Edge"
+INPUT                  = @CMAKE_SOURCE_DIR@/src
+OUTPUT_DIRECTORY       = @CMAKE_BINARY_DIR@/docs
+RECURSIVE              = YES
+GENERATE_LATEX         = NO
+QUIET                  = NO
+GENERATE_HTML          = YES
+DOT_PATH               = @DOT_PATH@
+
+EXCLUDE_PATTERNS = */test/* *docs/* *build/* *.vscode/* *.cache/*

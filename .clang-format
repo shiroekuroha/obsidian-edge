@@ -1,8 +1,110 @@
----
-BasedOnStyle: Google
+Language: Cpp
+BasedOnStyle: GNU
 IndentWidth: 4
 ColumnLimit: 64
----
-Language: Cpp
-AlignAfterOpenBracket: AlwaysBreak
-AlignEscapedNewlines: Right
+AccessModifierOffset: -4
+
+# AlignAfterOpenBracket: BlockIndent
+# AlignArrayOfStructures: Right
+# AlignConsecutiveAssignments: 
+#   Enabled: true
+#   AcrossEmptyLines: true
+#   AcrossComments: false
+#   AlignCompound: true
+#   PadOperators: true
+
+# AlignConsecutiveBitFields:
+#   Enabled: true
+#   AcrossEmptyLines: true
+#   AcrossComments: false
+
+# AlignConsecutiveDeclarations:
+#   Enabled: true
+#   AcrossEmptyLines: true
+#   AcrossComments: false
+#   AlignFunctionDeclarations: true
+#   AlignFunctionPointers: false
+
+# AlignConsecutiveMacros:
+#   Enabled: true
+#   AcrossEmptyLines: true
+#   AcrossComments: false
+
+# AlignConsecutiveShortCaseStatements:
+#   Enabled: true
+#   AcrossEmptyLines: true
+#   AcrossComments: true
+#   AlignCaseArrows: true
+#   AlignCaseColons: false
+
+# AlignConsecutiveTableGenBreakingDAGArgColons:
+#   Enabled: true
+#   AcrossEmptyLines: true
+#   AcrossComments: false
+
+# AlignConsecutiveTableGenCondOperatorColons:
+#   Enabled: true
+#   AcrossEmptyLines: true
+#   AcrossComments: false
+
+# AlignConsecutiveTableGenDefinitionColons:
+#   Enabled: true
+#   AcrossEmptyLines: true
+#   AcrossComments: false
+
+# AlignEscapedNewlines: LeftWithLastLine
+# AlignOperands: Align
+# AlignTrailingComments:
+#   Kind: Always
+#   OverEmptyLines: 1
+
+# AllowAllArgumentsOnNextLine: true
+# AllowAllParametersOfDeclarationOnNextLine: true
+# AllowBreakBeforeNoexceptSpecifier: Never
+# AllowShortBlocksOnASingleLine: Empty
+# AllowShortCaseExpressionOnASingleLine: false
+# AllowShortCaseLabelsOnASingleLine: false
+# AllowShortCompoundRequirementOnASingleLine: false
+# AllowShortEnumsOnASingleLine: false
+# AllowShortFunctionsOnASingleLine: Empty
+# AllowShortIfStatementsOnASingleLine: Never
+# AllowShortLambdasOnASingleLine: Empty
+# AllowShortLoopsOnASingleLine: true
+# AllowShortNamespacesOnASingleLine: true
+# AlwaysBreakBeforeMultilineStrings: false
+# AttributeMacros: [__capability, __output, __unused]
+# BinPackArguments: false
+# BinPackParameters: AlwaysOnePerLine
+# BitFieldColonSpacing: After
+# BreakBeforeBraces: Custom
+# BraceWrapping:
+#   AfterCaseLabel: true
+#   AfterClass: true
+#   AfterControlStatement: Always
+#   AfterEnum: true
+#   AfterFunction: true
+#   AfterNamespace: true
+#   AfterStruct: true
+#   AfterUnion: true
+#   AfterExternBlock: true
+#   BeforeCatch: true
+#   BeforeElse: true
+#   BeforeLambdaBody: true
+#   BeforeWhile: false
+#   IndentBraces: false
+#   SplitEmptyFunction: false
+#   SplitEmptyRecord: false
+#   SplitEmptyNamespace: false
+
+# BracedInitializerIndentWidth: 4
+# BreakAdjacentStringLiterals: true
+# BreakAfterAttributes: Always
+# BreakAfterJavaFieldAnnotations: true
+# BreakAfterReturnType: None
+# BreakArrays: true
+# BreakBeforeBinaryOperators: NonAssignment
+# BreakBeforeConceptDeclarations: Always
+# BreakBeforeTernaryOperators: true
+# BreakBinaryOperations: OnePerLine
+# BreakConstructorInitializers: AfterColon
+# BreakFunctionDefinitionParameters: true
