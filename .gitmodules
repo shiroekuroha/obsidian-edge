@@ -7,3 +7,7 @@
 [submodule "src/vendor/googletest"]
 	path = src/vendor/googletest
 	url = https://github.com/google/googletest
+[submodule "src/engine/vendor/imgui"]
+	path = src/engine/vendor/imgui
+	url = https://github.com/ocornut/imgui.git
+	branch = docking
