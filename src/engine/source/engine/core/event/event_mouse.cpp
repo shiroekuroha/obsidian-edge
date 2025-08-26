@@ -1,118 +1,96 @@
 #include "engine/core/event/event_mouse.h"
-#include "engine/core/event/event.h"
-#include "engine/core/event/input_codes.h"
 
 namespace ObsidianEdge
 {
-// Class: MouseButtonPressedEvent
+MouseButtonEvent::MouseButtonEvent (Input::MouseCode mouseCode) : m_mouseCode (mouseCode) {}
 
-MouseButtonPressedEvent::MouseButtonPressedEvent (Input::MouseCode mouseCode)
-    : m_mouseCode (mouseCode)
-{
-}
-
-EVENT_DEFINE_HELPER (MouseButtonPressed, MouseButtonPressedEvent,
-                     (EventCategoryInput | EventCategoryMouse
-                      | EventCategoryMouseButton))
+EVENT_DEFINE_HELPER (MouseButton, EventCategoryInput | EventCategoryMouse | EventCategoryMouseButton)
 
 Input::MouseCode
-MouseButtonPressedEvent::getMouseCode () const
+MouseButtonEvent::getMouseCode () const
 {
     return m_mouseCode;
 }
+
+std::string
+MouseButtonEvent::toString () const
+{
+    return std::string (getEventName ());
+}
+
+MouseButtonPressedEvent::MouseButtonPressedEvent (Input::MouseCode mouseCode) : MouseButtonEvent (mouseCode) {}
+
+EVENT_DEFINE_HELPER (MouseButtonPressed, EventCategoryInput | EventCategoryMouse | EventCategoryMouseButton)
 
 std::string
 MouseButtonPressedEvent::toString () const
 {
-    std::stringstream sstream;
-    sstream << "Mouse Button Pressed: MouseCode " << m_mouseCode;
-
-    return sstream.str ();
+    return "Mouse Button Pressed, Mouse Code: " + std::to_string (getMouseCode ());
 }
 
-// Class: MouseButtonPressedEvent
+MouseButtonReleasedEvent::MouseButtonReleasedEvent (Input::MouseCode mouseCode) : MouseButtonEvent (mouseCode) {}
 
-MouseButtonReleasedEvent::MouseButtonReleasedEvent (Input::MouseCode mouseCode)
-    : m_mouseCode (mouseCode)
-{
-}
-
-EVENT_DEFINE_HELPER (MouseButtonReleased, MouseButtonReleasedEvent,
-                     (EventCategoryInput | EventCategoryMouse
-                      | EventCategoryMouseButton))
-
-Input::MouseCode
-MouseButtonReleasedEvent::getMouseCode () const
-{
-    return m_mouseCode;
-}
+EVENT_DEFINE_HELPER (MouseButtonReleased, EventCategoryInput | EventCategoryMouse | EventCategoryMouseButton)
 
 std::string
 MouseButtonReleasedEvent::toString () const
 {
-    std::stringstream sstream;
-    sstream << "Mouse Button Released: MouseCode " << m_mouseCode;
-
-    return sstream.str ();
+    return "Mouse Button Released, Mouse Code: " + std::to_string (getMouseCode ());
 }
 
-// Class: MouseMovedEvent
+MouseMovedEvent::MouseMovedEvent (const Vector2 location) : m_location (location) {}
 
-MouseMovedEvent::MouseMovedEvent (float x, float y) : x (x), y (y) {}
+EVENT_DEFINE_HELPER (MouseMoved, EventCategoryInput | EventCategoryMouse)
 
-EVENT_DEFINE_HELPER (MouseMoved, MouseMovedEvent,
-                     (EventCategoryInput | EventCategoryMouse))
+Vector2
+MouseMovedEvent::getLocation () const
+{
+    return m_location;
+}
 
 float
 MouseMovedEvent::getX () const
 {
-    return x;
+    return m_location.x;
 }
 
 float
 MouseMovedEvent::getY () const
 {
-    return y;
+    return m_location.y;
 }
 
 std::string
 MouseMovedEvent::toString () const
 {
-    std::stringstream sstream;
-    sstream << "Mouse Moved: new X " << x << ", new Y " << y;
-
-    return sstream.str ();
+    return "Mouse Moved to location x: " + std::to_string (getX ()) + ", y: " + std::to_string (getY ());
 }
 
-// Class: MouseScrolled
+MouseScrolledEvent::MouseScrolledEvent (const Vector2 offset) : m_offset (offset) {}
 
-MouseScrolledEvent::MouseScrolledEvent (float xOffset, float yOffset)
-    : xOffset (xOffset), yOffset (yOffset)
+EVENT_DEFINE_HELPER (MouseScrolled, EventCategoryInput | EventCategoryMouse)
+
+Vector2
+MouseScrolledEvent::getOffset () const
 {
-}
-
-EVENT_DEFINE_HELPER (MouseScrolled, MouseScrolledEvent,
-                     (EventCategoryInput | EventCategoryMouse))
-
-float
-MouseScrolledEvent::getXOffset () const
-{
-    return xOffset;
+    return m_offset;
 }
 
 float
-MouseScrolledEvent::getYOffset () const
+MouseScrolledEvent::getX () const
 {
-    return yOffset;
+    return m_offset.x;
+}
+
+float
+MouseScrolledEvent::getY () const
+{
+    return m_offset.y;
 }
 
 std::string
 MouseScrolledEvent::toString () const
 {
-    std::stringstream sstream;
-    sstream << "Mouse Moved: new X Offset " << xOffset << ", new Y Offset "
-            << yOffset;
-
-    return sstream.str ();
+    return "Mouse scrolled offsetted by x: " + std::to_string (getX ()) + ", y: " + std::to_string (getY ());
 }
 }

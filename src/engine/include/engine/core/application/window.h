@@ -4,6 +4,8 @@
 
 #include "GLFW/glfw3.h"
 #include "engine/core/core.h"
+#include "engine/core/data/vector/vector2.h"
+#include "engine/core/data/vector/vector2i.h"
 #include "engine/core/event/event.h"
 #include "engine/core/log/logger.h"
 
@@ -18,8 +20,7 @@ struct WindowProps
     uint32_t width;
     uint32_t height;
 
-    WindowProps (const std::string &title = "Obsidian Edge",
-                 uint32_t width = 1600, uint32_t height = 900)
+    WindowProps (const std::string &title = "Obsidian Edge", uint32_t width = 1600, uint32_t height = 900)
         : title (title), width (width), height (height)
     {
     }
@@ -28,8 +29,7 @@ struct WindowProps
 class Window
 {
 public:
-    using EventCallbackFn
-        = std::function<void (std::shared_ptr<Event>)>;
+    using EventCallbackFn = std::function<void (std::shared_ptr<Event>)>;
 
     Window (const WindowProps &props);
     virtual ~Window ();
@@ -39,13 +39,11 @@ public:
     virtual uint32_t getWidth () const;
     virtual uint32_t getHeight () const;
 
-    virtual void
-    setEventCallback (const EventCallbackFn &callback);
+    virtual void setEventCallback (const EventCallbackFn &callback);
     virtual void setVSync (bool enabled);
     virtual bool isVSync () const;
 
-    static Window *create (const WindowProps &props
-                           = WindowProps ());
+    static Window *create (const WindowProps &props = WindowProps ());
 
 private:
     struct WindowData

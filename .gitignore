@@ -41,6 +41,6 @@
 *.dwo
 
 # user defines
+.vscode/launch.json
 .cache
-.vscode
 build

@@ -5,7 +5,7 @@ Obsidian Edge is a student project focused on exploring Graphical Application Pr
 # Dependencies:
 Arch:
 ```
-sudo pacman -S base-devel clang git make cmake wayland pkgconf ninja doxygen glfw libxkbcommon libx11 libxrandr libxinerama libxcursor libxi gcc-objc glew gtest gdb glibc valgrind debuginfod graphviz
+sudo pacman -S base-devel clang cmake debuginfod doxygen gcc-objc gdb git glew glfw glibc graphviz gtest libx11 libxcursor libxi libxinerama libxkbcommon libxrandr make ninja pkgconf valgrind wayland
 ```
 
 # Cloning Project:

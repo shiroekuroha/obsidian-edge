@@ -2,94 +2,83 @@
 
 namespace ObsidianEdge
 {
-// Class: WindowGainedFocusEvent
-
-EVENT_DEFINE_HELPER (WindowGainedFocus, WindowGainedFocusEvent,
-                     EventCategoryApplication)
+EVENT_DEFINE_HELPER (WindowGainedFocus, EventCategoryApplication)
 
 std::string
 WindowGainedFocusEvent::toString () const
 {
-    return "Window Gained Focus!";
+    return std::string ("Window Gained Focus");
 }
 
-// Class: WindowLostFocusEvent
-
-EVENT_DEFINE_HELPER (WindowLostFocus, WindowLostFocusEvent,
-                     EventCategoryApplication)
+EVENT_DEFINE_HELPER (WindowLostFocus, EventCategoryApplication)
 
 std::string
 WindowLostFocusEvent::toString () const
 {
-    return "Window Lost Focus!";
+    return std::string ("Window Lost Focus");
 }
 
-// Class: WindowMovedEvent
+WindowMovedEvent::WindowMovedEvent (const Vector2i location) : m_location (location) {}
 
-WindowMovedEvent::WindowMovedEvent (float x, float y) : x (x), y (y) {}
+EVENT_DEFINE_HELPER (WindowMoved, EventCategoryApplication)
 
-EVENT_DEFINE_HELPER (WindowMoved, WindowMovedEvent, EventCategoryApplication)
+Vector2i
+WindowMovedEvent::getLocation () const
+{
+    return m_location;
+}
+
+int
+WindowMovedEvent::getX () const
+{
+    return m_location.x;
+}
+
+int
+WindowMovedEvent::getY () const
+{
+    return m_location.y;
+}
 
 std::string
 WindowMovedEvent::toString () const
 {
-    std::stringstream sstream;
-    sstream << "Window Moved: new X " << getX () << ", new Y " << getY ();
-
-    return sstream.str ();
+    return std::string ("Window Moved to x: ") + std::to_string (m_location.x) + ", y: " + std::to_string (m_location.y);
 }
 
-float
-WindowMovedEvent::getX () const
+WindowResizedEvent::WindowResizedEvent (const Vector2i size) : m_size (size) {}
+
+EVENT_DEFINE_HELPER (WindowResized, EventCategoryApplication)
+
+Vector2i
+WindowResizedEvent::getSize () const
 {
-    return x;
+    return m_size;
 }
 
-float
-WindowMovedEvent::getY () const
+int
+WindowResizedEvent::getWidth () const
 {
-    return y;
+    return m_size.x;
 }
 
-// Class: WindowResizedEvent
-
-WindowResizedEvent::WindowResizedEvent (float x, float y) : x (x), y (y) {}
-
-EVENT_DEFINE_HELPER (WindowResized, WindowResizedEvent,
-                     EventCategoryApplication)
+int
+WindowResizedEvent::getHeight () const
+{
+    return m_size.y;
+}
 
 std::string
 WindowResizedEvent::toString () const
 {
-    std::stringstream sstream;
-    sstream << "Window Resized: new Width " << getX () << ", new Height "
-            << getY ();
-
-    return sstream.str ();
+    return std::string ("Window Resized to width: ") + std::to_string (m_size.x) + ", height: " + std::to_string (m_size.y);
 }
 
-float
-WindowResizedEvent::getX () const
-{
-    return x;
-}
-
-float
-WindowResizedEvent::getY () const
-{
-    return y;
-}
-
-// Class: WindowClosedEvent
-
-EVENT_DEFINE_HELPER (WindowClosed, WindowClosedEvent, EventCategoryApplication)
+EVENT_DEFINE_HELPER (WindowClosed, EventCategoryApplication)
 
 std::string
 WindowClosedEvent::toString () const
 {
-    std::stringstream sstream;
-    sstream << "Window Resized Closed!";
-
-    return sstream.str ();
+    return std::string ("Window Closed");
 }
 }

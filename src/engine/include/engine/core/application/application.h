@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <queue>
 
 #include "GLFW/glfw3.h"
@@ -19,18 +20,16 @@ public:
     Application ();
     virtual ~Application () = default;
 
-    virtual void init (int argc, char **argv);
     virtual void run ();
 
     virtual void onEvent (std::shared_ptr<Event> event);
-    virtual bool onWindowClose (WindowClosedEvent &e);
+    virtual bool requestWindowClose (WindowClosedEvent &e);
 
 private:
     bool m_looping = true;
 
     ArgsContainer m_options;
     std::unique_ptr<Window> m_window;
-    std::queue<std::shared_ptr<Event>> m_events;
 };
 
 Application *createApplication ();

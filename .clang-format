@@ -1,12 +1,12 @@
 Language: Cpp
 BasedOnStyle: GNU
 IndentWidth: 4
-ColumnLimit: 64
+ColumnLimit: 124
 AccessModifierOffset: -4
 
 # AlignAfterOpenBracket: BlockIndent
 # AlignArrayOfStructures: Right
-# AlignConsecutiveAssignments: 
+# AlignConsecutiveAssignments:
 #   Enabled: true
 #   AcrossEmptyLines: true
 #   AcrossComments: false

@@ -2,21 +2,27 @@
 
 namespace ObsidianEdge
 {
-// Class: KeyPressedEvent
+KeyEvent::KeyEvent (Input::KeyCode keyCode) : m_keyCode (keyCode) {}
 
-KeyPressedEvent::KeyPressedEvent (Input::KeyCode keyCode, bool isRepeated)
-    : m_keyCode (keyCode), m_isRepeated (isRepeated)
-{
-}
-
-EVENT_DEFINE_HELPER (KeyPressed, KeyPressedEvent,
-                     (EventCategoryInput | EventCategoryKeyboard))
+EVENT_DEFINE_HELPER (Key, EventCategoryInput | EventCategoryKeyboard)
 
 Input::KeyCode
-KeyPressedEvent::getKeyCode () const
+KeyEvent::getKeyCode () const
 {
     return m_keyCode;
 }
+
+std::string
+KeyEvent::toString () const
+{
+    return "Base Key Event";
+}
+
+KeyPressedEvent::KeyPressedEvent (Input::KeyCode keyCode, bool isRepeated) : KeyEvent (keyCode), m_isRepeated (isRepeated)
+{
+}
+
+EVENT_DEFINE_HELPER (KeyPressed, EventCategoryInput | EventCategoryKeyboard)
 
 bool
 KeyPressedEvent::isRepeated () const
@@ -27,35 +33,16 @@ KeyPressedEvent::isRepeated () const
 std::string
 KeyPressedEvent::toString () const
 {
-    std::stringstream sstream;
-    sstream << "Key Pressed: KeyCode " << m_keyCode
-            << (isRepeated () ? "is repeating" : "");
-
-    return sstream.str ();
+    return "Key Pressed, Key Code: " + std::to_string (getKeyCode ()) + (isRepeated () ? ", is repeated" : "");
 }
 
-// Class: KeyReleasedEvent
+KeyReleasedEvent::KeyReleasedEvent (Input::KeyCode keyCode) : KeyEvent (keyCode) {}
 
-KeyReleasedEvent::KeyReleasedEvent (Input::KeyCode keyCode)
-    : m_keyCode (keyCode)
-{
-}
-
-EVENT_DEFINE_HELPER (KeyReleased, KeyReleasedEvent,
-                     (EventCategoryInput | EventCategoryKeyboard))
-
-Input::KeyCode
-KeyReleasedEvent::getKeyCode () const
-{
-    return m_keyCode;
-}
+EVENT_DEFINE_HELPER (KeyReleased, EventCategoryInput | EventCategoryKeyboard)
 
 std::string
 KeyReleasedEvent::toString () const
 {
-    std::stringstream sstream;
-    sstream << "Key Released: KeyCode " << m_keyCode;
-
-    return sstream.str ();
+    return "Key Released, Key Code: " + std::to_string (getKeyCode ());
 }
 }

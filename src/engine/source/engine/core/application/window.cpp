@@ -23,11 +23,9 @@ isGLFWInitialized ()
 }
 
 static void
-glfwErrorCallback (int error, const char *msg){
-    OE_CORE_ERROR ("GLFW Error (code {0}): "
-                   "\"{1}\"",
-                   error, msg)
-}
+glfwErrorCallback (int error, const char *msg){ OE_CORE_ERROR ("GLFW Error (code {0}): "
+                                                               "\"{1}\"",
+                                                               error, msg) }
 
 Window::Window (const WindowProps &props)
 {
@@ -44,8 +42,7 @@ Window::Window (const WindowProps &props)
         {
             int result = glfwInit ();
 
-            OE_CORE_ASSERT (
-                result, "Failed to initialize GLFW library!")
+            OE_CORE_ASSERT (result, "Failed to initialize GLFW library!")
             setGLFWInitialized (true);
 
             /**
@@ -59,9 +56,7 @@ Window::Window (const WindowProps &props)
              */
         }
 
-    m_window = glfwCreateWindow (
-        (int)m_data.width, (int)m_data.height,
-        m_data.title.c_str (), nullptr, nullptr);
+    m_window = glfwCreateWindow ((int)m_data.width, (int)m_data.height, m_data.title.c_str (), nullptr, nullptr);
 
     glfwMakeContextCurrent (m_window);
 
@@ -71,119 +66,81 @@ Window::Window (const WindowProps &props)
 
     glfwSetErrorCallback (glfwErrorCallback);
 
-    glfwSetWindowFocusCallback (
-        m_window, [] (GLFWwindow *window, int focus) {
-            WindowData &data
-                = *(WindowData *)(glfwGetWindowUserPointer (
-                    window));
+    glfwSetWindowFocusCallback (m_window, [] (GLFWwindow *window, int focus) {
+        WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
 
-            if (focus)
-                {
-                    data.eventCallback (std::shared_ptr<Event> (
-                        new WindowGainedFocusEvent));
-                }
-            else
-                {
-                    data.eventCallback (std::shared_ptr<Event> (
-                        new WindowLostFocusEvent));
-                }
-        });
-
-    glfwSetWindowPosCallback (
-        m_window, [] (GLFWwindow *window, int xpos, int ypos) {
-            WindowData &data
-                = *(WindowData *)(glfwGetWindowUserPointer (
-                    window));
-
-            data.eventCallback (std::shared_ptr<Event> (
-                new WindowMovedEvent (xpos, ypos)));
-        });
-
-    glfwSetWindowSizeCallback (m_window, [] (GLFWwindow *window,
-                                             int width,
-                                             int height) {
-        WindowData &data = *(
-            WindowData *)(glfwGetWindowUserPointer (window));
-
-        data.eventCallback (std::shared_ptr<Event> (
-            new WindowResizedEvent (width, height)));
+        if (focus)
+            {
+                data.eventCallback (std::shared_ptr<Event> (new WindowGainedFocusEvent));
+            }
+        else
+            {
+                data.eventCallback (std::shared_ptr<Event> (new WindowLostFocusEvent));
+            }
     });
 
-    glfwSetWindowCloseCallback (
-        m_window, [] (GLFWwindow *window) {
-            WindowData &data
-                = *(WindowData *)(glfwGetWindowUserPointer (
-                    window));
+    glfwSetWindowPosCallback (m_window, [] (GLFWwindow *window, int xpos, int ypos) {
+        WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
 
-            data.eventCallback (
-                std::shared_ptr<Event> (new WindowClosedEvent));
-        });
+        data.eventCallback (std::shared_ptr<Event> (new WindowMovedEvent (Vector2i (xpos, ypos))));
+    });
 
-    glfwSetKeyCallback (m_window, [] (GLFWwindow *window,
-                                      int key, int scancode,
-                                      int action, int mods) {
-        WindowData &data = *(
-            WindowData *)(glfwGetWindowUserPointer (window));
+    glfwSetWindowSizeCallback (m_window, [] (GLFWwindow *window, int width, int height) {
+        WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
+
+        data.eventCallback (std::shared_ptr<Event> (new WindowResizedEvent (Vector2i (width, height))));
+    });
+
+    glfwSetWindowCloseCallback (m_window, [] (GLFWwindow *window) {
+        WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
+
+        data.eventCallback (std::shared_ptr<Event> (new WindowClosedEvent));
+    });
+
+    glfwSetKeyCallback (m_window, [] (GLFWwindow *window, int key, int scancode, int action, int mods) {
+        WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
 
         switch (action)
             {
             case GLFW_PRESS:
-                data.eventCallback (std::shared_ptr<Event> (
-                    new KeyPressedEvent (key, 0)));
+                data.eventCallback (std::shared_ptr<Event> (new KeyPressedEvent (key, 0)));
                 break;
 
             case GLFW_REPEAT:
-                data.eventCallback (std::shared_ptr<Event> (
-                    new KeyPressedEvent (key, 1)));
+                data.eventCallback (std::shared_ptr<Event> (new KeyPressedEvent (key, 1)));
                 break;
 
             case GLFW_RELEASE:
-                data.eventCallback (std::shared_ptr<Event> (
-                    new KeyReleasedEvent (key)));
+                data.eventCallback (std::shared_ptr<Event> (new KeyReleasedEvent (key)));
                 break;
             }
     });
 
-    glfwSetMouseButtonCallback (
-        m_window, [] (GLFWwindow *window, int button,
-                      int action, int mods) {
-            WindowData &data
-                = *(WindowData *)(glfwGetWindowUserPointer (
-                    window));
+    glfwSetMouseButtonCallback (m_window, [] (GLFWwindow *window, int button, int action, int mods) {
+        WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
 
-            switch (action)
-                {
-                case GLFW_PRESS:
-                    data.eventCallback (std::shared_ptr<Event> (
-                        new MouseButtonPressedEvent (button)));
-                    break;
+        switch (action)
+            {
+            case GLFW_PRESS:
+                data.eventCallback (std::shared_ptr<Event> (new MouseButtonPressedEvent (button)));
+                break;
 
-                case GLFW_RELEASE:
-                    data.eventCallback (std::shared_ptr<Event> (
-                        new MouseButtonReleasedEvent (button)));
-                    break;
-                }
-        });
-
-    glfwSetScrollCallback (m_window, [] (GLFWwindow *window,
-                                         double xoffset,
-                                         double yoffset) {
-        WindowData &data = *(
-            WindowData *)(glfwGetWindowUserPointer (window));
-
-        data.eventCallback (
-            std::shared_ptr<Event> (new MouseScrolledEvent (
-                (float)xoffset, (float)yoffset)));
+            case GLFW_RELEASE:
+                data.eventCallback (std::shared_ptr<Event> (new MouseButtonReleasedEvent (button)));
+                break;
+            }
     });
 
-    glfwSetCursorPosCallback (m_window, [] (GLFWwindow *window,
-                                            double xpos,
-                                            double ypos) {
-        WindowData &data = *(
-            WindowData *)(glfwGetWindowUserPointer (window));
+    glfwSetScrollCallback (m_window, [] (GLFWwindow *window, double xoffset, double yoffset) {
+        WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
 
-        data.eventCallback (std::shared_ptr<Event> (
-            new MouseMovedEvent ((float)xpos, (float)ypos)));
+        data.eventCallback (std::shared_ptr<Event> (new MouseScrolledEvent (Vector2 ((float)xoffset, (float)yoffset))));
+    });
+
+    glfwSetCursorPosCallback (m_window, [] (GLFWwindow *window, double xpos, double ypos) {
+        WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
+
+        data.eventCallback (std::shared_ptr<Event> (new MouseMovedEvent (Vector2 ((float)xpos, (float)ypos))));
     });
 }
 

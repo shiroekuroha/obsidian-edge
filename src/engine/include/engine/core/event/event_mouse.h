@@ -1,65 +1,74 @@
 #pragma once
 
+#include "engine/core/data/vector/vector2.h"
+#include "engine/core/event/codes.h"
 #include "engine/core/event/event.h"
-#include "engine/core/event/input_codes.h"
 
 namespace ObsidianEdge
 {
-class MouseButtonPressedEvent : public Event
+class MouseButtonEvent : public Event
 {
-  public:
-    MouseButtonPressedEvent () = delete;
-    MouseButtonPressedEvent (Input::MouseCode mouseCode);
+public:
+    MouseButtonEvent (Input::MouseCode mouseCode);
+    virtual ~MouseButtonEvent () = default;
 
-    EVENT_DECLARE_HELPER (MouseButtonPressed)
+    EVENT_DECLARE_HELPER (MouseButton)
 
     Input::MouseCode getMouseCode () const;
 
-  private:
+private:
     Input::MouseCode m_mouseCode;
 };
 
-class MouseButtonReleasedEvent : public Event
+class MouseButtonPressedEvent : public MouseButtonEvent
 {
-  public:
-    MouseButtonReleasedEvent () = delete;
+public:
+    MouseButtonPressedEvent (Input::MouseCode mouseCode);
+    virtual ~MouseButtonPressedEvent () = default;
+
+    EVENT_DECLARE_HELPER (MouseButtonPressed)
+};
+
+class MouseButtonReleasedEvent : public MouseButtonEvent
+{
+public:
     MouseButtonReleasedEvent (Input::MouseCode mouseCode);
+    virtual ~MouseButtonReleasedEvent () = default;
 
     EVENT_DECLARE_HELPER (MouseButtonReleased)
-
-    Input::MouseCode getMouseCode () const;
-
-  private:
-    Input::MouseCode m_mouseCode;
 };
 
 class MouseMovedEvent : public Event
 {
-  public:
-    MouseMovedEvent () = delete;
-    MouseMovedEvent (float x, float y);
+public:
+    MouseMovedEvent (const Vector2 location);
+    virtual ~MouseMovedEvent () = default;
 
     EVENT_DECLARE_HELPER (MouseMoved)
+
+    Vector2 getLocation () const;
 
     float getX () const;
     float getY () const;
 
-  private:
-    float x, y;
+private:
+    Vector2 m_location;
 };
 
 class MouseScrolledEvent : public Event
 {
-  public:
-    MouseScrolledEvent () = delete;
-    MouseScrolledEvent (float xOffset, float yOffset);
+public:
+    MouseScrolledEvent (const Vector2 offset);
+    virtual ~MouseScrolledEvent () = default;
 
     EVENT_DECLARE_HELPER (MouseScrolled)
 
-    float getXOffset () const;
-    float getYOffset () const;
+    Vector2 getOffset () const;
 
-  private:
-    float xOffset, yOffset;
+    float getX () const;
+    float getY () const;
+
+private:
+    Vector2 m_offset;
 };
 }

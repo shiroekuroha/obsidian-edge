@@ -11,19 +11,25 @@ Event::getEventName () const
 EventType
 Event::getEventType () const
 {
-    return EventType::None;
+    return EventType::BaseEvent;
+}
+
+EventType
+Event::getStaticType ()
+{
+    return EventType::BaseEvent;
 }
 
 EventCategory
-Event::getEventCategories () const
+Event::getEventCategoryFlags () const
 {
-    return None;
+    return EventCategory::EventCategoryGeneric;
 }
 
 bool
 Event::isInCategory (EventCategory category) const
 {
-    return category & getEventCategories ();
+    return category & getEventCategoryFlags ();
 }
 
 std::string
@@ -32,4 +38,9 @@ Event::toString () const
     return "Base Event";
 }
 
+bool
+EventDispatcher::isHandled () const
+{
+    return m_event.get ()->m_isHandled;
+}
 } // namespace ObsidianEdge

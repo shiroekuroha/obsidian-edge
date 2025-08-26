@@ -1,59 +1,59 @@
 #pragma once
 
-#include <sstream>
-#include <string>
-#include <string_view>
-
+#include "engine/core/data/vector/vector2i.h"
 #include "engine/core/event/event.h"
 
 namespace ObsidianEdge
 {
 class WindowGainedFocusEvent : public Event
 {
-  public:
+public:
     EVENT_DECLARE_HELPER (WindowGainedFocus)
 };
 
 class WindowLostFocusEvent : public Event
 {
-  public:
+public:
     EVENT_DECLARE_HELPER (WindowLostFocus)
 };
 
 class WindowMovedEvent : public Event
 {
-  public:
-    WindowMovedEvent () = delete;
-    WindowMovedEvent (float x, float y);
+public:
+    WindowMovedEvent (const Vector2i location);
+    virtual ~WindowMovedEvent () = default;
 
     EVENT_DECLARE_HELPER (WindowMoved)
 
-    float getX () const;
-    float getY () const;
+    Vector2i getLocation () const;
 
-  private:
-    float x, y;
+    int getX () const;
+    int getY () const;
+
+private:
+    Vector2i m_location;
 };
 
 class WindowResizedEvent : public Event
 {
-  public:
-    WindowResizedEvent () = delete;
-    WindowResizedEvent (float x, float y);
+public:
+    WindowResizedEvent (const Vector2i size);
+    virtual ~WindowResizedEvent () = default;
 
     EVENT_DECLARE_HELPER (WindowResized)
 
-    float getX () const;
-    float getY () const;
+    Vector2i getSize () const;
 
-  private:
-    float x, y;
+    int getWidth () const;
+    int getHeight () const;
+
+private:
+    Vector2i m_size;
 };
 
 class WindowClosedEvent : public Event
 {
-  public:
+public:
     EVENT_DECLARE_HELPER (WindowClosed)
 };
-
 }

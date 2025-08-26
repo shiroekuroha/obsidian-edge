@@ -37,7 +37,6 @@ option(BUILD_DOC "Build documentation" OFF)
 # check if Doxygen is installed
 find_package(Doxygen)
 if (${DOXYGEN_FOUND} STREQUAL "YES" AND ${BUILD_DOC} STREQUAL "ON")
-    # set input and output files
     set(DOXYFILE_IN "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in")
     set(DOXYFILE_OUT "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile")
 
