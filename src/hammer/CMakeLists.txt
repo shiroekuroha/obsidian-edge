@@ -17,9 +17,21 @@ target_include_directories(obsidian-hammer
     ${CMAKE_CURRENT_SOURCE_DIR}/engine/include
 )
 
-target_compile_options(obsidian-hammer
-    PUBLIC
+if(WIN32)
+    # Windows-specific configuration
+        target_compile_options(obsidian-hammer
+        PUBLIC
+    )
 
-    $<$<CONFIG:Debug>:-Og> 
-    $<$<CONFIG:Release>:-O3>
-)
+elseif(APPLE)
+    # macOS-specific configuration
+elseif(UNIX)
+    # Unix-like platform (Linux, BSD, etc.) configuration
+    target_compile_options(obsidian-hammer
+        PUBLIC
+
+        $<$<CONFIG:Debug>:-Og>
+        $<$<CONFIG:Release>:-O3>
+    )
+
+endif()

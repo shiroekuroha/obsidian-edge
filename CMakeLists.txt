@@ -21,7 +21,13 @@ if(WIN32)
     # Windows-specific configuration
     message("Configuring for Windows...")
 
-    set (GLEW_ROOT)
+    set (GLEW_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/src/engine/vendor/glew)
+
+    set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} ")
+    set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DEBUG} ")
+    set(CMAKE_EXE_LINKER_FLAGS_DIST "${CMAKE_EXE_LINKER_FLAGS_DEBUG} ")
+
+    set(GTEST_HAS_PTHREAD OFF)
 
 elseif(APPLE)
     # macOS-specific configuration
@@ -68,32 +74,35 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/vendor/googletest)
 
 # Testing
 
-add_executable(test_standalone "test/test_standalone.cpp")
-target_link_libraries(test_standalone gtest gtest_main pthread)
+if (NOT WIN32)
+    add_executable(test_standalone "test/test_standalone.cpp")
+    target_link_libraries(test_standalone gtest gtest_main pthread)
 
-target_include_directories(test_standalone
-    PUBLIC
+    target_include_directories(test_standalone
+        PUBLIC
 
-    ${CMAKE_SOURCE_DIR}/src/engine/include
-    ${CMAKE_SOURCE_DIR}/src/vendor/googletest/googletest/include
-)
+        ${CMAKE_SOURCE_DIR}/src/engine/include
+        ${CMAKE_SOURCE_DIR}/src/vendor/googletest/googletest/include
+    )
 
-enable_testing()
+    enable_testing()
 
-add_test(NAME StandAlone COMMAND test_standalone)
+    add_test(NAME StandAlone COMMAND test_standalone)
 
-add_test(NAME StandAlone_Memcheck COMMAND valgrind
-    --error-exitcode=1
-    --tool=memcheck
-    --leak-check=full
-    --show-leak-kinds=definite $<TARGET_FILE:test_standalone>
-)
+    add_test(NAME StandAlone_Memcheck COMMAND valgrind
+        --error-exitcode=1
+        --tool=memcheck
+        --leak-check=full
+        --show-leak-kinds=definite $<TARGET_FILE:test_standalone>
+    )
 
-# If, for somereason, valgrind fatal error for memcmp
-# Change DEBUGINFOD_URLS server:
-#   https://sourceware.org/elfutils/Debuginfod.html
-#   https://debuginfod.archlinux.org/
-#   https://debuginfod.elfutils.org/
-set_tests_properties(StandAlone_Memcheck PROPERTIES
-    ENVIRONMENT "DEBUGINFOD_URLS=\"https://debuginfod.elfutils.org/\";G_SLICE=always-malloc;"
-)
+    # If, for somereason, valgrind fatal error for memcmp
+    # Change DEBUGINFOD_URLS server:
+    #   https://sourceware.org/elfutils/Debuginfod.html
+    #   https://debuginfod.archlinux.org/
+    #   https://debuginfod.elfutils.org/
+    set_tests_properties(StandAlone_Memcheck PROPERTIES
+        ENVIRONMENT "DEBUGINFOD_URLS=\"https://debuginfod.elfutils.org/\";G_SLICE=always-malloc;"
+    )
+
+endif (NOT WIN32)

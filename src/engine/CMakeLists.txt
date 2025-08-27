@@ -48,9 +48,21 @@ target_include_directories(obsidian-engine
     ${PROJECT_SOURCE_DIR}/vendor/imgui
 )
 
-target_compile_options(obsidian-engine
-    PUBLIC
+if(WIN32)
+    # Windows-specific configuration
+        target_compile_options(obsidian-engine
+        PUBLIC
+    )
 
-    $<$<CONFIG:Debug>:-Og>
-    $<$<CONFIG:Release>:-O3>
-)
+elseif(APPLE)
+    # macOS-specific configuration
+elseif(UNIX)
+    # Unix-like platform (Linux, BSD, etc.) configuration
+    target_compile_options(obsidian-engine
+        PUBLIC
+
+        $<$<CONFIG:Debug>:-Og>
+        $<$<CONFIG:Release>:-O3>
+    )
+
+endif()
