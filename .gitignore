@@ -20,7 +20,9 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+
+# For windows build
+# *.dll
 
 # Fortran module files
 *.mod
@@ -30,7 +32,9 @@
 *.lai
 *.la
 *.a
-*.lib
+
+# For windows build
+# *.lib
 
 # Executables
 *.exe

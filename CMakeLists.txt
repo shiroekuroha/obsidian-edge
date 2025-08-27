@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.12.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_C_COMPILER clang)
-set(CMAKE_CXX_COMPILER clang++)
 
 project(obsidian-edge VERSION 0.0.1 LANGUAGES C CXX)
 
@@ -22,12 +20,19 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/build/bin/${CMAKE_SYSTEM_PRO
 if(WIN32)
     # Windows-specific configuration
     message("Configuring for Windows...")
+
+    set (GLEW_ROOT)
+
 elseif(APPLE)
     # macOS-specific configuration
     message("Configuring for macOS...")
 elseif(UNIX)
     # Unix-like platform (Linux, BSD, etc.) configuration
     message("Configuring for Unix-like platform...")
+
+    set(CMAKE_C_COMPILER /usr/bin/clang)
+    set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+
 endif()
 
 # Documentations
@@ -89,6 +94,6 @@ add_test(NAME StandAlone_Memcheck COMMAND valgrind
 #   https://sourceware.org/elfutils/Debuginfod.html
 #   https://debuginfod.archlinux.org/
 #   https://debuginfod.elfutils.org/
-set_tests_properties(StandAlone_Memcheck PROPERTIES 
+set_tests_properties(StandAlone_Memcheck PROPERTIES
     ENVIRONMENT "DEBUGINFOD_URLS=\"https://debuginfod.elfutils.org/\";G_SLICE=always-malloc;"
 )
