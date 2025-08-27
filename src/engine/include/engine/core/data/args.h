@@ -7,7 +7,7 @@ namespace ObsidianEdge
 {
 class ArgsContainer
 {
-  public:
+public:
     ArgsContainer () = default;
     ArgsContainer (int argc, char **argv);
 
@@ -16,7 +16,7 @@ class ArgsContainer
 
     std::string &operator[] (const char *arg);
 
-  private:
+private:
     std::unordered_map<std::string, std::string> m_args;
 };
 }

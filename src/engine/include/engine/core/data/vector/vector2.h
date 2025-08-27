@@ -4,7 +4,7 @@ namespace ObsidianEdge
 {
 class Vector2
 {
-  public:
+public:
     Vector2 ();
     Vector2 (float x, float y);
 

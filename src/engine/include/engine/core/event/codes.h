@@ -152,10 +152,10 @@ enum : MouseCode
     MOUSE_7 = 6,
     MOUSE_8 = 7,
 
-    MOUSE_LEFT =   MOUSE_1,
-    MOUSE_RIGHT =  MOUSE_2,
+    MOUSE_LEFT = MOUSE_1,
+    MOUSE_RIGHT = MOUSE_2,
     MOUSE_MIDDLE = MOUSE_3,
-    MOUSE_LAST =   MOUSE_8,
+    MOUSE_LAST = MOUSE_8,
 };
 
 enum : GamepadCode

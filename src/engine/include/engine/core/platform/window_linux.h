@@ -9,7 +9,7 @@ namespace ObsidianEdge
 {
 class LinuxWindow : public Window
 {
-  public:
+public:
     LinuxWindow (const WindowProps &props = WindowProps ());
     virtual ~LinuxWindow () override;
 

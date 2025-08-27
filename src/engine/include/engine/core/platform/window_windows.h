@@ -9,7 +9,7 @@ namespace ObsidianEdge
 {
 class WindowsWindow : public Window
 {
-  public:
+public:
     WindowsWindow (const WindowProps &props);
     virtual ~WindowsWindow () override;
 

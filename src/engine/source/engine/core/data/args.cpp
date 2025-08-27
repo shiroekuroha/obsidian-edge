@@ -20,8 +20,7 @@ ArgsContainer::set (int argc, char **argv)
             else
                 {
                     std::string key = target.substr (0, sepIndex);
-                    std::string value = target.substr (
-                        sepIndex + 1, target.length () - key.length () - 1);
+                    std::string value = target.substr (sepIndex + 1, target.length () - key.length () - 1);
 
                     m_args[key] = value;
                 }

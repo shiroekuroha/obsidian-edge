@@ -27,7 +27,7 @@ public:
 
     EVENT_DECLARE_HELPER (Key)
 
-    bool isRepeated() const;
+    bool isRepeated () const;
 
 private:
     bool m_isRepeated;

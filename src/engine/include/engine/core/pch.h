@@ -22,5 +22,5 @@
 #include <string.h>
 
 #ifdef _WIN64
-#include <Windows.h>
+#    include <Windows.h>
 #endif

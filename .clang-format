@@ -4,6 +4,8 @@ IndentWidth: 4
 ColumnLimit: 124
 AccessModifierOffset: -4
 
+IndentPPDirectives: AfterHash
+
 # AlignAfterOpenBracket: BlockIndent
 # AlignArrayOfStructures: Right
 # AlignConsecutiveAssignments:

@@ -1,9 +1,9 @@
 #include "engine/core/application/window.h"
 
 #ifdef OE_PLATFORM_WINDOWS
-#include "engine/core/platform/window_windows.h"
+#    include "engine/core/platform/window_windows.h"
 #elif OE_PLATFORM_LINUX
-#include "engine/core/platform/window_linux.h"
+#    include "engine/core/platform/window_linux.h"
 #endif
 
 namespace ObsidianEdge
