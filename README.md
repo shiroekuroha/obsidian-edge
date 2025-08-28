@@ -26,6 +26,8 @@ git clone --recurse-submodules https://github.com/shiroekuroha/Obsidian-Edge.git
 ### Optional:
 - Doxygen: [Download x64](https://www.doxygen.nl/files/doxygen-1.14.0-setup.exe)
 
+*Notes:* Current version of this repo provides precompiled shared and static library of GLEW, this will be removed in the future. If possible, remove contents of `src/engine/vendor/glew` and replace it with the latest version of GLEW on official GLEW github repo releases. Thank You!
+
 ## Linux (Tested on Archlinux)
 
 ### Dependencies:
