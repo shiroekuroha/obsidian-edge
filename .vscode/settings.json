@@ -10,12 +10,18 @@
     "[cpp]": {
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
         "editor.insertSpaces": true,
-        "editor.detectIndentation": false
+        "editor.detectIndentation": false,
+        "editor.trimAutoWhitespace": true,
+        "files.trimFinalNewlines": true,
+        "files.insertFinalNewline": true
     },
     "[c]": {
         "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
         "editor.insertSpaces": true,
-        "editor.detectIndentation": false
+        "editor.detectIndentation": false,
+        "editor.trimAutoWhitespace": true,
+        "files.trimFinalNewlines": true,
+        "files.insertFinalNewline": true
     },
     "lldb.displayFormat": "auto",
     "lldb.showDisassembly": "never",
