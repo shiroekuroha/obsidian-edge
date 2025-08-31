@@ -2,6 +2,8 @@
 
 Obsidian Edge is a student project focused on exploring Graphical Application Programming Interfaces (APIs) using C/C++. The project involves hands-on experience with graphics rendering, shader programming, and user interface design. This initiative allows us to strengthen our programming abilities while gaining valuable insights into effective project organization and teamwork.
 
+This project currently does not have any plans to support Apple's computers.
+
 # Cloning Project:
 
 Git:
@@ -26,7 +28,17 @@ git clone --recurse-submodules https://github.com/shiroekuroha/Obsidian-Edge.git
 ### Optional:
 - Doxygen: [Download x64](https://www.doxygen.nl/files/doxygen-1.14.0-setup.exe)
 
-*Notes:* Current version of this repo provides precompiled shared and static library of GLEW, this will be removed in the future. If possible, remove contents of `src/engine/vendor/glew` and replace it with the latest version of GLEW on official GLEW github repo releases. Thank You!
+### GLEW Binary installation
+1. Download GLEW: [Download Win32](https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0-win32.zip)
+2. Copy contents from GLEW to `PROJECT_SOURCE_DIR/src/engine/vendor/glew`, result looks like this:
+
+- `PROJECT_SOURCE_DIR/src/engine/vendor/glew/`
+    - `bin`
+    - `doc`
+    - `include`
+    - `lib`
+    - `LICENSE.txt`
+    - `Makefile.txt`
 
 ## Linux (Tested on Archlinux)
 
