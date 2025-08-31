@@ -10,11 +10,13 @@
 #include "engine/core/event/event_app.h"
 #include "engine/core/event/event_key.h"
 #include "engine/core/event/event_mouse.h"
+#include "engine/core/layer/layer.h"
+#include "engine/core/layer/layer_stack.h"
 #include "engine/core/log/logger.h"
 
 namespace ObsidianEdge
 {
-class Application
+class OE_API Application
 {
 public:
     Application ();
@@ -25,11 +27,17 @@ public:
     virtual void onEvent (std::shared_ptr<Event> event);
     virtual bool requestWindowClose (WindowClosedEvent &e);
 
+    void pushLayer (Layer *layer);
+    void pushOverlay (Layer *overlay);
+
+    void clearLayerStack ();
+
 private:
     bool m_looping = true;
 
     ArgsContainer m_options;
     std::unique_ptr<Window> m_window;
+    LayerStack m_layerStack;
 };
 
 Application *createApplication ();

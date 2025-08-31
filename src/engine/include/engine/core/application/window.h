@@ -26,7 +26,7 @@ struct WindowProps
     }
 };
 
-class Window
+class OE_API Window
 {
 public:
     using EventCallbackFn = std::function<void (std::shared_ptr<Event>)>;

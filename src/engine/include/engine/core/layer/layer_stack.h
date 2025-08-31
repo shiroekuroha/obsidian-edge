@@ -10,8 +10,19 @@ public:
     LayerStack ();
     virtual ~LayerStack ();
 
+    void pushLayer (Layer *layer);
+    void popLayer (Layer *layer);
+
+    void pushOverlay (Layer *overlay);
+    void popOverlay (Layer *overlay);
+
+    void clear ();
+
+    std::vector<Layer *>::iterator begin ();
+    std::vector<Layer *>::iterator end ();
+
 private:
-    std::vector<Layer> m_layers;
-    std::vector<Layer> m_overlays;
+    std::vector<Layer *> m_layers;
+    std::vector<Layer *>::iterator m_stackBreak;
 };
 }

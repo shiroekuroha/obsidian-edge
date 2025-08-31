@@ -32,6 +32,12 @@ Event::isInCategory (EventCategory category) const
     return category & getEventCategoryFlags ();
 }
 
+bool
+Event::isHandled () const
+{
+    return m_isHandled;
+}
+
 std::string
 Event::toString () const
 {

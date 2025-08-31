@@ -15,6 +15,9 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/source/engine/core/log/logger.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/platform/window_linux.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/platform/window_windows.cpp
+    ${PROJECT_SOURCE_DIR}/source/engine/core/layer/layer_stack.cpp
+    ${PROJECT_SOURCE_DIR}/source/engine/core/layer/layer.cpp
+
 
     # GLAD source files
     # ${PROJECT_SOURCE_DIR}/vendor/glad/src/glad.c
