@@ -7,7 +7,6 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/source/engine/core/application/window.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/data/vector/vector2.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/data/vector/vector2i.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/data/args.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/event/event_app.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/event/event_key.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/event/event_mouse.cpp
@@ -15,18 +14,16 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/source/engine/core/log/logger.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/platform/window_linux.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/platform/window_windows.cpp
-
-    # GLAD source files
-    # ${PROJECT_SOURCE_DIR}/vendor/glad/src/glad.c
+    ${PROJECT_SOURCE_DIR}/source/engine/core/layer/layer_stack.cpp
+    ${PROJECT_SOURCE_DIR}/source/engine/core/layer/layer.cpp
 )
 
+add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/glad)
 add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/glfw)
 add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/spdlog)
 
-find_package(GLEW REQUIRED)
-
 add_library(obsidian-engine STATIC ${SOURCE_FILES})
-target_link_libraries(obsidian-engine glfw spdlog GLEW::GLEW )
+target_link_libraries(obsidian-engine glad glfw spdlog)
 
 target_precompile_headers(obsidian-engine PUBLIC ${PROJECT_SOURCE_DIR}/include/engine/core/pch.h)
 
@@ -43,6 +40,7 @@ target_include_directories(obsidian-engine
     PUBLIC
 
     ${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}/vendor/glad/include
     ${PROJECT_SOURCE_DIR}/vendor/glfw/include
     ${PROJECT_SOURCE_DIR}/vendor/spdlog/include
     ${PROJECT_SOURCE_DIR}/vendor/imgui
@@ -54,8 +52,6 @@ if(WIN32)
         PUBLIC
     )
 
-elseif(APPLE)
-    # macOS-specific configuration
 elseif(UNIX)
     # Unix-like platform (Linux, BSD, etc.) configuration
     target_compile_options(obsidian-engine

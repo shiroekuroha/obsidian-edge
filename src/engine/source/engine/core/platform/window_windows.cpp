@@ -1,3 +1,5 @@
+#include <engine/core/pch.h>
+
 #include "engine/core/platform/window_windows.h"
 
 namespace ObsidianEdge

@@ -1,3 +1,5 @@
+#include <engine/core/pch.h>
+
 #include "engine/core/event/event_mouse.h"
 
 namespace ObsidianEdge

@@ -1,6 +1,6 @@
-#include "engine/core/application/application.h"
+#include <engine/core/pch.h>
 
-#define DISPATCHER_FUNC_BIND(fn) std::bind (fn, this, std::placeholders::_1)
+#include "engine/core/application/application.h"
 
 namespace ObsidianEdge
 {
@@ -12,19 +12,32 @@ Application::Application ()
 }
 
 void
-Application::onEvent (std::shared_ptr<Event> event)
-{
-    EventDispatcher eventDispatcher (event);
-    eventDispatcher.dispatch<WindowClosedEvent> (std::bind (&Application::requestWindowClose, this, std::placeholders::_1));
-}
-
-void
 Application::run ()
 {
     while (m_looping)
         {
             // Event Polling
             m_window->onUpdate ();
+            std::for_each (m_layerStack.begin (), m_layerStack.end (), [] (Layer *layer) { layer->onUpdate (); });
+        }
+}
+
+void
+Application::onEvent (std::shared_ptr<Event> event)
+{
+    EventDispatcher eventDispatcher (event);
+
+    eventDispatcher.dispatch<WindowClosedEvent> (([this] (WindowClosedEvent &e) {
+        this->requestWindowClose (e);
+
+        return true;
+    }));
+
+    for (auto it = m_layerStack.end (); it != m_layerStack.begin (); --it)
+        {
+            (*it)->onEvent (*event.get ());
+            if (event.get ()->isHandled ())
+                break;
         }
 }
 
@@ -34,5 +47,23 @@ Application::requestWindowClose (WindowClosedEvent &e)
     m_looping = false;
 
     return true;
+}
+
+void
+Application::pushLayer (Layer *layer)
+{
+    m_layerStack.pushLayer (layer);
+}
+
+void
+Application::pushOverlay (Layer *overlay)
+{
+    m_layerStack.pushOverlay (overlay);
+}
+
+void
+Application::clearLayerStack ()
+{
+    m_layerStack.clear ();
 }
 } // namespace ObsidianEdge

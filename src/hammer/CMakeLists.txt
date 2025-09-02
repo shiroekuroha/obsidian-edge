@@ -1,6 +1,6 @@
 project(obsidian-hammer VERSION 0.0.1 LANGUAGES C CXX)
 
-set(SOURCE_FILES 
+set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/source/hammer.cpp
 )
 
@@ -23,8 +23,6 @@ if(WIN32)
         PUBLIC
     )
 
-elseif(APPLE)
-    # macOS-specific configuration
 elseif(UNIX)
     # Unix-like platform (Linux, BSD, etc.) configuration
     target_compile_options(obsidian-hammer

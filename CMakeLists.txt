@@ -13,7 +13,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CURRENT_BINARY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/build/int/${CMAKE_BUILD_TYPE}-${CMAKE_SYSTEM_NAME}_${CMAKE_SYSTEM_PROCESSOR})
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/build/bin/${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${CMAKE_PROJECT_NAME})
-set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/build/bin/${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${CMAKE_PROJECT_NAME})
+set(LIBRARY_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/build/lib/${CMAKE_SYSTEM_PROCESSOR}-${CMAKE_SYSTEM_NAME}-${CMAKE_BUILD_TYPE}/${CMAKE_PROJECT_NAME})
 
 # Platform dependant configs
 
@@ -29,9 +29,6 @@ if(WIN32)
 
     set(GTEST_HAS_PTHREAD OFF)
 
-elseif(APPLE)
-    # macOS-specific configuration
-    message("Configuring for macOS...")
 elseif(UNIX)
     # Unix-like platform (Linux, BSD, etc.) configuration
     message("Configuring for Unix-like platform...")
@@ -70,11 +67,14 @@ endif (${DOXYGEN_FOUND} STREQUAL "YES" AND ${BUILD_DOC} STREQUAL "ON")
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/engine)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/hammer)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/vendor/googletest)
 
 # Testing
 
-if (NOT WIN32)
+set(OBSIDIAN_EDGE_ENABLED_TESTING OFF)
+
+if (NOT WIN32 AND OBSIDIAN_EDGE_ENABLED_TESTING)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/vendor/googletest)
+
     add_executable(test_standalone "test/test_standalone.cpp")
     target_link_libraries(test_standalone gtest gtest_main pthread)
 
@@ -105,4 +105,4 @@ if (NOT WIN32)
         ENVIRONMENT "DEBUGINFOD_URLS=\"https://debuginfod.elfutils.org/\";G_SLICE=always-malloc;"
     )
 
-endif (NOT WIN32)
+endif (NOT WIN32 AND OBSIDIAN_EDGE_ENABLED_TESTING)

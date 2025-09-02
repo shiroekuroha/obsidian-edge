@@ -1,8 +1,9 @@
 #pragma once
 
-// #include "glad/glad.h"
+#include "glad/gl.h"
 
 #include "GLFW/glfw3.h"
+
 #include "engine/core/core.h"
 #include "engine/core/data/vector/vector2.h"
 #include "engine/core/data/vector/vector2i.h"
@@ -26,7 +27,7 @@ struct WindowProps
     }
 };
 
-class Window
+class OE_API Window
 {
 public:
     using EventCallbackFn = std::function<void (std::shared_ptr<Event>)>;

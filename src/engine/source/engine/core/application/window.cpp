@@ -1,3 +1,5 @@
+#include <engine/core/pch.h>
+
 #include "engine/core/application/window.h"
 
 #ifdef OE_PLATFORM_WINDOWS

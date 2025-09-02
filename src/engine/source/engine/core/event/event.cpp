@@ -1,3 +1,5 @@
+#include <engine/core/pch.h>
+
 #include "engine/core/event/event.h"
 
 namespace ObsidianEdge
@@ -30,6 +32,12 @@ bool
 Event::isInCategory (EventCategory category) const
 {
     return category & getEventCategoryFlags ();
+}
+
+bool
+Event::isHandled () const
+{
+    return m_isHandled;
 }
 
 std::string

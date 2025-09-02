@@ -73,6 +73,7 @@ public:
     virtual EventCategory getEventCategoryFlags () const = 0;
 
     bool isInCategory (EventCategory category) const;
+    bool isHandled () const;
 
     // For debugging purposes, do not use on production build
     virtual std::string toString () const = 0;
@@ -89,9 +90,9 @@ class EventDispatcher
 public:
     EventDispatcher (std::shared_ptr<Event> event) : m_event (event) {}
 
-    template <typename T, typename F>
+    template <typename T>
     bool
-    dispatch (const F &func)
+    dispatch (std::function<bool (T &)> func)
     {
         if (m_event->getEventType () == T::getStaticType ())
             {

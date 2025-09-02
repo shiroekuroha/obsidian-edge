@@ -28,18 +28,6 @@ git clone --recurse-submodules https://github.com/shiroekuroha/Obsidian-Edge.git
 ### Optional:
 - Doxygen: [Download x64](https://www.doxygen.nl/files/doxygen-1.14.0-setup.exe)
 
-### GLEW Binary installation
-1. Download GLEW: [Download Win32](https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0-win32.zip)
-2. Copy contents from GLEW to `PROJECT_SOURCE_DIR/src/engine/vendor/glew`, result looks like this:
-
-- `PROJECT_SOURCE_DIR/src/engine/vendor/glew/`
-    - `bin`
-    - `doc`
-    - `include`
-    - `lib`
-    - `LICENSE.txt`
-    - `Makefile.txt`
-
 ## Linux (Tested on Archlinux)
 
 ### Dependencies:

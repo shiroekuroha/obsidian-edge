@@ -1,3 +1,5 @@
+#include <engine/core/pch.h>
+
 #include "engine/core/data/vector/vector2i.h"
 
 namespace ObsidianEdge

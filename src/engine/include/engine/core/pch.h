@@ -7,9 +7,11 @@
 #include <functional>
 #include <iostream>
 #include <list>
+#include <math.h>
 #include <memory>
 #include <queue>
 #include <sstream>
+#include <string.h>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -17,9 +19,6 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
-
-#include <math.h>
-#include <string.h>
 
 #ifdef _WIN64
 #    include <Windows.h>

@@ -1,3 +1,5 @@
+#include <engine/core/pch.h>
+
 #include "engine/core/log/logger.h"
 
 #define OE_LOG_FILE_MAX_SIZE 5   // Max file size of rotating log files, in MB
