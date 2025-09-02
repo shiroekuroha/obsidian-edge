@@ -1,3 +1,5 @@
+#include <engine/core/pch.h>
+
 #include "engine/core/event/event_key.h"
 
 namespace ObsidianEdge

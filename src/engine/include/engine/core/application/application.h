@@ -1,9 +1,9 @@
 #pragma once
 
-#include <iostream>
-#include <queue>
+#include "glad/gl.h"
 
 #include "GLFW/glfw3.h"
+
 #include "engine/core/application/window.h"
 #include "engine/core/data/args.h"
 #include "engine/core/event/event.h"

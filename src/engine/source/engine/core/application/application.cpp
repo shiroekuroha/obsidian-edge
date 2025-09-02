@@ -1,3 +1,5 @@
+#include <engine/core/pch.h>
+
 #include "engine/core/application/application.h"
 
 namespace ObsidianEdge

@@ -1,8 +1,9 @@
 #pragma once
 
-// #include "glad/glad.h"
+#include "glad/gl.h"
 
 #include "GLFW/glfw3.h"
+
 #include "engine/core/core.h"
 #include "engine/core/data/vector/vector2.h"
 #include "engine/core/data/vector/vector2i.h"

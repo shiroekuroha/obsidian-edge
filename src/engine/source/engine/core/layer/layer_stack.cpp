@@ -1,3 +1,5 @@
+#include <engine/core/pch.h>
+
 #include "engine/core/layer/layer_stack.h"
 
 namespace ObsidianEdge
