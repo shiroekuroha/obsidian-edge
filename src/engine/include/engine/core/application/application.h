@@ -5,7 +5,6 @@
 #include "GLFW/glfw3.h"
 
 #include "engine/core/application/window.h"
-#include "engine/core/data/args.h"
 #include "engine/core/event/event.h"
 #include "engine/core/event/event_app.h"
 #include "engine/core/event/event_key.h"
@@ -35,7 +34,6 @@ public:
 private:
     bool m_looping = true;
 
-    ArgsContainer m_options;
     std::unique_ptr<Window> m_window;
     LayerStack m_layerStack;
 };

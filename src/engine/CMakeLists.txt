@@ -7,7 +7,6 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/source/engine/core/application/window.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/data/vector/vector2.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/data/vector/vector2i.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/data/args.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/event/event_app.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/event/event_key.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/event/event_mouse.cpp
