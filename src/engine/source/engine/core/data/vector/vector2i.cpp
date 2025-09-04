@@ -7,14 +7,26 @@ namespace ObsidianEdge
 Vector2i::Vector2i () : x (0), y (0) {};
 Vector2i::Vector2i (int x, int y) : x (x), y (y) {};
 
+bool
+Vector2i::operator== (const Vector2i &other) const
+{
+    return (x == other.x && y == other.y) ? true : false;
+}
+
+bool
+Vector2i::operator!= (const Vector2i &other) const
+{
+    return !(*this == other);
+}
+
 Vector2i
-Vector2i::operator+ (Vector2i &other) const
+Vector2i::operator+ (const Vector2i &other) const
 {
     return Vector2i (x + other.x, y + other.y);
 }
 
 Vector2i &
-Vector2i::operator+= (Vector2i &other)
+Vector2i::operator+= (const Vector2i &other)
 {
     x += other.x;
     y += other.y;
@@ -23,13 +35,13 @@ Vector2i::operator+= (Vector2i &other)
 }
 
 Vector2i
-Vector2i::operator- (Vector2i &other) const
+Vector2i::operator- (const Vector2i &other) const
 {
     return Vector2i (x + other.x, y + other.y);
 }
 
 Vector2i &
-Vector2i::operator-= (Vector2i &other)
+Vector2i::operator-= (const Vector2i &other)
 {
     x -= other.x;
     y -= other.y;
@@ -68,35 +80,82 @@ Vector2i::operator/= (float mul)
 }
 
 Vector2i
+Vector2i::operator* (const Vector2i &other) const
+{
+    return Vector2i (x * other.x, y * other.y);
+}
+
+Vector2i &
+Vector2i::operator*= (const Vector2i &other)
+{
+    x *= other.x;
+    x *= other.x;
+
+    return *this;
+}
+
+Vector2i
+Vector2i::operator/ (const Vector2i &other) const
+{
+    return Vector2i (x / other.x, y / other.y);
+}
+
+Vector2i &
+Vector2i::operator/= (const Vector2i &other)
+{
+    x /= other.x;
+    x /= other.x;
+
+    return *this;
+}
+
+Vector2
+Vector2::operator- () const
+{
+    return Vector2 (-x, -y);
+}
+
+Vector2i::
+operator Vector2 () const
+{
+    return Vector2i ((int)x, (int)y);
+}
+
+Vector2i
 Vector2i::absolute () const
 {
     return Vector2i (abs (x), abs (y));
 }
 
-int
+float
 Vector2i::length () const
 {
     return sqrt (x * x + y * y);
 }
 
-int
-Vector2i::dot (Vector2i &other) const
+float
+Vector2i::dot (const Vector2 &other) const
 {
     return x * other.x + y * other.y;
 }
 
-int
-Vector2i::angleBetween (Vector2i &source, Vector2i &destination)
+Vector2
+Vector2i::normalized () const
 {
-    Vector2i absSrc = source.absolute ();
-    Vector2i absDes = source.absolute ();
+    float len = length ();
 
-    return acos ((source.dot (destination)) / (absSrc.dot (absDes)));
+    return Vector2 (((float)x) / len, ((float)y) / len);
 }
 
-int
-Vector2i::distanceBetween (Vector2i &source, Vector2i &destination)
+bool
+Vector2i::isZero () const
 {
-    return ((source - destination).length ());
+    return (x | y) ? false : true;
+}
+
+std::string
+Vector2i::toString () const
+{
+    return "(x: " + std::to_string (x) + ", y: " + std::to_string (x) + ")";
 }
 }

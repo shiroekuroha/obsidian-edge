@@ -49,6 +49,6 @@ Event::toString () const
 bool
 EventDispatcher::isHandled () const
 {
-    return m_event.get ()->m_isHandled;
+    return m_event.m_isHandled;
 }
 } // namespace ObsidianEdge

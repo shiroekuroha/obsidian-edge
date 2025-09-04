@@ -5,6 +5,7 @@
 #include "GLFW/glfw3.h"
 
 #include "engine/core/application/window.h"
+#include "engine/core/core.h"
 #include "engine/core/event/event.h"
 #include "engine/core/event/event_app.h"
 #include "engine/core/event/event_key.h"
@@ -31,11 +32,17 @@ public:
 
     void clearLayerStack ();
 
+    static Application &getApplication ();
+    Window &getWindow ();
+
 private:
     bool m_looping = true;
+    Window *m_window;
 
-    std::unique_ptr<Window> m_window;
     LayerStack m_layerStack;
+
+private:
+    static Application *s_application;
 };
 
 Application *createApplication ();

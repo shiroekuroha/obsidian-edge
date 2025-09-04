@@ -42,3 +42,7 @@ This project works best with VSCode.
 ### VSCode Extensions:
 - CMake Tools: [Redirect](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
 - Clangd: [Redirect](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
+
+#### Optional Extension for debugging with gdb
+- C/C++ Debug (gdb): [Redirect](https://open-vsx.org/vscode/item?itemName=KylinIdeTeam.cppdebug)
+- In `utility` folder, `settings.json` file will force vscode to format document using clangd extension.

@@ -1,0 +1,29 @@
+{
+    "clangd.enable": true,
+    "clangd.restartAfterCrash": true,
+    "clangd.arguments": [
+        "--log=verbose",
+        "--compile-commands-dir=${workspaceFolder}/build",
+        "--fallback-style=none",
+        "--header-insertion=never"
+    ],
+    "[cpp]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+    },
+    "[c]": {
+        "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+    },
+    "lldb.displayFormat": "auto",
+    "lldb.showDisassembly": "never",
+    "lldb.dereferencePointers": true,
+    "lldb.consoleMode": "commands",
+    "explorer.compactFolders": false,
+    "editor.insertSpaces": true,
+    "editor.formatOnSave": true,
+    "editor.detectIndentation": false,
+    "editor.trimAutoWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "files.insertFinalNewline": true,
+    "explorer.autoReveal": false,
+    "cSpell.diagnosticLevel": "Hint",
+}

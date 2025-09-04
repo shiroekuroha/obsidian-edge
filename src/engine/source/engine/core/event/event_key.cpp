@@ -4,7 +4,7 @@
 
 namespace ObsidianEdge
 {
-KeyEvent::KeyEvent (Input::KeyCode keyCode) : m_keyCode (keyCode) {}
+KeyEvent::KeyEvent (Input::KeyCode keyCode, int mods) : m_keyCode (keyCode), m_mods (mods) {}
 
 EVENT_DEFINE_HELPER (Key, EventCategoryInput | EventCategoryKeyboard)
 
@@ -14,13 +14,20 @@ KeyEvent::getKeyCode () const
     return m_keyCode;
 }
 
+int
+KeyEvent::getMods () const
+{
+    return m_mods;
+}
+
 std::string
 KeyEvent::toString () const
 {
     return "Base Key Event";
 }
 
-KeyPressedEvent::KeyPressedEvent (Input::KeyCode keyCode, bool isRepeated) : KeyEvent (keyCode), m_isRepeated (isRepeated)
+KeyPressedEvent::KeyPressedEvent (Input::KeyCode keyCode, int mods, bool isRepeated)
+    : KeyEvent (keyCode, mods), m_isRepeated (isRepeated)
 {
 }
 
@@ -35,16 +42,17 @@ KeyPressedEvent::isRepeated () const
 std::string
 KeyPressedEvent::toString () const
 {
-    return "Key Pressed, Key Code: " + std::to_string (getKeyCode ()) + (isRepeated () ? ", is repeated" : "");
+    return "Key Pressed, Key Code: " + std::to_string (getKeyCode ()) + ", mods: " + std::to_string (getMods ())
+           + (isRepeated () ? ", is repeated" : "");
 }
 
-KeyReleasedEvent::KeyReleasedEvent (Input::KeyCode keyCode) : KeyEvent (keyCode) {}
+KeyReleasedEvent::KeyReleasedEvent (Input::KeyCode keyCode, int mods) : KeyEvent (keyCode, mods) {}
 
 EVENT_DEFINE_HELPER (KeyReleased, EventCategoryInput | EventCategoryKeyboard)
 
 std::string
 KeyReleasedEvent::toString () const
 {
-    return "Key Released, Key Code: " + std::to_string (getKeyCode ());
+    return "Key Released, Key Code: " + std::to_string (getKeyCode ()) + ", mods: " + std::to_string (getMods ());
 }
 }

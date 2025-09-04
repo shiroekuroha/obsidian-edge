@@ -48,50 +48,50 @@ private:
 
 #ifdef OE_DEBUG
 
-#define OE_CORE_TRACE(...)                                                                                                 \
-    ::ObsidianEdge::Logger::getCoreLogger ()->trace (__VA_ARGS__);                                                         \
-    ::ObsidianEdge::Logger::getCoreFileLogger ()->trace (__VA_ARGS__);
-#define OE_CORE_INFO(...)                                                                                                  \
-    ::ObsidianEdge::Logger::getCoreLogger ()->info (__VA_ARGS__);                                                          \
-    ::ObsidianEdge::Logger::getCoreFileLogger ()->info (__VA_ARGS__);
-#define OE_CORE_WARN(...)                                                                                                  \
-    ::ObsidianEdge::Logger::getCoreLogger ()->warn (__VA_ARGS__);                                                          \
-    ::ObsidianEdge::Logger::getCoreFileLogger ()->warn (__VA_ARGS__);
-#define OE_CORE_ERROR(...)                                                                                                 \
-    ::ObsidianEdge::Logger::getCoreLogger ()->error (__VA_ARGS__);                                                         \
-    ::ObsidianEdge::Logger::getCoreFileLogger ()->error (__VA_ARGS__);
-#define OE_CORE_FATAL(...)                                                                                                 \
-    ::ObsidianEdge::Logger::getCoreLogger ()->critical (__VA_ARGS__);                                                      \
-    ::ObsidianEdge::Logger::getCoreFileLogger ()->critical (__VA_ARGS__);
+#    define OE_CORE_TRACE(...)                                                                                             \
+        ::ObsidianEdge::Logger::getCoreLogger ()->trace (__VA_ARGS__);                                                     \
+        ::ObsidianEdge::Logger::getCoreFileLogger ()->trace (__VA_ARGS__);
+#    define OE_CORE_INFO(...)                                                                                              \
+        ::ObsidianEdge::Logger::getCoreLogger ()->info (__VA_ARGS__);                                                      \
+        ::ObsidianEdge::Logger::getCoreFileLogger ()->info (__VA_ARGS__);
+#    define OE_CORE_WARN(...)                                                                                              \
+        ::ObsidianEdge::Logger::getCoreLogger ()->warn (__VA_ARGS__);                                                      \
+        ::ObsidianEdge::Logger::getCoreFileLogger ()->warn (__VA_ARGS__);
+#    define OE_CORE_ERROR(...)                                                                                             \
+        ::ObsidianEdge::Logger::getCoreLogger ()->error (__VA_ARGS__);                                                     \
+        ::ObsidianEdge::Logger::getCoreFileLogger ()->error (__VA_ARGS__);
+#    define OE_CORE_FATAL(...)                                                                                             \
+        ::ObsidianEdge::Logger::getCoreLogger ()->critical (__VA_ARGS__);                                                  \
+        ::ObsidianEdge::Logger::getCoreFileLogger ()->critical (__VA_ARGS__);
 
-#define OE_TRACE(...)                                                                                                      \
-    ::ObsidianEdge::Logger::getClientLogger ()->trace (__VA_ARGS__);                                                       \
-    ::ObsidianEdge::Logger::getClientFileLogger ()->trace (__VA_ARGS__);
-#define OE_INFO(...)                                                                                                       \
-    ::ObsidianEdge::Logger::getClientLogger ()->info (__VA_ARGS__);                                                        \
-    ::ObsidianEdge::Logger::getClientFileLogger ()->info (__VA_ARGS__);
-#define OE_WARN(...)                                                                                                       \
-    ::ObsidianEdge::Logger::getClientLogger ()->warn (__VA_ARGS__);                                                        \
-    ::ObsidianEdge::Logger::getClientFileLogger ()->warn (__VA_ARGS__);
-#define OE_ERROR(...)                                                                                                      \
-    ::ObsidianEdge::Logger::getClientLogger ()->error (__VA_ARGS__);                                                       \
-    ::ObsidianEdge::Logger::getClientFileLogger ()->error (__VA_ARGS__);
-#define OE_FATAL(...)                                                                                                      \
-    ::ObsidianEdge::Logger::getClientLogger ()->critical (__VA_ARGS__);                                                    \
-    ::ObsidianEdge::Logger::getClientFileLogger ()->critical (__VA_ARGS__);
+#    define OE_TRACE(...)                                                                                                  \
+        ::ObsidianEdge::Logger::getClientLogger ()->trace (__VA_ARGS__);                                                   \
+        ::ObsidianEdge::Logger::getClientFileLogger ()->trace (__VA_ARGS__);
+#    define OE_INFO(...)                                                                                                   \
+        ::ObsidianEdge::Logger::getClientLogger ()->info (__VA_ARGS__);                                                    \
+        ::ObsidianEdge::Logger::getClientFileLogger ()->info (__VA_ARGS__);
+#    define OE_WARN(...)                                                                                                   \
+        ::ObsidianEdge::Logger::getClientLogger ()->warn (__VA_ARGS__);                                                    \
+        ::ObsidianEdge::Logger::getClientFileLogger ()->warn (__VA_ARGS__);
+#    define OE_ERROR(...)                                                                                                  \
+        ::ObsidianEdge::Logger::getClientLogger ()->error (__VA_ARGS__);                                                   \
+        ::ObsidianEdge::Logger::getClientFileLogger ()->error (__VA_ARGS__);
+#    define OE_FATAL(...)                                                                                                  \
+        ::ObsidianEdge::Logger::getClientLogger ()->critical (__VA_ARGS__);                                                \
+        ::ObsidianEdge::Logger::getClientFileLogger ()->critical (__VA_ARGS__);
 
 #else
 
-#define OE_CORE_TRACE(...)
-#define OE_CORE_INFO(...)
-#define OE_CORE_WARN(...)
-#define OE_CORE_ERROR(...)
-#define OE_CORE_FATAL(...)
+#    define OE_CORE_TRACE(...)
+#    define OE_CORE_INFO(...)
+#    define OE_CORE_WARN(...)
+#    define OE_CORE_ERROR(...)
+#    define OE_CORE_FATAL(...)
 
-#define OE_TRACE(...)
-#define OE_INFO(...)
-#define OE_WARN(...)
-#define OE_ERROR(...)
-#define OE_FATAL(...)
+#    define OE_TRACE(...)
+#    define OE_INFO(...)
+#    define OE_WARN(...)
+#    define OE_ERROR(...)
+#    define OE_FATAL(...)
 
 #endif

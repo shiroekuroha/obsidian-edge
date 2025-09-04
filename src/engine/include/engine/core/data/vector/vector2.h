@@ -1,20 +1,26 @@
 #pragma once
 
+struct Vector2;
+
+#include "engine/core/data/vector/vector2i.h"
+
 namespace ObsidianEdge
 {
-class Vector2
+struct Vector2
 {
-public:
     Vector2 ();
     Vector2 (float x, float y);
 
     ~Vector2 () = default;
 
-    Vector2 operator+ (Vector2 &other) const;
-    Vector2 &operator+= (Vector2 &other);
+    bool operator== (const Vector2 &other) const;
+    bool operator!= (const Vector2 &other) const;
 
-    Vector2 operator- (Vector2 &other) const;
-    Vector2 &operator-= (Vector2 &other);
+    Vector2 operator+ (const Vector2 &other) const;
+    Vector2 &operator+= (const Vector2 &other);
+
+    Vector2 operator- (const Vector2 &other) const;
+    Vector2 &operator-= (const Vector2 &other);
 
     Vector2 operator* (float mul) const;
     Vector2 &operator*= (float mul);
@@ -22,16 +28,36 @@ public:
     Vector2 operator/ (float mul) const;
     Vector2 &operator/= (float mul);
 
+    Vector2 operator* (const Vector2 &other) const;
+    Vector2 &operator*= (const Vector2 &other);
+
+    Vector2 operator/ (const Vector2 &other) const;
+    Vector2 &operator/= (const Vector2 &other);
+
+    Vector2 operator- () const;
+
+    operator Vector2i () const;
     Vector2 absolute () const;
 
     float length () const;
-    float dot (Vector2 &other) const;
+    float dot (const Vector2 &other) const;
+    float cross (const Vector2 &other) const;
+
     Vector2 normalized () const;
+    Vector2 floor () const;
+    Vector2 ceil () const;
+    Vector2 round () const;
+
+    Vector2 rotate (float radians) const;
+    Vector2 scale (const Vector2 &scale) const;
+    Vector2 translate (const Vector2 &translate) const;
+
+    bool isZero () const;
 
     float x = 0, y = 0;
+    std::string toString () const;
 
-    static float angleBetween (Vector2 &source, Vector2 &destination);
-    static float distanceBetween (Vector2 &source, Vector2 &destination);
+    float angleBetween (const Vector2 &source, const Vector2 &destination);
+    float distanceBetween (const Vector2 &source, const Vector2 &destination);
 };
-
 }

@@ -12,14 +12,8 @@ namespace ObsidianEdge
 {
 static bool s_glfwInitialized = false;
 
-void
-setGLFWInitialized (bool init)
-{
-    s_glfwInitialized = init;
-}
-
 bool
-isGLFWInitialized ()
+isGlfwInitialized ()
 {
     return s_glfwInitialized;
 }
@@ -40,33 +34,23 @@ Window::Window (const WindowProps &props)
                   "h: {2}",
                   m_data.title, m_data.width, m_data.height)
 
-    if (!isGLFWInitialized ())
+    if (!isGlfwInitialized ())
         {
             int result = glfwInit ();
 
             OE_CORE_ASSERT (result, "Failed to initialize GLFW library!")
-            setGLFWInitialized (true);
-
-            /**
-             * @brief This is for Glad, but not working right
-             * now.
-             *
-             * int status =
-             * gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-             * OE_CORE_ASSERT (status,"Failed to initialize
-             * GLAD!")
-             */
+            s_glfwInitialized = true;
         }
 
     m_window = glfwCreateWindow ((int)m_data.width, (int)m_data.height, m_data.title.c_str (), nullptr, nullptr);
 
     glfwMakeContextCurrent (m_window);
-
     glfwSetWindowUserPointer (m_window, &m_data);
-
     setVSync (true);
-
     glfwSetErrorCallback (glfwErrorCallback);
+
+    int status = gladLoadGL (glfwGetProcAddress);
+    OE_CORE_ASSERT (status, "Failed to initialize Glad library!")
 
     glfwSetWindowFocusCallback (m_window, [] (GLFWwindow *window, int focus) {
         WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
@@ -105,15 +89,15 @@ Window::Window (const WindowProps &props)
         switch (action)
             {
             case GLFW_PRESS:
-                data.eventCallback (std::shared_ptr<Event> (new KeyPressedEvent (key, 0)));
+                data.eventCallback (std::shared_ptr<Event> (new KeyPressedEvent (key, mods, 0)));
                 break;
 
             case GLFW_REPEAT:
-                data.eventCallback (std::shared_ptr<Event> (new KeyPressedEvent (key, 1)));
+                data.eventCallback (std::shared_ptr<Event> (new KeyPressedEvent (key, mods, 1)));
                 break;
 
             case GLFW_RELEASE:
-                data.eventCallback (std::shared_ptr<Event> (new KeyReleasedEvent (key)));
+                data.eventCallback (std::shared_ptr<Event> (new KeyReleasedEvent (key, mods)));
                 break;
             }
     });
@@ -151,10 +135,10 @@ Window::~Window ()
     if (m_window)
         glfwDestroyWindow (m_window);
 
-    if (isGLFWInitialized ())
+    if (isGlfwInitialized ())
         {
             glfwTerminate ();
-            setGLFWInitialized (false);
+            s_glfwInitialized = false;
         }
 }
 
@@ -211,5 +195,17 @@ Window::create (const WindowProps &props)
     OE_CORE_ERROR ("Unknown platform!");
     return nullptr;
 #endif
+}
+
+GLFWwindow &
+Window::get ()
+{
+    return *m_window;
+}
+
+GLFWwindow *
+Window::get_ptr ()
+{
+    return m_window;
 }
 } // namespace ObsidianEdge

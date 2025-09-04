@@ -37,10 +37,10 @@
 *.out
 *.app
 
-# debug information files
+# Debug information files
 *.dwo
 
-# user defines
-.vscode/launch.json
-.cache
+# User defines
+./.vscode/
+./.cache/
 build

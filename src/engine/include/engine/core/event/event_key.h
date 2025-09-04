@@ -8,21 +8,23 @@ namespace ObsidianEdge
 class KeyEvent : public Event
 {
 public:
-    KeyEvent (Input::KeyCode keyCode);
+    KeyEvent (Input::KeyCode keyCode, int mods);
     virtual ~KeyEvent () = default;
 
     EVENT_DECLARE_HELPER (Key)
 
     Input::KeyCode getKeyCode () const;
+    int getMods () const;
 
 private:
     Input::KeyCode m_keyCode;
+    int m_mods;
 };
 
 class KeyPressedEvent : public KeyEvent
 {
 public:
-    KeyPressedEvent (Input::KeyCode keyCode, bool isRepeated = 0);
+    KeyPressedEvent (Input::KeyCode keyCode, int mods, bool isRepeated = 0);
     virtual ~KeyPressedEvent () = default;
 
     EVENT_DECLARE_HELPER (Key)
@@ -36,7 +38,7 @@ private:
 class KeyReleasedEvent : public KeyEvent
 {
 public:
-    KeyReleasedEvent (Input::KeyCode keyCode);
+    KeyReleasedEvent (Input::KeyCode keyCode, int mods);
     virtual ~KeyReleasedEvent () = default;
 
     EVENT_DECLARE_HELPER (KeyReleased)

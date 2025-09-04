@@ -181,6 +181,5 @@ enum : GamepadCode
     GAMEPAD_SQUARE = GAMEPAD_X,
     GAMEPAD_TRIANGLE = GAMEPAD_Y,
 };
-
 } // namespace Input
 } // namespace ObsidianEdge

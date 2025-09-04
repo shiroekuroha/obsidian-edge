@@ -1,3 +1,5 @@
+string(TOUPPER OE_PLATFORM_${CMAKE_SYSTEM_NAME} OE_PLATFORM_NAME)
+
 project(obsidian-hammer VERSION 0.0.1 LANGUAGES C CXX)
 
 set(SOURCE_FILES
@@ -17,19 +19,14 @@ target_include_directories(obsidian-hammer
     ${CMAKE_CURRENT_SOURCE_DIR}/engine/include
 )
 
-if(WIN32)
-    # Windows-specific configuration
-        target_compile_options(obsidian-hammer
-        PUBLIC
-    )
+target_compile_options(obsidian-hammer
+    PUBLIC
 
-elseif(UNIX)
-    # Unix-like platform (Linux, BSD, etc.) configuration
-    target_compile_options(obsidian-hammer
-        PUBLIC
+    $<$<AND:$<CONFIG:Debug>,$<PLATFORM_ID:Linux>>:-Og>
+    $<$<AND:$<CONFIG:Release>,$<PLATFORM_ID:Linux>>:-O1>
+    $<$<AND:$<CONFIG:Distribute>,$<PLATFORM_ID:Linux>>:-O3>
 
-        $<$<CONFIG:Debug>:-Og>
-        $<$<CONFIG:Release>:-O3>
-    )
-
-endif()
+    $<$<AND:$<CONFIG:Debug>,$<PLATFORM_ID:Windows>>:/O0>
+    $<$<AND:$<CONFIG:Release>,$<PLATFORM_ID:Windows>>:/O1>
+    $<$<AND:$<CONFIG:Distribute>,$<PLATFORM_ID:Windows>>:/O3>
+)

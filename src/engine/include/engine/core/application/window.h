@@ -12,8 +12,7 @@
 
 namespace ObsidianEdge
 {
-extern void setGLFWInitialized (bool init);
-extern bool isGLFWInitialized ();
+extern bool isGlfwInitialized ();
 
 struct WindowProps
 {
@@ -45,6 +44,9 @@ public:
     virtual bool isVSync () const;
 
     static Window *create (const WindowProps &props = WindowProps ());
+
+    GLFWwindow &get ();
+    GLFWwindow *get_ptr ();
 
 private:
     struct WindowData

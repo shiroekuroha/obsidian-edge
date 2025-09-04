@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string>
-#include <string_view>
-
 namespace ObsidianEdge
 {
 enum class EventType
@@ -88,15 +85,15 @@ protected:
 class EventDispatcher
 {
 public:
-    EventDispatcher (std::shared_ptr<Event> event) : m_event (event) {}
+    EventDispatcher (Event &event) : m_event (event) {}
 
     template <typename T>
     bool
     dispatch (std::function<bool (T &)> func)
     {
-        if (m_event->getEventType () == T::getStaticType ())
+        if (m_event.getEventType () == T::getStaticType ())
             {
-                m_event->m_isHandled |= func (static_cast<T &> (*m_event.get ()));
+                m_event.m_isHandled |= func (static_cast<T &> (m_event));
 
                 return true;
             }
@@ -107,7 +104,7 @@ public:
     bool isHandled () const;
 
 private:
-    std::shared_ptr<Event> m_event;
+    Event &m_event;
 };
 
 #define EVENT_DECLARE_HELPER(eventType)                                                                                    \

@@ -1,20 +1,26 @@
 #pragma once
 
+struct Vector2i;
+
+#include "engine/core/data/vector/vector2.h"
+
 namespace ObsidianEdge
 {
-class Vector2i
+struct Vector2i
 {
-public:
     Vector2i ();
     Vector2i (int x, int y);
 
     ~Vector2i () = default;
 
-    Vector2i operator+ (Vector2i &other) const;
-    Vector2i &operator+= (Vector2i &other);
+    bool operator== (const Vector2i &other) const;
+    bool operator!= (const Vector2i &other) const;
 
-    Vector2i operator- (Vector2i &other) const;
-    Vector2i &operator-= (Vector2i &other);
+    Vector2i operator+ (const Vector2i &other) const;
+    Vector2i &operator+= (const Vector2i &other);
+
+    Vector2i operator- (const Vector2i &other) const;
+    Vector2i &operator-= (const Vector2i &other);
 
     Vector2i operator* (float mul) const;
     Vector2i &operator*= (float mul);
@@ -22,15 +28,25 @@ public:
     Vector2i operator/ (float mul) const;
     Vector2i &operator/= (float mul);
 
+    Vector2i operator* (const Vector2i &other) const;
+    Vector2i &operator*= (const Vector2i &other);
+
+    Vector2i operator/ (const Vector2i &other) const;
+    Vector2i &operator/= (const Vector2i &other);
+
+    Vector2i operator- () const;
+
+    operator Vector2 () const;
     Vector2i absolute () const;
 
-    int length () const;
-    int dot (Vector2i &other) const;
-    Vector2i normalized () const;
+    float length () const;
+    float dot (const Vector2 &other) const;
+    float cross (const Vector2 &other) const;
+    Vector2 normalized () const;
+
+    bool isZero () const;
 
     int x = 0, y = 0;
-
-    static int angleBetween (Vector2i &source, Vector2i &destination);
-    static int distanceBetween (Vector2i &source, Vector2i &destination);
+    std::string toString () const;
 };
 }

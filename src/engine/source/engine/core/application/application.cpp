@@ -4,11 +4,16 @@
 
 namespace ObsidianEdge
 {
+Application *Application::s_application = nullptr;
+
 Application::Application ()
 {
     m_looping = true;
-    m_window = std::unique_ptr<Window> (Window::create ());
+    m_window = Window::create ();
     m_window->setEventCallback (std::bind (&Application::onEvent, this, std::placeholders::_1));
+
+    OE_CORE_ASSERT ((s_application == nullptr), "Application is a singleton, cannot exist more than one.")
+    s_application = this;
 }
 
 void
@@ -25,7 +30,7 @@ Application::run ()
 void
 Application::onEvent (std::shared_ptr<Event> event)
 {
-    EventDispatcher eventDispatcher (event);
+    EventDispatcher eventDispatcher (*event.get ());
 
     eventDispatcher.dispatch<WindowClosedEvent> (([this] (WindowClosedEvent &e) {
         this->requestWindowClose (e);
@@ -33,12 +38,10 @@ Application::onEvent (std::shared_ptr<Event> event)
         return true;
     }));
 
-    for (auto it = m_layerStack.end (); it != m_layerStack.begin (); --it)
-        {
-            (*it)->onEvent (*event.get ());
-            if (event.get ()->isHandled ())
-                break;
-        }
+    std::for_each (m_layerStack.begin (), m_layerStack.end (), [event] (Layer *layer) {
+        if (!event.get ()->isHandled ())
+            layer->onEvent (*event.get ());
+    });
 }
 
 bool
@@ -53,17 +56,31 @@ void
 Application::pushLayer (Layer *layer)
 {
     m_layerStack.pushLayer (layer);
+    layer->onAttach ();
 }
 
 void
 Application::pushOverlay (Layer *overlay)
 {
     m_layerStack.pushOverlay (overlay);
+    overlay->onAttach ();
 }
 
 void
 Application::clearLayerStack ()
 {
     m_layerStack.clear ();
+}
+
+Application &
+Application::getApplication ()
+{
+    return *s_application;
+}
+
+Window &
+Application::getWindow ()
+{
+    return *m_window;
 }
 } // namespace ObsidianEdge
