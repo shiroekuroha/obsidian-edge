@@ -26,7 +26,7 @@ target_compile_options(obsidian-hammer
     $<$<AND:$<CONFIG:Release>,$<PLATFORM_ID:Linux>>:-O1>
     $<$<AND:$<CONFIG:Distribute>,$<PLATFORM_ID:Linux>>:-O3>
 
-    $<$<AND:$<CONFIG:Debug>,$<PLATFORM_ID:Windows>>:/O0>
-    $<$<AND:$<CONFIG:Release>,$<PLATFORM_ID:Windows>>:/O1>
-    $<$<AND:$<CONFIG:Distribute>,$<PLATFORM_ID:Windows>>:/O3>
+    $<$<AND:$<CONFIG:Debug>,$<PLATFORM_ID:Windows>>:/Od>
+    $<$<AND:$<CONFIG:Release>,$<PLATFORM_ID:Windows>>:/Os>
+    $<$<AND:$<CONFIG:Distribute>,$<PLATFORM_ID:Windows>>:/Os/Ot>
 )

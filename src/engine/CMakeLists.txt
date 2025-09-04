@@ -11,7 +11,7 @@ set(IMGUI_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/vendor/imgui/imgui_widgets.cpp
     ${PROJECT_SOURCE_DIR}/vendor/imgui/backends/imgui_impl_glfw.cpp
     ${PROJECT_SOURCE_DIR}/vendor/imgui/backends/imgui_impl_opengl3.cpp
-    ${PROJECT_SOURCE_DIR}/vendor/imgui/backends/imgui_impl_vulkan.cpp
+    # ${PROJECT_SOURCE_DIR}/vendor/imgui/backends/imgui_impl_vulkan.cpp
 )
 
 add_library(imgui ${IMGUI_SOURCE_FILES})
@@ -20,6 +20,7 @@ target_include_directories(imgui
     PUBLIC
 
     ${PROJECT_SOURCE_DIR}/vendor/imgui
+    ${PROJECT_SOURCE_DIR}/vendor/glfw/include
 )
 
 # Engine Configs
@@ -78,7 +79,7 @@ target_compile_options(obsidian-engine
     $<$<AND:$<CONFIG:Release>,$<PLATFORM_ID:Linux>>:-O1>
     $<$<AND:$<CONFIG:Distribute>,$<PLATFORM_ID:Linux>>:-O3>
 
-    $<$<AND:$<CONFIG:Debug>,$<PLATFORM_ID:Windows>>:/O0>
-    $<$<AND:$<CONFIG:Release>,$<PLATFORM_ID:Windows>>:/O1>
-    $<$<AND:$<CONFIG:Distribute>,$<PLATFORM_ID:Windows>>:/O3>
+    $<$<AND:$<CONFIG:Debug>,$<PLATFORM_ID:Windows>>:/Od>
+    $<$<AND:$<CONFIG:Release>,$<PLATFORM_ID:Windows>>:/Os>
+    $<$<AND:$<CONFIG:Distribute>,$<PLATFORM_ID:Windows>>:/Os/Ot>
 )
