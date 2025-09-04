@@ -41,6 +41,8 @@
 *.dwo
 
 # User defines
-./.vscode/
-./.cache/
+.vscode/
+.cache/
 build
+./build_cached.sh
+./build_fresh.sh

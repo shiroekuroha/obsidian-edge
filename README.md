@@ -45,4 +45,3 @@ This project works best with VSCode.
 
 #### Optional Extension for debugging with gdb
 - C/C++ Debug (gdb): [Redirect](https://open-vsx.org/vscode/item?itemName=KylinIdeTeam.cppdebug)
-- In `utility` folder, `settings.json` file will force vscode to format document using clangd extension.
