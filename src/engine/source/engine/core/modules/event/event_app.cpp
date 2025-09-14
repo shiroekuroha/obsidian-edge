@@ -20,11 +20,11 @@ WindowLostFocusEvent::toString () const
     return std::string ("Window Lost Focus");
 }
 
-WindowMovedEvent::WindowMovedEvent (const Vector2i location) : m_location (location) {}
+WindowMovedEvent::WindowMovedEvent (const glm::ivec2 location) : m_location (location) {}
 
 EVENT_DEFINE_HELPER (WindowMoved, EventCategoryApplication)
 
-Vector2i
+glm::ivec2
 WindowMovedEvent::getLocation () const
 {
     return m_location;
@@ -48,11 +48,11 @@ WindowMovedEvent::toString () const
     return std::string ("Window Moved to x: ") + std::to_string (m_location.x) + ", y: " + std::to_string (m_location.y);
 }
 
-WindowResizedEvent::WindowResizedEvent (const Vector2i size) : m_size (size) {}
+WindowResizedEvent::WindowResizedEvent (const glm::ivec2 size) : m_size (size) {}
 
 EVENT_DEFINE_HELPER (WindowResized, EventCategoryApplication)
 
-Vector2i
+glm::ivec2
 WindowResizedEvent::getSize () const
 {
     return m_size;

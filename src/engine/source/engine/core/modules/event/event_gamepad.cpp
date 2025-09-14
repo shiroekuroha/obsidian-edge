@@ -61,14 +61,14 @@ GamepadButtonReleasedEvent::toString () const
 }
 
 // GamepadLeftJoystickMovedEvent
-GamepadLeftJoystickMovedEvent::GamepadLeftJoystickMovedEvent (Vector2 offset, int controller)
+GamepadLeftJoystickMovedEvent::GamepadLeftJoystickMovedEvent (glm::vec2 offset, int controller)
     : m_offset (offset), m_controller (controller)
 {
 }
 
 EVENT_DEFINE_HELPER (GamepadLeftJoystickMoved, EventCategoryInput | EventCategoryGamepad)
 
-Vector2
+glm::vec2
 GamepadLeftJoystickMovedEvent::getOffset () const
 {
     return m_offset;
@@ -100,14 +100,14 @@ GamepadLeftJoystickMovedEvent::toString () const
 }
 
 // GamepadRightJoystickMovedEvent
-GamepadRightJoystickMovedEvent::GamepadRightJoystickMovedEvent (Vector2 offset, int controller)
+GamepadRightJoystickMovedEvent::GamepadRightJoystickMovedEvent (glm::vec2 offset, int controller)
     : m_offset (offset), m_controller (controller)
 {
 }
 
 EVENT_DEFINE_HELPER (GamepadRightJoystickMoved, EventCategoryInput | EventCategoryGamepad)
 
-Vector2
+glm::vec2
 GamepadRightJoystickMovedEvent::getOffset () const
 {
     return m_offset;

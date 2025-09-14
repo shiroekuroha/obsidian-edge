@@ -7,7 +7,6 @@
 // clang-format on
 
 #include "engine/core/core.h"
-
 #include "engine/core/modules/event/event.h"
 #include "engine/core/modules/event/event_app.h"
 #include "engine/core/modules/event/event_key.h"

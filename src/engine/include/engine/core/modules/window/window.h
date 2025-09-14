@@ -8,14 +8,13 @@
 
 #include "engine/core/core.h"
 
-#include "engine/core/modules/data/vector/vector2.h"
-#include "engine/core/modules/data/vector/vector2i.h"
 #include "engine/core/modules/event/event.h"
 #include "engine/core/modules/event/event_app.h"
 #include "engine/core/modules/event/event_gamepad.h"
 #include "engine/core/modules/event/event_key.h"
 #include "engine/core/modules/event/event_mouse.h"
 #include "engine/core/modules/log/logger.h"
+#include <glm/vec2.hpp>
 
 namespace ObsidianEdge
 {

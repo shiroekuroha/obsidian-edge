@@ -1,9 +1,8 @@
 #pragma once
 
-#include "engine/core/modules/data/vector/vector2.h"
-#include "engine/core/modules/data/vector/vector2i.h"
 #include "engine/core/modules/event/codes/codes_mouse.h"
 #include "engine/core/modules/event/event.h"
+#include <glm/vec2.hpp>
 
 namespace ObsidianEdge
 {
@@ -42,34 +41,34 @@ public:
 class MouseMovedEvent : public Event
 {
 public:
-    MouseMovedEvent (const Vector2 location);
+    MouseMovedEvent (const glm::vec2 location);
     virtual ~MouseMovedEvent () = default;
 
     EVENT_DECLARE_HELPER (MouseMoved)
 
-    Vector2 getLocation () const;
+    glm::vec2 getLocation () const;
 
     float getX () const;
     float getY () const;
 
 private:
-    Vector2 m_location;
+    glm::vec2 m_location;
 };
 
 class MouseScrolledEvent : public Event
 {
 public:
-    MouseScrolledEvent (const Vector2 offset);
+    MouseScrolledEvent (const glm::vec2 offset);
     virtual ~MouseScrolledEvent () = default;
 
     EVENT_DECLARE_HELPER (MouseScrolled)
 
-    Vector2 getOffset () const;
+    glm::vec2 getOffset () const;
 
     float getX () const;
     float getY () const;
 
 private:
-    Vector2 m_offset;
+    glm::vec2 m_offset;
 };
 }

@@ -70,13 +70,13 @@ Window::Window (const WindowProps &props)
     glfwSetWindowPosCallback (m_window, [] (GLFWwindow *window, int xpos, int ypos) {
         WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
 
-        data.eventCallback (std::shared_ptr<Event> (new WindowMovedEvent (Vector2i (xpos, ypos))));
+        data.eventCallback (std::shared_ptr<Event> (new WindowMovedEvent (glm::ivec2 (xpos, ypos))));
     });
 
     glfwSetWindowSizeCallback (m_window, [] (GLFWwindow *window, int width, int height) {
         WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
 
-        data.eventCallback (std::shared_ptr<Event> (new WindowResizedEvent (Vector2i (width, height))));
+        data.eventCallback (std::shared_ptr<Event> (new WindowResizedEvent (glm::ivec2 (width, height))));
     });
 
     glfwSetWindowCloseCallback (m_window, [] (GLFWwindow *window) {
@@ -122,13 +122,13 @@ Window::Window (const WindowProps &props)
     glfwSetScrollCallback (m_window, [] (GLFWwindow *window, double xoffset, double yoffset) {
         WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
 
-        data.eventCallback (std::shared_ptr<Event> (new MouseScrolledEvent (Vector2 ((float)xoffset, (float)yoffset))));
+        data.eventCallback (std::shared_ptr<Event> (new MouseScrolledEvent (glm::vec2 ((float)xoffset, (float)yoffset))));
     });
 
     glfwSetCursorPosCallback (m_window, [] (GLFWwindow *window, double xpos, double ypos) {
         WindowData &data = *(WindowData *)(glfwGetWindowUserPointer (window));
 
-        data.eventCallback (std::shared_ptr<Event> (new MouseMovedEvent (Vector2 ((float)xpos, (float)ypos))));
+        data.eventCallback (std::shared_ptr<Event> (new MouseMovedEvent (glm::vec2 ((float)xpos, (float)ypos))));
     });
 
     refreshControllers ();
@@ -259,8 +259,8 @@ Window::checkGamepadEvent ()
                                     || state.axes[GLFW_GAMEPAD_AXIS_LEFT_Y] < -CONTROLLER_AXIS_DEADZONE))
                                 {
                                     m_data.eventCallback (std::shared_ptr<Event> (new GamepadLeftJoystickMovedEvent (
-                                        Vector2 (state.axes[GLFW_GAMEPAD_AXIS_LEFT_X],
-                                                 -1 * state.axes[GLFW_GAMEPAD_AXIS_LEFT_Y]),
+                                        glm::vec2 (state.axes[GLFW_GAMEPAD_AXIS_LEFT_X],
+                                                   -1 * state.axes[GLFW_GAMEPAD_AXIS_LEFT_Y]),
                                         i)));
                                 }
 
@@ -270,8 +270,8 @@ Window::checkGamepadEvent ()
                                     || state.axes[GLFW_GAMEPAD_AXIS_RIGHT_Y] < -CONTROLLER_AXIS_DEADZONE))
                                 {
                                     m_data.eventCallback (std::shared_ptr<Event> (new GamepadRightJoystickMovedEvent (
-                                        Vector2 (state.axes[GLFW_GAMEPAD_AXIS_RIGHT_X],
-                                                 -1 * state.axes[GLFW_GAMEPAD_AXIS_RIGHT_Y]),
+                                        glm::vec2 (state.axes[GLFW_GAMEPAD_AXIS_RIGHT_X],
+                                                   -1 * state.axes[GLFW_GAMEPAD_AXIS_RIGHT_Y]),
                                         i)));
                                 }
 

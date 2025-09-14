@@ -30,8 +30,6 @@ Application::run ()
 void
 Application::onEvent (std::shared_ptr<Event> event)
 {
-    OE_TRACE ("{0}", event->toString ())
-
     EventDispatcher eventDispatcher (*event.get ());
 
     eventDispatcher.dispatch<WindowClosedEvent> (([this] (WindowClosedEvent &e) {

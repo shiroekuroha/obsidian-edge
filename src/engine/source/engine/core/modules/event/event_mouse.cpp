@@ -40,11 +40,11 @@ MouseButtonReleasedEvent::toString () const
     return "Mouse Button Released, Mouse Code: " + std::to_string (getMouseCode ());
 }
 
-MouseMovedEvent::MouseMovedEvent (const Vector2 location) : m_location (location) {}
+MouseMovedEvent::MouseMovedEvent (const glm::vec2 location) : m_location (location) {}
 
 EVENT_DEFINE_HELPER (MouseMoved, EventCategoryInput | EventCategoryMouse)
 
-Vector2
+glm::vec2
 MouseMovedEvent::getLocation () const
 {
     return m_location;
@@ -68,11 +68,11 @@ MouseMovedEvent::toString () const
     return "Mouse Moved to location x: " + std::to_string (getX ()) + ", y: " + std::to_string (getY ());
 }
 
-MouseScrolledEvent::MouseScrolledEvent (const Vector2 offset) : m_offset (offset) {}
+MouseScrolledEvent::MouseScrolledEvent (const glm::vec2 offset) : m_offset (offset) {}
 
 EVENT_DEFINE_HELPER (MouseScrolled, EventCategoryInput | EventCategoryMouse)
 
-Vector2
+glm::vec2
 MouseScrolledEvent::getOffset () const
 {
     return m_offset;

@@ -1,9 +1,8 @@
 #pragma once
 
-#include "engine/core/modules/data/vector/vector2.h"
-#include "engine/core/modules/data/vector/vector2i.h"
 #include "engine/core/modules/event/codes/codes_key.h"
 #include "engine/core/modules/event/event.h"
+#include <glm/vec2.hpp>
 
 namespace ObsidianEdge
 {

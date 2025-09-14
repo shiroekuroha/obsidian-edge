@@ -1,8 +1,7 @@
 #pragma once
 
-#include "engine/core/modules/data/vector/vector2.h"
-#include "engine/core/modules/data/vector/vector2i.h"
 #include "engine/core/modules/event/event.h"
+#include <glm/vec2.hpp>
 
 namespace ObsidianEdge
 {
@@ -21,35 +20,35 @@ public:
 class WindowMovedEvent : public Event
 {
 public:
-    WindowMovedEvent (const Vector2i location);
+    WindowMovedEvent (const glm::ivec2 location);
     virtual ~WindowMovedEvent () = default;
 
     EVENT_DECLARE_HELPER (WindowMoved)
 
-    Vector2i getLocation () const;
+    glm::ivec2 getLocation () const;
 
     int getX () const;
     int getY () const;
 
 private:
-    Vector2i m_location;
+    glm::ivec2 m_location;
 };
 
 class WindowResizedEvent : public Event
 {
 public:
-    WindowResizedEvent (const Vector2i size);
+    WindowResizedEvent (const glm::ivec2 size);
     virtual ~WindowResizedEvent () = default;
 
     EVENT_DECLARE_HELPER (WindowResized)
 
-    Vector2i getSize () const;
+    glm::ivec2 getSize () const;
 
     int getWidth () const;
     int getHeight () const;
 
 private:
-    Vector2i m_size;
+    glm::ivec2 m_size;
 };
 
 class WindowClosedEvent : public Event
