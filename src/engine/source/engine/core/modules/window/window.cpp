@@ -8,6 +8,8 @@
 #    include "engine/core/modules/window/platform/window_linux.h"
 #endif
 
+#define CONTROLLER_AXIS_DEADZONE 0.25
+
 namespace ObsidianEdge
 {
 static bool s_glfwInitialized = false;
@@ -128,6 +130,8 @@ Window::Window (const WindowProps &props)
 
         data.eventCallback (std::shared_ptr<Event> (new MouseMovedEvent (Vector2 ((float)xpos, (float)ypos))));
     });
+
+    refreshControllers ();
 }
 
 Window::~Window ()
@@ -145,6 +149,8 @@ Window::~Window ()
 void
 Window::onUpdate ()
 {
+    checkGamepadEvent ();
+
     glfwPollEvents ();
     glfwSwapBuffers (m_window);
 }
@@ -207,5 +213,81 @@ GLFWwindow *
 Window::get_ptr ()
 {
     return m_window;
+}
+
+void
+Window::refreshControllers ()
+{
+    for (int i = 0; i < 16; i++)
+        m_controllers[i].present = glfwJoystickPresent (i);
+}
+
+void
+Window::checkGamepadEvent ()
+{
+    for (int i = 0; i < 16; i++)
+        {
+            if (m_controllers[i].present && glfwJoystickIsGamepad (i))
+                {
+                    GLFWgamepadstate state;
+                    if (glfwGetGamepadState (i, &state))
+                        {
+                            for (unsigned char b = 0; b < 15; b++)
+                                {
+                                    if (state.buttons[b] != m_controllers[i].buttons[b])
+                                        {
+                                            switch (state.buttons[b])
+                                                {
+                                                case GLFW_PRESS:
+                                                    m_data.eventCallback (std::shared_ptr<Event> (
+                                                        new GamepadButtonPressedEvent (static_cast<int> (b), i)));
+                                                    break;
+
+                                                case GLFW_RELEASE:
+                                                    m_data.eventCallback (std::shared_ptr<Event> (
+                                                        new GamepadButtonReleasedEvent (static_cast<int> (b), i)));
+                                                    break;
+                                                }
+
+                                            m_controllers[i].buttons[b] = state.buttons[b];
+                                        }
+                                }
+
+                            if ((state.axes[GLFW_GAMEPAD_AXIS_LEFT_X] > CONTROLLER_AXIS_DEADZONE
+                                 || state.axes[GLFW_GAMEPAD_AXIS_LEFT_X] < -CONTROLLER_AXIS_DEADZONE)
+                                || (state.axes[GLFW_GAMEPAD_AXIS_LEFT_Y] > CONTROLLER_AXIS_DEADZONE
+                                    || state.axes[GLFW_GAMEPAD_AXIS_LEFT_Y] < -CONTROLLER_AXIS_DEADZONE))
+                                {
+                                    m_data.eventCallback (std::shared_ptr<Event> (new GamepadLeftJoystickMovedEvent (
+                                        Vector2 (state.axes[GLFW_GAMEPAD_AXIS_LEFT_X],
+                                                 -1 * state.axes[GLFW_GAMEPAD_AXIS_LEFT_Y]),
+                                        i)));
+                                }
+
+                            if ((state.axes[GLFW_GAMEPAD_AXIS_RIGHT_X] > CONTROLLER_AXIS_DEADZONE
+                                 || state.axes[GLFW_GAMEPAD_AXIS_RIGHT_X] < -CONTROLLER_AXIS_DEADZONE)
+                                || (state.axes[GLFW_GAMEPAD_AXIS_RIGHT_Y] > CONTROLLER_AXIS_DEADZONE
+                                    || state.axes[GLFW_GAMEPAD_AXIS_RIGHT_Y] < -CONTROLLER_AXIS_DEADZONE))
+                                {
+                                    m_data.eventCallback (std::shared_ptr<Event> (new GamepadRightJoystickMovedEvent (
+                                        Vector2 (state.axes[GLFW_GAMEPAD_AXIS_RIGHT_X],
+                                                 -1 * state.axes[GLFW_GAMEPAD_AXIS_RIGHT_Y]),
+                                        i)));
+                                }
+
+                            if (state.axes[GLFW_GAMEPAD_AXIS_LEFT_TRIGGER] > -0.9f)
+                                {
+                                    m_data.eventCallback (std::shared_ptr<Event> (new GamepadLeftTriggerPulledEvent (
+                                        (state.axes[GLFW_GAMEPAD_AXIS_LEFT_TRIGGER] + 1.0f) / 2.0f, i)));
+                                }
+
+                            if (state.axes[GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER] > -0.9f)
+                                {
+                                    m_data.eventCallback (std::shared_ptr<Event> (new GamepadRightTriggerPulledEvent (
+                                        (state.axes[GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER] + 1.0f) / 2.0f, i)));
+                                }
+                        }
+                }
+        }
 }
 } // namespace ObsidianEdge

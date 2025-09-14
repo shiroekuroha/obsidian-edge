@@ -12,6 +12,7 @@
 #include "engine/core/modules/data/vector/vector2i.h"
 #include "engine/core/modules/event/event.h"
 #include "engine/core/modules/event/event_app.h"
+#include "engine/core/modules/event/event_gamepad.h"
 #include "engine/core/modules/event/event_key.h"
 #include "engine/core/modules/event/event_mouse.h"
 #include "engine/core/modules/log/logger.h"
@@ -54,6 +55,9 @@ public:
     GLFWwindow &get ();
     GLFWwindow *get_ptr ();
 
+    void refreshControllers ();
+    void checkGamepadEvent ();
+
 private:
     struct WindowData
     {
@@ -64,7 +68,15 @@ private:
         EventCallbackFn eventCallback;
     };
 
+    struct ControllerData
+    {
+        std::string name;
+        bool present;
+        unsigned char buttons[15];
+    };
+
     GLFWwindow *m_window;
     WindowData m_data;
+    ControllerData m_controllers[16] = {};
 };
 } // namespace ObsidianEdge

@@ -5,10 +5,10 @@ namespace ObsidianEdge
 enum class RenderAPI
 {
     OPENGL = 0,
-    VULKAN = 1,
-    DIRECTX11, // Not supported yet
-    DIRECTX12, // Not supported yet
-    METAL,     // Not supported yet
+    VULKAN = 1, // ! Preping
+    DIRECTX11,  // Not supported yet
+    DIRECTX12,  // Not supported yet
+    METAL,      // Not supported yet
 };
 
 class Render

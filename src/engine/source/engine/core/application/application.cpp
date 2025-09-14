@@ -8,8 +8,6 @@ Application *Application::s_application = nullptr;
 
 Application::Application ()
 {
-    ObsidianEdge::Logger::init ();
-
     m_looping = true;
     m_window = Window::create ();
     m_window->setEventCallback (std::bind (&Application::onEvent, this, std::placeholders::_1));
@@ -32,6 +30,8 @@ Application::run ()
 void
 Application::onEvent (std::shared_ptr<Event> event)
 {
+    OE_TRACE ("{0}", event->toString ())
+
     EventDispatcher eventDispatcher (*event.get ());
 
     eventDispatcher.dispatch<WindowClosedEvent> (([this] (WindowClosedEvent &e) {

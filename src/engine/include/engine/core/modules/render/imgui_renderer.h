@@ -12,10 +12,12 @@
 
 #include "backends/imgui_impl_glfw.h"
 
+// * OpenGL:
 #include "backends/imgui_impl_opengl3.h"
 #include "engine/core/modules/render/platform/imgui_opengl_renderer.h"
 
 // TODO: Release these files for Vulkan build
+// * Vulkan:
 // #include "backends/imgui_impl_vulkan.h"
 // #include "engine/core/modules/render/platform/imgui_vulkan_renderer.h"
 

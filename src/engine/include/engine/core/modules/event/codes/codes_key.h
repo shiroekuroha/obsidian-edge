@@ -5,8 +5,6 @@ namespace ObsidianEdge
 namespace Input
 {
 using KeyCode = unsigned int;
-using MouseCode = unsigned int;
-using GamepadCode = unsigned int;
 
 enum : KeyCode
 {
@@ -55,12 +53,12 @@ enum : KeyCode
     KEY_X = 88,
     KEY_Y = 89,
     KEY_Z = 90,
-    KEY_BRACKET_L = 91,    /* [ */
-    KEY_BRACKET_R = 93,    /* ] */
-    KEY_BACKSLASH = 92,    /* \ */
-    KEY_GRAVE_ACCENT = 96, /* ` */
-    KEY_WORLD_1 = 161,     /* non-US #1 */
-    KEY_WORLD_2 = 162,     /* non-US #2 */
+    KEY_BRACKET_LEFT = 91,  /* [ */
+    KEY_BRACKET_RIGHT = 93, /* ] */
+    KEY_BACKSLASH = 92,     /* \ */
+    KEY_GRAVE_ACCENT = 96,  /* ` */
+    KEY_WORLD_1 = 161,      /* non-US #1 */
+    KEY_WORLD_2 = 162,      /* non-US #2 */
 
     /* Function keys */
     KEY_ESCAPE = 256,
@@ -109,23 +107,23 @@ enum : KeyCode
     KEY_F25 = 314,
 
     /* KeyPad Keys */
-    KP_0 = 320,
-    KP_1 = 321,
-    KP_2 = 322,
-    KP_3 = 323,
-    KP_4 = 324,
-    KP_5 = 325,
-    KP_6 = 326,
-    KP_7 = 327,
-    KP_8 = 328,
-    KP_9 = 329,
-    KP_DECIMAL = 330,
-    KP_DIVIDE = 331,
-    KP_MULTIPLY = 332,
-    KP_SUBTRACT = 333,
-    KP_ADD = 334,
-    KP_ENTER = 335,
-    KP_EQUAL = 336,
+    KEY_KP_0 = 320,
+    KEY_KP_1 = 321,
+    KEY_KP_2 = 322,
+    KEY_KP_3 = 323,
+    KEY_KP_4 = 324,
+    KEY_KP_5 = 325,
+    KEY_KP_6 = 326,
+    KEY_KP_7 = 327,
+    KEY_KP_8 = 328,
+    KEY_KP_9 = 329,
+    KEY_KP_DECIMAL = 330,
+    KEY_KP_DIVIDE = 331,
+    KEY_KP_MULTIPLY = 332,
+    KEY_KP_SUBTRACT = 333,
+    KEY_KP_ADD = 334,
+    KEY_KP_ENTER = 335,
+    KEY_KP_EQUAL = 336,
 
     /* Aug Keys*/
     KEY_SHIFT_LEFT = 340,
@@ -139,47 +137,6 @@ enum : KeyCode
     KEY_MENU = 348,
 
     KEY_LAST = KEY_MENU
-};
-
-enum : MouseCode
-{
-    MOUSE_1 = 0,
-    MOUSE_2 = 1,
-    MOUSE_3 = 2,
-    MOUSE_4 = 3,
-    MOUSE_5 = 4,
-    MOUSE_6 = 5,
-    MOUSE_7 = 6,
-    MOUSE_8 = 7,
-
-    MOUSE_LEFT = MOUSE_1,
-    MOUSE_RIGHT = MOUSE_2,
-    MOUSE_MIDDLE = MOUSE_3,
-    MOUSE_LAST = MOUSE_8,
-};
-
-enum : GamepadCode
-{
-    GAMEPAD_A = 0,
-    GAMEPAD_B = 1,
-    GAMEPAD_X = 2,
-    GAMEPAD_Y = 3,
-    GAMEPAD_LEFT_BUMPER = 4,
-    GAMEPAD_RIGHT_BUMPER = 5,
-    GAMEPAD_BACK = 6,
-    GAMEPAD_START = 7,
-    GAMEPAD_GUIDE = 8,
-    GAMEPAD_LEFT_THUMB = 9,
-    GAMEPAD_RIGHT_THUMB = 10,
-    GAMEPAD_DPAD_UP = 11,
-    GAMEPAD_DPAD_RIGHT = 12,
-    GAMEPAD_DPAD_DOWN = 13,
-    GAMEPAD_DPAD_LEFT = 14,
-
-    GAMEPAD_CROSS = GAMEPAD_A,
-    GAMEPAD_CIRCLE = GAMEPAD_B,
-    GAMEPAD_SQUARE = GAMEPAD_X,
-    GAMEPAD_TRIANGLE = GAMEPAD_Y,
 };
 } // namespace Input
 } // namespace ObsidianEdge

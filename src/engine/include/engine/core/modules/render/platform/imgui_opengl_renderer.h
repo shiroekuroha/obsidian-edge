@@ -25,7 +25,6 @@ class ImGuiOpenGlRenderer
 {
 public:
     static void init ();
-
     static const char *getGlslVersion ();
 
 private:

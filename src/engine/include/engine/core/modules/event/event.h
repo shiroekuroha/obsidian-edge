@@ -27,6 +27,7 @@ enum class EventType
     MouseScrolled,
 
     // Gamepad Events
+    GamepadButton,
     GamepadButtonPressed,
     GamepadButtonReleased,
 
