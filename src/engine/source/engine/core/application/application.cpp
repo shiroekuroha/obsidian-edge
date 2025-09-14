@@ -8,6 +8,8 @@ Application *Application::s_application = nullptr;
 
 Application::Application ()
 {
+    ObsidianEdge::Logger::init ();
+
     m_looping = true;
     m_window = Window::create ();
     m_window->setEventCallback (std::bind (&Application::onEvent, this, std::placeholders::_1));
