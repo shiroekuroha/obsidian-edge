@@ -1,18 +1,21 @@
 #pragma once
 
-#include "glad/gl.h"
+// ! This order matters!
+// clang-format off
+#include <glad/gl.h>
+#include <GLFW/glfw3.h>
+// clang-format on
 
-#include "GLFW/glfw3.h"
-
-#include "engine/core/application/window.h"
 #include "engine/core/core.h"
-#include "engine/core/event/event.h"
-#include "engine/core/event/event_app.h"
-#include "engine/core/event/event_key.h"
-#include "engine/core/event/event_mouse.h"
-#include "engine/core/layer/layer.h"
-#include "engine/core/layer/layer_stack.h"
-#include "engine/core/log/logger.h"
+#include "engine/core/modules/event/event.h"
+#include "engine/core/modules/event/event_app.h"
+#include "engine/core/modules/event/event_key.h"
+#include "engine/core/modules/event/event_mouse.h"
+#include "engine/core/modules/layer/layer.h"
+#include "engine/core/modules/layer/layer_stack.h"
+#include "engine/core/modules/layer/layers/imgui_layer.h"
+#include "engine/core/modules/log/logger.h"
+#include "engine/core/modules/window/window.h"
 
 namespace ObsidianEdge
 {
@@ -38,6 +41,7 @@ public:
 private:
     bool m_looping = true;
     Window *m_window;
+    Layer *m_imguiLayer;
 
     LayerStack m_layerStack;
 
