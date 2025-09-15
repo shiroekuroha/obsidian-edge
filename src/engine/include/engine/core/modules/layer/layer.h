@@ -16,6 +16,10 @@ public:
     virtual void onUpdate ();
     virtual void onEvent (Event &event);
 
+    virtual void begin ();
+    virtual void end ();
+    virtual void onRender ();
+
     inline const std::string &
     getName () const
     {

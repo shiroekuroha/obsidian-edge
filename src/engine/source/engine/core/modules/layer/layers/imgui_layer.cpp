@@ -4,9 +4,18 @@
 
 namespace ObsidianEdge
 {
-ImGuiLayer::ImGuiLayer ()
+ImGuiLayer::ImGuiLayer () : Layer ("ImGui") {}
+
+ImGuiLayer::~ImGuiLayer () {}
+
+void
+ImGuiLayer::onAttach ()
 {
-    ImGuiOpenGlRenderer::init ();
+    const char *glsl_version = "#version 130";
+    glfwWindowHint (GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint (GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // 3.2+ only
+    glfwWindowHint (GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);           // 3.0+ only
 
     float main_scale = ImGui_ImplGlfw_GetContentScaleForMonitor (glfwGetPrimaryMonitor ());
 
@@ -20,17 +29,12 @@ ImGuiLayer::ImGuiLayer ()
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;   // Enable Multi-Viewport / Platform Windows
 
     ImGui::StyleColorsDark ();
-
     ImGuiStyle &style = ImGui::GetStyle ();
-    style.ScaleAllSizes (main_scale); // Bake a fixed style scale. (until we have a solution for dynamic style scaling,
-                                      // changing this requires resetting Style + calling this again)
-    style.FontScaleDpi = main_scale;  // Set initial font scale. (using io.ConfigDpiScaleFonts=true makes this unnecessary.
-                                      // We leave both here for documentation purpose)
-#if GLFW_VERSION_MAJOR >= 3 && GLFW_VERSION_MINOR >= 3
-    io.ConfigDpiScaleFonts = true; // [Experimental] Automatically overwrite style.FontScaleDpi in Begin() when Monitor DPI
-                                   // changes. This will scale fonts but _NOT_ scale sizes/padding for now.
-    io.ConfigDpiScaleViewports = true; // [Experimental] Scale Dear ImGui and Platform Windows when Monitor DPI changes.
-#endif
+
+    style.ScaleAllSizes (main_scale);
+    style.FontScaleDpi = main_scale;
+    io.ConfigDpiScaleFonts = true;
+    io.ConfigDpiScaleViewports = true;
 
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
@@ -39,33 +43,12 @@ ImGuiLayer::ImGuiLayer ()
         }
 
     ImGui_ImplGlfw_InitForOpenGL (Application::getApplication ().getWindow ().get_ptr (), true);
-
-#ifdef __EMSCRIPTEN__
-    ImGui_ImplGlfw_InstallEmscriptenCallbacks (window, "#canvas");
-#endif
-    ImGui_ImplOpenGL3_Init (ImGuiOpenGlRenderer::getGlslVersion ());
-}
-
-ImGuiLayer::~ImGuiLayer () {}
-
-void
-ImGuiLayer::onAttach ()
-{
-    ImVec4 clear_color = ImVec4 (0.45f, 0.55f, 0.60f, 1.00f);
-    ImGuiIO &io = ImGui::GetIO ();
-
-    glfwMakeContextCurrent (Application::getApplication ().getWindow ().get_ptr ());
-
-    if (glfwGetWindowAttrib (Application::getApplication ().getWindow ().get_ptr (), GLFW_ICONIFIED) != 0)
-        {
-            ImGui_ImplGlfw_Sleep (10);
-        }
+    ImGui_ImplOpenGL3_Init (glsl_version);
 }
 
 void
 ImGuiLayer::onDetach ()
 {
-    // Cleanup
     ImGui_ImplOpenGL3_Shutdown ();
     ImGui_ImplGlfw_Shutdown ();
     ImGui::DestroyContext ();
@@ -74,30 +57,74 @@ ImGuiLayer::onDetach ()
 void
 ImGuiLayer::onUpdate ()
 {
-    bool show_demo_window = true;
-    bool show_another_window = false;
-    ImVec4 clear_color = ImVec4 (0.45f, 0.55f, 0.60f, 1.00f);
+}
+
+void
+ImGuiLayer::onEvent (Event &event)
+{
     ImGuiIO &io = ImGui::GetIO ();
+    EventDispatcher dispatcher (event);
 
-    float time = glfwGetTime ();
-    io.DeltaTime = m_time > 0.0f ? (time - m_time) : (1.0f / 60.0f);
-    m_time = time;
+    if (event.isInCategory (EventCategoryKeyboard) & io.WantCaptureKeyboard)
+        {
+            dispatcher.dispatch<KeyPressedEvent> ([] (KeyPressedEvent &event) {
+                ImGuiIO &io = ImGui::GetIO ();
 
+                io.AddKeyEvent (glfwKeyToImGuiKey (event.getKeyCode (), glfwGetKeyScancode (event.getKeyCode ())), 1);
+                return true;
+            });
+
+            dispatcher.dispatch<KeyReleasedEvent> ([] (KeyReleasedEvent &event) {
+                ImGuiIO &io = ImGui::GetIO ();
+
+                io.AddKeyEvent (glfwKeyToImGuiKey (event.getKeyCode (), glfwGetKeyScancode (event.getKeyCode ())), 0);
+                return true;
+            });
+        }
+
+    if (event.isInCategory (EventCategoryMouse) & io.WantCaptureMouse)
+        {
+            dispatcher.dispatch<MouseButtonPressedEvent> ([] (MouseButtonPressedEvent &event) {
+                ImGuiIO &io = ImGui::GetIO ();
+
+                io.AddMouseButtonEvent (static_cast<ImGuiMouseButton> (event.getMouseCode ()), 1);
+                return true;
+            });
+
+            dispatcher.dispatch<MouseButtonReleasedEvent> ([] (MouseButtonReleasedEvent &event) {
+                ImGuiIO &io = ImGui::GetIO ();
+
+                io.AddMouseButtonEvent (static_cast<ImGuiMouseButton> (event.getMouseCode ()), 0);
+                return true;
+            });
+
+            dispatcher.dispatch<MouseMovedEvent> ([] (MouseMovedEvent &event) {
+                ImGuiIO &io = ImGui::GetIO ();
+
+                io.AddMousePosEvent (event.getX (), event.getY ());
+                return true;
+            });
+        }
+}
+
+void
+ImGuiLayer::begin ()
+{
     ImGui_ImplOpenGL3_NewFrame ();
     ImGui_ImplGlfw_NewFrame ();
     ImGui::NewFrame ();
+}
 
-    if (show_demo_window)
-        ImGui::ShowDemoWindow (&show_demo_window);
+void
+ImGuiLayer::end ()
+{
+
+    ImGuiIO &io = ImGui::GetIO ();
+    io.DisplaySize = ImVec2 ((float)Application::getApplication ().getWindow ().getWidth (),
+                             (float)Application::getApplication ().getWindow ().getHeight ());
 
     // Rendering
     ImGui::Render ();
-    int display_w, display_h;
-    glfwGetFramebufferSize (Application::getApplication ().getWindow ().get_ptr (), &display_w, &display_h);
-    glViewport (0, 0, display_w, display_h);
-    glClearColor (clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
-                  clear_color.w);
-    glClear (GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData (ImGui::GetDrawData ());
 
     if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -110,48 +137,19 @@ ImGuiLayer::onUpdate ()
 }
 
 void
-ImGuiLayer::onEvent (Event &event)
+ImGuiLayer::onRender ()
 {
-    EventDispatcher dispatcher (event);
+    static bool show = true;
+    ImVec4 clear_color = ImVec4 (0.45f, 0.55f, 0.60f, 1.00f);
 
-    dispatcher.dispatch<KeyPressedEvent> ([] (KeyPressedEvent &event) {
-        ImGuiIO &io = ImGui::GetIO ();
-
-        io.AddKeyEvent (KeyToImGuiKey (event.getKeyCode (), glfwGetKeyScancode (event.getKeyCode ())), 1);
-        return true;
-    });
-
-    dispatcher.dispatch<KeyReleasedEvent> ([] (KeyReleasedEvent &event) {
-        ImGuiIO &io = ImGui::GetIO ();
-
-        io.AddKeyEvent (KeyToImGuiKey (event.getKeyCode (), glfwGetKeyScancode (event.getKeyCode ())), 0);
-        return true;
-    });
-
-    dispatcher.dispatch<MouseButtonPressedEvent> ([] (MouseButtonPressedEvent &event) {
-        ImGuiIO &io = ImGui::GetIO ();
-
-        io.AddMouseButtonEvent (static_cast<ImGuiMouseButton> (event.getMouseCode ()), 1);
-        return true;
-    });
-
-    dispatcher.dispatch<MouseButtonReleasedEvent> ([] (MouseButtonReleasedEvent &event) {
-        ImGuiIO &io = ImGui::GetIO ();
-
-        io.AddMouseButtonEvent (static_cast<ImGuiMouseButton> (event.getMouseCode ()), 0);
-        return true;
-    });
-
-    dispatcher.dispatch<MouseMovedEvent> ([] (MouseMovedEvent &event) {
-        ImGuiIO &io = ImGui::GetIO ();
-
-        io.AddMousePosEvent (event.getX (), event.getY ());
-        return true;
-    });
+    ImGui::ShowDemoWindow (&show);
+    glClearColor (clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w,
+                  clear_color.w);
+    glClear (GL_COLOR_BUFFER_BIT);
 }
 
 ImGuiKey
-KeyToImGuiKey (int keycode, int scancode)
+glfwKeyToImGuiKey (int keycode, int scancode)
 {
     IM_UNUSED (scancode);
     switch (keycode)

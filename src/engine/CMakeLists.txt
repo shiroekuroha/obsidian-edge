@@ -29,6 +29,7 @@ project(obsidian-engine VERSION 0.0.1 LANGUAGES C CXX)
 
 set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/source/engine/core/application/application.cpp
+    ${PROJECT_SOURCE_DIR}/source/engine/core/application/render.cpp
 
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/event/event.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/event/event_app.cpp
@@ -40,22 +41,8 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/layer/layer.cpp
 
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/layer/layers/imgui_layer.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/layer/layers/duo_layer.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/layer/layers/tri_layer.cpp
 
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/log/logger.cpp
-
-    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/imgui_renderer.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/render.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/duo_renderer.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/tri_renderer.cpp
-
-    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/platform/imgui_opengl_renderer.cpp
-    # ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/platform/imgui_vulkan_renderer.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/platform/duo_opengl_renderer.cpp
-    # ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/platform/duo_vulkan_renderer.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/platform/tri_opengl_renderer.cpp
-    # ${PROJECT_SOURCE_DIR}/source/engine/core/modules/render/platform/tri_vulkan_renderer.cpp
 
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/window/window.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/window/platform/window_linux.cpp

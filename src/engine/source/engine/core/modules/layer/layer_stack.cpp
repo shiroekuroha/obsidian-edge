@@ -4,14 +4,15 @@
 
 namespace ObsidianEdge
 {
-LayerStack::LayerStack () { m_stackBreak = m_layers.begin (); }
+LayerStack::LayerStack () : m_stackBreakIndex (0) {}
 
 LayerStack::~LayerStack () { clear (); }
 
 void
 LayerStack::pushLayer (Layer *layer)
 {
-    m_stackBreak = m_layers.emplace (m_stackBreak, layer);
+    m_layers.emplace (m_layers.begin () + m_stackBreakIndex, layer);
+    m_stackBreakIndex++;
 }
 
 void
@@ -22,7 +23,7 @@ LayerStack::popLayer (Layer *layer)
     if (it != m_layers.end ())
         {
             m_layers.erase (it);
-            m_stackBreak--;
+            m_stackBreakIndex--;
         }
 }
 

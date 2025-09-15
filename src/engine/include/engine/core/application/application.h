@@ -13,6 +13,7 @@
 #include "engine/core/modules/event/event_mouse.h"
 #include "engine/core/modules/layer/layer.h"
 #include "engine/core/modules/layer/layer_stack.h"
+#include "engine/core/modules/layer/layers/imgui_layer.h"
 #include "engine/core/modules/log/logger.h"
 #include "engine/core/modules/window/window.h"
 
@@ -40,6 +41,7 @@ public:
 private:
     bool m_looping = true;
     Window *m_window;
+    Layer *m_imguiLayer;
 
     LayerStack m_layerStack;
 

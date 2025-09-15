@@ -13,7 +13,6 @@ public:
     run () override
     {
         OE_INFO ("Application Running...")
-        pushLayer (new ObsidianEdge::ImGuiLayer);
         Application::run ();
     }
 

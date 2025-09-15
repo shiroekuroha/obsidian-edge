@@ -27,4 +27,19 @@ void
 Layer::onEvent (Event &event)
 {
 }
+
+void
+Layer::begin ()
+{
+}
+
+void
+Layer::end ()
+{
+}
+
+void
+Layer::onRender ()
+{
+}
 }

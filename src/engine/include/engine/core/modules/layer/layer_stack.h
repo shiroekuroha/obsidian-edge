@@ -4,7 +4,7 @@
 
 namespace ObsidianEdge
 {
-class LayerStack
+class OE_API LayerStack
 {
 public:
     LayerStack ();
@@ -23,6 +23,6 @@ public:
 
 private:
     std::vector<Layer *> m_layers;
-    std::vector<Layer *>::iterator m_stackBreak;
+    unsigned int m_stackBreakIndex;
 };
 }

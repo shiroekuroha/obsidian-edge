@@ -1,8 +1,13 @@
 #pragma once
 
+#include "imgui.h"
+
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
+// #include "backends/imgui_impl_vulkan.h"
+
 #include "engine/core/application/application.h"
 #include "engine/core/modules/layer/layer.h"
-#include "engine/core/modules/render/imgui_renderer.h"
 
 namespace ObsidianEdge
 {
@@ -17,9 +22,13 @@ public:
     void onUpdate () override;
     void onEvent (Event &event) override;
 
+    virtual void begin () override;
+    virtual void end () override;
+    virtual void onRender () override;
+
 private:
     float m_time = 0;
 };
 
-ImGuiKey KeyToImGuiKey (int keycode, int scancode);
+ImGuiKey glfwKeyToImGuiKey (int keycode, int scancode);
 }

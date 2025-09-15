@@ -1,5 +1,7 @@
 #pragma once
 
+#include "engine/core/core.h"
+
 namespace ObsidianEdge
 {
 enum class EventType
@@ -56,7 +58,7 @@ enum EventCategory
 /**
  * @brief Base class for events
  */
-class Event
+class OE_API Event
 {
 public:
     Event () = default;
