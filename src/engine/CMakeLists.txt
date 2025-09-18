@@ -12,7 +12,6 @@ set(IMGUI_SOURCE_FILES
 
     ${PROJECT_SOURCE_DIR}/vendor/imgui/backends/imgui_impl_glfw.cpp
     ${PROJECT_SOURCE_DIR}/vendor/imgui/backends/imgui_impl_opengl3.cpp
-    # ${PROJECT_SOURCE_DIR}/vendor/imgui/backends/imgui_impl_vulkan.cpp
 )
 
 add_library(imgui ${IMGUI_SOURCE_FILES})
@@ -29,7 +28,6 @@ project(obsidian-engine VERSION 0.0.1 LANGUAGES C CXX)
 
 set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/source/engine/core/application/application.cpp
-    ${PROJECT_SOURCE_DIR}/source/engine/core/application/render.cpp
 
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/event/event.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/event/event_app.cpp
