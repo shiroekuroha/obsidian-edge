@@ -38,9 +38,13 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/layer/layer_stack.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/layer/layer.cpp
 
+    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/layer/layers/duo_layer.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/layer/layers/imgui_layer.cpp
 
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/log/logger.cpp
+
+    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/renderer/duo_renderer.cpp
+    ${PROJECT_SOURCE_DIR}/source/engine/core/modules/renderer/imgui_renderer.cpp
 
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/window/window.cpp
     ${PROJECT_SOURCE_DIR}/source/engine/core/modules/window/platform/window_linux.cpp

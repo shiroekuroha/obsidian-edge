@@ -4,7 +4,6 @@
 
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
-// #include "backends/imgui_impl_vulkan.h"
 
 #include "engine/core/application/application.h"
 #include "engine/core/modules/layer/layer.h"

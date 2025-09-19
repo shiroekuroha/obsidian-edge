@@ -15,8 +15,7 @@ Application::Application ()
     OE_CORE_ASSERT ((s_application == nullptr), "Application is a singleton, cannot exist more than one.")
     s_application = this;
 
-    m_imguiLayer = new ImGuiLayer;
-    pushLayer (m_imguiLayer);
+    pushLayer (new DuoLayer);
 }
 
 void
@@ -26,10 +25,10 @@ Application::run ()
         {
             // Event Polling
             m_window->onUpdate ();
-            m_imguiLayer->begin ();
+            std::for_each (m_layerStack.begin (), m_layerStack.end (), [] (Layer *layer) { layer->begin (); });
             std::for_each (m_layerStack.begin (), m_layerStack.end (), [] (Layer *layer) { layer->onUpdate (); });
             std::for_each (m_layerStack.begin (), m_layerStack.end (), [] (Layer *layer) { layer->onRender (); });
-            m_imguiLayer->end ();
+            std::for_each (m_layerStack.begin (), m_layerStack.end (), [] (Layer *layer) { layer->end (); });
         }
 }
 
