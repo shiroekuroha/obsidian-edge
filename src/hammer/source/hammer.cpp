@@ -1,26 +1,36 @@
-#include "engine/obsidian_edge.h"
+#include "obsidian/core/render/glass.h"
+#include "obsidian/external.h"
 
-#include "engine/core/modules/layer/layers/imgui_layer.h"
+#include "obsidian/core/layer/layers/imgui_layer.h"
 
 class Hammer : public ObsidianEdge::Application
 {
 public:
-    Hammer () { OE_INFO ("Application Starting...") }
+    Hammer () = default;
+    ~Hammer () override = default;
 
-    ~Hammer () { OE_INFO ("Application Ending...") }
+    Hammer (const Hammer &other) = delete;
+    Hammer (Hammer &&other) noexcept = delete;
+
+    auto operator= (const Hammer &other) -> Hammer & = delete;
+    auto operator= (Hammer &&other) noexcept -> Hammer & = delete;
 
     void
     run () override
     {
-        OE_INFO ("Application Running...")
-        Application::run ();
+        ObsidianEdge::Application::pushLayer (new ObsidianEdge::Glass);
+        ObsidianEdge::Application::run ();
     }
 
 private:
 };
 
-ObsidianEdge::Application *
-ObsidianEdge::createApplication ()
+// NOLINTBEGIN(cppcoreguidelines-owning-memory)
+
+auto
+ObsidianEdge::createApplication () -> ObsidianEdge::Application *
 {
     return new Hammer ();
 }
+
+// NOLINTEND(cppcoreguidelines-owning-memory)

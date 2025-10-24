@@ -1,0 +1,22 @@
+Checks: >
+  -*
+##  clang-analyzer-*,
+##  cppcoreguidelines-*,
+##  bugprone-*,
+##  modernize-*,
+##  -cppcoreguidelines-pro-type-union-access,
+##  -bugprone-easily-swappable-parameters,
+##  -cppcoreguidelines-owning-memory,
+##  llvm-header-guard,
+
+HeaderFilterRegex: ""
+
+WarningsAsErrors: "*"
+
+CheckOptions:
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.FunctionCase
+    value: camelBack
+  - key: readability-identifier-naming.VariableCase
+    value: camelBack

@@ -30,3 +30,5 @@ target_compile_options(obsidian-hammer
     $<$<AND:$<CONFIG:Release>,$<PLATFORM_ID:Windows>>:/Os>
     $<$<AND:$<CONFIG:Distribute>,$<PLATFORM_ID:Windows>>:/Os/Ot>
 )
+
+add_dependencies(obsidian-hammer obsidian-engine)
