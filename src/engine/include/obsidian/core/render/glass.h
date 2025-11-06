@@ -34,13 +34,18 @@ public:
 
 private:
     Shader shader;
-    unsigned int currentBuffer = 0;
     Vector<unsigned int> vao = {};
-    Vector<Pair<unsigned int, Vector<Vertex>>> vbo = {};
-    Vector<Pair<unsigned int, Vector<Index>>> ibo = {};
-    Vector<Vector<Texture>> m_textures = {};
 
-    Matrix4 model = Matrix4 (1.0f);
+    struct Buffer
+    {
+        Pair<unsigned int, Vector<Vertex>> vbo = {};
+        Pair<unsigned int, Vector<Index>> ibo = {};
+        Vector<Texture> textures = {};
+        Matrix4 transform = { 1.0f };
+    };
+
+    Vector<Buffer> buffer = {};
+
     Matrix4 view = Matrix4 (1.0f);
     Matrix4 proj = Matrix4 (1.0f);
 };
