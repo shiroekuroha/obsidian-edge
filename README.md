@@ -7,7 +7,7 @@ Obsidian Edge is a student project focused on exploring Graphical Application Pr
 Git:
 
 ```
-git clone --recurse-submodules https://github.com/shiroekuroha/obsidian-fragments.git
+git clone --recurse-submodules https://github.com/shiroekuroha/obsidian-edge.git
 ```
 
 # Building
