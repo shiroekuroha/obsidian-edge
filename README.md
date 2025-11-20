@@ -1,4 +1,4 @@
-# obsidian-fragments
+# Obsidian Edge
 
 Obsidian Edge is a student project focused on exploring Graphical Application Programming Interfaces (APIs) using C/C++. The project involves hands-on experience with graphics rendering, shader programming, and user interface design. This initiative allows us to strengthen our programming abilities while gaining valuable insights into effective project organization and teamwork.
 
