@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.12.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(obsidian-edge VERSION 0.0.1 LANGUAGES C CXX)
+project(obsidian-fragments VERSION 0.0.1 LANGUAGES C CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
@@ -36,8 +36,8 @@ endif()
 
 # Add submodules
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/engine)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/hammer)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/cluster)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/fragments)
 
 # Options
 

@@ -1,13 +1,13 @@
 Checks: >
-  -*
-##  clang-analyzer-*,
-##  cppcoreguidelines-*,
-##  bugprone-*,
-##  modernize-*,
-##  -cppcoreguidelines-pro-type-union-access,
-##  -bugprone-easily-swappable-parameters,
-##  -cppcoreguidelines-owning-memory,
-##  llvm-header-guard,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  concurrency-*,
+  performance-*,
+  llvm-*,
+  modernize-*,
+  -cppcoreguidelines-owning-memory,
+  -llvm-include-order,
+  -cppcoreguidelines-pro-type-union-access,
 
 HeaderFilterRegex: ""
 
