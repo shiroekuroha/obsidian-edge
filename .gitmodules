@@ -4,9 +4,6 @@
 [submodule "src/engine/vendor/glfw"]
 	path = src/engine/vendor/glfw
 	url = https://github.com/glfw/glfw
-[submodule "src/vendor/googletest"]
-	path = src/vendor/googletest
-	url = https://github.com/google/googletest
 [submodule "src/engine/vendor/imgui"]
 	path = src/engine/vendor/imgui
 	url = https://github.com/ocornut/imgui.git
@@ -14,3 +11,6 @@
 [submodule "src/engine/vendor/glm"]
 	path = src/engine/vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "src/cluster/vendor/gsl"]
+	path = src/cluster/vendor/gsl
+	url = https://github.com/microsoft/GSL.git
