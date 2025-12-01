@@ -33,6 +33,7 @@ public:
 
     void setupGame();
     void drawGame();
+    void drawEndGame();
 
     void userHit();
     void userStay();

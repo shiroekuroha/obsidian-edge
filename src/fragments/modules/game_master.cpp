@@ -28,7 +28,10 @@ void GameMaster::onDetach() {}
 
 void GameMaster::onUpdate(float delta) {
     if (showEndGameScreen > 0.0f) {
-        if (showEndGameScreen >= 10.0f) {
+        showEndGameScreen += delta;
+
+        if (showEndGameScreen >= 4.0f) {
+            showEndGameScreen = 0.0f;
             clearChildren();
 
             houseCards.clear();
@@ -96,9 +99,14 @@ void GameMaster::drawGame() {
 
     drawHouseHand();
     drawUserHand();
+}
 
-    OE_TRACE("House score: {0}", getDeckHighestScore(houseCards))
-    OE_TRACE("User score: {0}", getDeckHighestScore(userCards))
+void GameMaster::drawEndGame() {
+    clearChildren();
+    drawHouseHand(true);
+    drawUserHand();
+
+    drawWinScreen();
 }
 
 void GameMaster::userHit() {
@@ -136,11 +144,7 @@ void GameMaster::houseWin() {
     playerWinLast = false;
     showEndGameScreen = 0.01f;
 
-    clearChildren();
-    drawHouseHand(true);
-    drawUserHand();
-
-    drawWinScreen();
+    drawEndGame();
 }
 
 void GameMaster::userWin() {
@@ -148,11 +152,7 @@ void GameMaster::userWin() {
     playerWinLast = true;
     showEndGameScreen = 0.01f;
 
-    clearChildren();
-    drawHouseHand(true);
-    drawUserHand();
-
-    drawWinScreen();
+    drawEndGame();
 }
 
 auto GameMaster::getDeckHighestScore(Deck &deck) const -> unsigned int {
