@@ -1,14 +1,14 @@
 #pragma once
 
 #include "app/window.h"
+#include "core/audio/audioplayer.h"
 #include "core/layer/layer_stack.h"
 
 namespace ObsidianEdge {
 enum class RenderAPI : std::int8_t {
     OpenGL = 0, //* Compat API < ! default ! >
     Vulkan,     //* Linux / Android
-    DirectX11,  //* Windows
-    DirectX12,  //* Windows
+    DirectX,    //* Windows
     Metal,      //* Mac / IOS
 };
 
@@ -26,10 +26,14 @@ public:
     auto operator=(const Application &other) -> Application & = delete;
     auto operator=(Application &&other) noexcept -> Application & = delete;
 
+    virtual void init(int argc, char **argv);
+
     virtual void init();
     virtual void yeet();
 
+    virtual void onUpdate(float delta);
     virtual void onEvent(const std::shared_ptr<Event> &event);
+
     virtual void onWindowClose();
 
     /**
@@ -43,6 +47,11 @@ public:
     void clearLayers();
 
     auto window() -> Window &;
+    [[nodiscard]] auto isLooping() const -> bool;
+    [[nodiscard]] auto getWindow() const -> Window &;
+    [[nodiscard]] auto getDelta() const -> float;
+
+    void updateDeltaClock();
 
 public:
     /**
@@ -58,11 +67,13 @@ public:
     static auto getNative() -> Application *;
 
 private:
-    std::chrono::high_resolution_clock::time_point m_time = std::chrono::high_resolution_clock::now();
+    bool m_init = false;
     bool m_loop = false;
+    std::chrono::high_resolution_clock::time_point m_time = std::chrono::high_resolution_clock::now();
 
-    Window *m_window = nullptr;
-    LayerStack m_layerStack;
+    std::unique_ptr<Window> m_window;
+    LayerStack m_layerStack = {};
+    RenderAPI m_renderApi = RenderAPI::OpenGL;
 
 private:
     static Application *s_application;

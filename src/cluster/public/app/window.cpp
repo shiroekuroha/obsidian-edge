@@ -44,6 +44,9 @@ Window::Window(const WindowProps &props) {
     int status = gladLoadGL(glfwGetProcAddress);
     OE_CORE_ASSERT(status, "Failed to initialize Glad library!")
 
+    glfwSetFramebufferSizeCallback(m_window,
+                                   [](GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); });
+
     glfwSetWindowFocusCallback(m_window, [](GLFWwindow *window, int focus) {
         auto *data = static_cast<WindowData *>(glfwGetWindowUserPointer(window));
 
@@ -63,6 +66,8 @@ Window::Window(const WindowProps &props) {
         auto *data = static_cast<WindowData *>(glfwGetWindowUserPointer(window));
 
         data->eventCallback(std::shared_ptr<Event>(new WindowResizedEvent(Vector2i(width, height))));
+        data->size.x = width;
+        data->size.y = height;
     });
 
     glfwSetWindowCloseCallback(m_window, [](GLFWwindow *window) {

@@ -62,8 +62,6 @@ void ImGuiLayer::onUpdate(float delta) {
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     ImGui::ShowDemoWindow(&show);
-    glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-    glClear(GL_COLOR_BUFFER_BIT);
 
     ImGuiIO &io = ImGui::GetIO();
     io.DisplaySize = ImVec2((float)Application::get().window().getWidth(), (float)Application::get().window().getHeight());

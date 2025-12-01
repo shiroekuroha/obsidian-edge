@@ -20,6 +20,8 @@ public:
     void onUpdate(float delta) override;
     void onEvent(Event &event) override;
 
+    [[nodiscard]] auto getGlass() -> Glass &;
+
 private:
     Glass renderer;
 };

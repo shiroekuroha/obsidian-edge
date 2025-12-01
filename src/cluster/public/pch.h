@@ -12,7 +12,9 @@
 #include <list>
 #include <memory>
 #include <queue>
+#include <random>
 #include <sstream>
+#include <stack>
 #include <string>
 #include <string_view>
 #include <type_traits>

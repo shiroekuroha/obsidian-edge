@@ -1,17 +1,14 @@
 #pragma once
 
 #include "core/renderer/modules/generic.h"
-#include "core/renderer/modules/shader.h"
-#include "core/renderer/modules/texture.h"
 #include "entity.h"
-#include "glm/ext/matrix_transform.hpp"
 
 namespace ObsidianEdge {
 class Node2D : public Entity {
 public:
-    Node2D(Vector2 loc, Vector2 size, Vector4 color);
+    // ------------------------------------ Base Begin ------------------------------------
 
-    Node2D();
+    Node2D(const char *name = "Node2D");
     ~Node2D() override;
 
     Node2D(const Node2D &other);
@@ -20,34 +17,43 @@ public:
     auto operator=(const Node2D &other) -> Node2D &;
     auto operator=(Node2D &&other) noexcept -> Node2D &;
 
-    void setTransform(Matrix4 transform) override;
-    [[nodiscard]] auto getTransform() const -> Matrix4 override;
-
-    [[nodiscard]] virtual auto getVertices() const -> std::vector<Vertex>;
-    [[nodiscard]] virtual auto getIndices() const -> std::vector<Index>;
+    [[nodiscard]] auto duplicate() const -> std::shared_ptr<Entity> override = 0;
 
     void onAttach() override;
     void onDetach() override;
     void onUpdate(float delta) override;
     void onEvent(Event &event) override;
 
-    static auto getStaticType() -> EntityType;
-    [[nodiscard]] auto getType() const -> EntityType override;
+    OE_SETUP_ENTITY_TYPE_DEC
 
-    static auto getStaticCategory() -> EntityCategory;
-    [[nodiscard]] auto getCategory() const -> EntityCategory override;
+    // ------------------------------------- Base End -------------------------------------
 
-    void draw(Shader &shader) override;
+    Node2D(Vector3 position, float rotation, Vector3 scale);
+
+    [[nodiscard]] auto isDrawable() const -> bool override = 0;
+
+    [[nodiscard]] virtual auto isPositionInShape(Vector2 position) const -> bool = 0;
+    [[nodiscard]] auto isHovered(bool passThrough = false, bool ignoreChildren = false) -> bool;
+    [[nodiscard]] virtual auto getRenderingData() const -> QuadData = 0;
+
+    [[nodiscard]] auto getPosition() const -> Vector3;
+    [[nodiscard]] auto getRotation() const -> float;
+    [[nodiscard]] auto getScale() const -> Vector3;
+
+    void setPosition(Vector3 position);
+    void setRotation(float rotation);
+    void setScale(Vector3 scale);
+
+    [[nodiscard]] auto getLocalMatrix() const -> Matrix4;
+    [[nodiscard]] auto getWorldMatrix() const -> Matrix4;
 
 private:
-    Matrix4 m_transform = {1.0f};
+    // clang-format off
 
-    unsigned int m_vao = 0;
-    unsigned int m_vbo = 0;
-    unsigned int m_ibo = 0;
+    Vector3 m_position  {0.0f};
+    float   m_rotation  {0.0f};
+    Vector3 m_scale     {1.0f};
 
-    Vector2 m_loc, m_size;
-    Vector4 m_color;
-    Texture texture = {"textures/default.png"};
+    // clang-format on
 };
 } // namespace ObsidianEdge

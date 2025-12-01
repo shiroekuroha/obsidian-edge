@@ -7,7 +7,7 @@ class Texture {
 public:
     Texture(const char *path);
 
-    Texture() = delete;
+    Texture();
     virtual ~Texture() = default;
 
     Texture(const Texture &other) = default;
@@ -20,6 +20,9 @@ public:
     void unbind();
 
 public:
+    static auto loadDefaultTexture() -> unsigned int;
+    static auto instancingTexture(const char *path, unsigned int id) -> unsigned int;
+
     static auto createTexture(const char *path) -> unsigned int;
     static void destroyTexture(const char *path);
 
@@ -30,6 +33,7 @@ private:
     std::string m_path = {};
 
 private:
+    static bool defaultInit;
     static std::vector<std::pair<std::string, unsigned int>> buffer;
 };
 } // namespace ObsidianEdge

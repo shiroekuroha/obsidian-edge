@@ -6,6 +6,8 @@ string(TOUPPER OE_PLATFORM_${CMAKE_SYSTEM_NAME} OE_PLATFORM_NAME)
 
 project(imgui VERSION 1.92.1)
 
+find_package(X11 REQUIRED)
+
 set(IMGUI_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/vendor/imgui/imgui.cpp
     ${PROJECT_SOURCE_DIR}/vendor/imgui/imgui_demo.cpp
@@ -18,15 +20,17 @@ set(IMGUI_SOURCE_FILES
 )
 
 add_library(imgui ${IMGUI_SOURCE_FILES})
+target_link_libraries(imgui glfw ${X11_LIBRARIES})
 
 target_include_directories(imgui
     PUBLIC
 
     ${PROJECT_SOURCE_DIR}/vendor/imgui
     ${PROJECT_SOURCE_DIR}/vendor/glfw/include
+    ${X11_INCLUDE_DIR}
 )
 
-
+set(GLFW_BUILD_WAYLAND ON CACHE BOOL "Force Wayland backend")
 
 # ====================================================================
 # Engine Configs
@@ -48,16 +52,22 @@ set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/public/app/application.cpp
     ${PROJECT_SOURCE_DIR}/public/app/window.cpp
 
+    ${PROJECT_SOURCE_DIR}/public/core/audio/audioplayer.cpp
+
     ${PROJECT_SOURCE_DIR}/public/core/renderer/ecs/entity.cpp
+    ${PROJECT_SOURCE_DIR}/public/core/renderer/ecs/root.cpp
     ${PROJECT_SOURCE_DIR}/public/core/renderer/ecs/node.cpp
     ${PROJECT_SOURCE_DIR}/public/core/renderer/ecs/node2d.cpp
-    ${PROJECT_SOURCE_DIR}/public/core/renderer/ecs/node3d.cpp
+
+    ${PROJECT_SOURCE_DIR}/public/core/renderer/ecs/node2d/image.cpp
+    ${PROJECT_SOURCE_DIR}/public/core/renderer/ecs/node2d/rectangle.cpp
+
 
     ${PROJECT_SOURCE_DIR}/public/core/renderer/modules/shader.cpp
     ${PROJECT_SOURCE_DIR}/public/core/renderer/modules/texture.cpp
 
+    ${PROJECT_SOURCE_DIR}/public/core/renderer/render_engine.cpp
     ${PROJECT_SOURCE_DIR}/public/core/renderer/glass.cpp
-    ${PROJECT_SOURCE_DIR}/public/core/renderer/prism.cpp
     
     ${PROJECT_SOURCE_DIR}/public/core/event/event.cpp
     ${PROJECT_SOURCE_DIR}/public/core/event/event_app.cpp
@@ -80,9 +90,10 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/glm)
 add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/spdlog)
 add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/stb)
 add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/gsl)
+add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/miniaudio)
 
 add_library(obsidian-cluster STATIC ${SOURCE_FILES})
-target_link_libraries(obsidian-cluster glad glfw glm spdlog imgui stb gsl)
+target_link_libraries(obsidian-cluster glad glfw glm spdlog imgui stb gsl miniaudio)
 
 target_precompile_headers(obsidian-cluster PUBLIC ${PROJECT_SOURCE_DIR}/public/pch.h)
 
@@ -108,6 +119,7 @@ target_include_directories(obsidian-cluster
     ${PROJECT_SOURCE_DIR}/vendor/imgui
     ${PROJECT_SOURCE_DIR}/vendor/stb/include
     ${PROJECT_SOURCE_DIR}/vendor/gsl/include
+    ${PROJECT_SOURCE_DIR}/vendor/miniaudio
 )
 
 target_compile_options(obsidian-cluster

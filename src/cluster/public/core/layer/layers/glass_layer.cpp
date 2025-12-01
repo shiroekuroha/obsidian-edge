@@ -22,4 +22,6 @@ void GlassLayer::onDetach() {}
 void GlassLayer::onUpdate(float delta) { renderer.onUpdate(delta); }
 
 void GlassLayer::onEvent(Event &event) { renderer.onEvent(event); }
+
+auto GlassLayer::getGlass() -> Glass & { return renderer; }
 } // namespace ObsidianEdge
