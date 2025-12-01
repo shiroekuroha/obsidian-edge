@@ -52,6 +52,9 @@ void GameMaster::onEvent(Event &event) {
     });
 
     eventDispatcher.dispatch<MouseButtonPressedEvent>([this](MouseButtonPressedEvent &event) -> bool {
+        if (showEndGameScreen != 0)
+            return false;
+
         switch (event.getMouseCode()) {
         case Input::MOUSE_LEFT:
             userHit();
