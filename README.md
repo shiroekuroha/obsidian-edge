@@ -1,15 +1,13 @@
-# Obsidian-Edge
+# Obsidian Edge
 
 Obsidian Edge is a student project focused on exploring Graphical Application Programming Interfaces (APIs) using C/C++. The project involves hands-on experience with graphics rendering, shader programming, and user interface design. This initiative allows us to strengthen our programming abilities while gaining valuable insights into effective project organization and teamwork.
-
-This project currently does not have any plans to support Apple's computers.
 
 # Cloning Project:
 
 Git:
 
 ```
-git clone --recurse-submodules https://github.com/shiroekuroha/Obsidian-Edge.git
+git clone --recurse-submodules https://github.com/shiroekuroha/obsidian-edge.git
 ```
 
 # Building
@@ -24,6 +22,7 @@ git clone --recurse-submodules https://github.com/shiroekuroha/Obsidian-Edge.git
     - Package Requires:
         - Desktop development with C++
         - (Optional) Linux, Mac and embedded development with C++
+- Vulkan SDK(For Vulkan development): [Redirect](https://vulkan.lunarg.com/)
 
 ### Optional:
 - Doxygen: [Download x64](https://www.doxygen.nl/files/doxygen-1.14.0-setup.exe)
@@ -32,7 +31,7 @@ git clone --recurse-submodules https://github.com/shiroekuroha/Obsidian-Edge.git
 
 ### Dependencies:
 ```
-base-devel clang cmake debuginfod doxygen gcc-objc gdb git glew glfw glibc graphviz gtest libx11 libxcursor libxi libxinerama libxkbcommon libxrandr make ninja pkgconf valgrind wayland
+base-devel clang cmake debuginfod doxygen gcc-objc gdb git glew glfw glibc graphviz gtest libx11 libxcursor libxi libxinerama libxkbcommon libxrandr make ninja pkgconf valgrind wayland vulkan-icd-loader vulkan-headers
 ```
 
 # Build Environment
@@ -42,3 +41,6 @@ This project works best with VSCode.
 ### VSCode Extensions:
 - CMake Tools: [Redirect](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
 - Clangd: [Redirect](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
+
+#### Optional Extension for debugging with gdb
+- C/C++ Debug (gdb): [Redirect](https://open-vsx.org/vscode/item?itemName=KylinIdeTeam.cppdebug)

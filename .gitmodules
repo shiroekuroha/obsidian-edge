@@ -1,13 +1,19 @@
-[submodule "src/engine/vendor/spdlog"]
-	path = src/engine/vendor/spdlog
+[submodule "src/cluster/vendor/spdlog"]
+	path = src/cluster/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "src/engine/vendor/glfw"]
-	path = src/engine/vendor/glfw
+[submodule "src/cluster/vendor/glfw"]
+	path = src/cluster/vendor/glfw
 	url = https://github.com/glfw/glfw
-[submodule "src/vendor/googletest"]
-	path = src/vendor/googletest
-	url = https://github.com/google/googletest
-[submodule "src/engine/vendor/imgui"]
-	path = src/engine/vendor/imgui
+[submodule "src/cluster/vendor/imgui"]
+	path = src/cluster/vendor/imgui
 	url = https://github.com/ocornut/imgui.git
 	branch = docking
+[submodule "src/cluster/vendor/glm"]
+	path = src/cluster/vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "src/cluster/vendor/gsl"]
+	path = src/cluster/vendor/gsl
+	url = https://github.com/microsoft/GSL.git
+[submodule "src/cluster/vendor/miniaudio"]
+	path = src/cluster/vendor/miniaudio
+	url = https://github.com/mackron/miniaudio
