@@ -14,6 +14,10 @@ set(SOURCE_FILES
 add_executable(obsidian-fragments ${SOURCE_FILES})
 target_link_libraries(obsidian-fragments obsidian-cluster)
 
+set_target_properties(obsidian-fragments PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
 target_compile_definitions(obsidian-cluster
     PUBLIC
 )

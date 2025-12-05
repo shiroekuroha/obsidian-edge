@@ -159,7 +159,7 @@ auto Window::isVSync() const -> bool { return m_data.vSync; }
 
 auto Window::create(const WindowProps &props) -> Window * {
 #ifdef OE_PLATFORM_WINDOWS
-    return new std::shared_ptr(props);
+    return new WindowsWindow(props);
 #elif OE_PLATFORM_LINUX
     return new LinuxWindow(props);
 #else
