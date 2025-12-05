@@ -67,7 +67,7 @@ if(OBSIDIAN_EDGE_ENABLED_DOCS)
             VERBATIM )
 
     else ()
-    message("Doxygen need to be installed to generate the doxygen documentation")
+        message("Doxygen need to be installed to generate the doxygen documentation")
     endif (${DOXYGEN_FOUND} STREQUAL "YES" AND ${BUILD_DOC} STREQUAL "ON")
 
 endif(OBSIDIAN_EDGE_ENABLED_DOCS)

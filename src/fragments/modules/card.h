@@ -69,8 +69,8 @@ public:
     [[nodiscard]] auto getCardName() const -> std::string;
     auto getCardObject() -> std::shared_ptr<Image>;
 
-    constexpr static const float cardSize_x = 140.0f;
-    constexpr static const float cardSize_y = 200.0f;
+    constexpr static const float cardSize_x = 200.0f;
+    constexpr static const float cardSize_y = 280.0f;
     constexpr static const float suitSize_x = 40.0f;
     constexpr static const float suitSize_y = 40.0f;
 

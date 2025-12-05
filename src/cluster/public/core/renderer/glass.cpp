@@ -38,6 +38,15 @@ void Glass::onEvent(Event &event) {
     });
 
     eventDispatcher.dispatch<WindowResizedEvent>([this](WindowResizedEvent &event) -> bool {
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, 0.0f));
+        proj = glm::orthoLH(
+            // Left, Right
+            0.0f, (float)getViewportSize().x,
+            // Up, Down
+            0.0f, (float)getViewportSize().y,
+            // Near, Far
+            -1.0f, 1.0f);
+
         reload();
 
         return false;

@@ -6,7 +6,9 @@ string(TOUPPER OE_PLATFORM_${CMAKE_SYSTEM_NAME} OE_PLATFORM_NAME)
 
 project(imgui VERSION 1.92.1)
 
-find_package(X11 REQUIRED)
+if(UNIX)
+    find_package(X11 REQUIRED)
+endif()
 
 set(IMGUI_SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/vendor/imgui/imgui.cpp
@@ -20,14 +22,14 @@ set(IMGUI_SOURCE_FILES
 )
 
 add_library(imgui ${IMGUI_SOURCE_FILES})
-target_link_libraries(imgui glfw ${X11_LIBRARIES})
+target_link_libraries(imgui $<$<PLATFORM_ID:Windows>:${X11_LIBRARIES}>)
 
 target_include_directories(imgui
     PUBLIC
 
     ${PROJECT_SOURCE_DIR}/vendor/imgui
     ${PROJECT_SOURCE_DIR}/vendor/glfw/include
-    ${X11_INCLUDE_DIR}
+    $<$<PLATFORM_ID:Windows>:${X11_INCLUDE_DIR}>
 )
 
 set(GLFW_BUILD_WAYLAND ON CACHE BOOL "Force Wayland backend")
@@ -68,7 +70,7 @@ set(SOURCE_FILES
 
     ${PROJECT_SOURCE_DIR}/public/core/renderer/render_engine.cpp
     ${PROJECT_SOURCE_DIR}/public/core/renderer/glass.cpp
-    
+
     ${PROJECT_SOURCE_DIR}/public/core/event/event.cpp
     ${PROJECT_SOURCE_DIR}/public/core/event/event_app.cpp
     ${PROJECT_SOURCE_DIR}/public/core/event/event_key.cpp
@@ -157,11 +159,7 @@ add_custom_command(
 endif(COPY_FILES_TO_BUILD_FOLDER)
 
 
-if(WIN32)
-    # Windows-specific configuration
-    message("Configuring for Windows...")
-
-elseif(UNIX)
+if(UNIX)
     # Unix-like platform (Linux, BSD, etc.) configuration
     message("Configuring for Unix-like platform...")
 
@@ -169,8 +167,8 @@ elseif(UNIX)
 
     if(CLANG_TIDY_BIN)
         message("Found clang-tidy!")
-    
-        set(CMAKE_CXX_CLANG_TIDY 
+
+        set(CMAKE_CXX_CLANG_TIDY
             clang-tidy;
             -p=${CMAKE_CURRENT_BINARY_DIR};
         )

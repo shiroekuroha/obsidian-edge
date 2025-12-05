@@ -17,8 +17,8 @@
 namespace ObsidianEdge {
 using EventCallbackFn = std::function<void(std::shared_ptr<Event>)>;
 
-static const int s_defaultWindowWidth = 1200;
-static const int s_defaultWindowHeight = 800;
+static const int s_defaultWindowWidth = 1920;
+static const int s_defaultWindowHeight = 1080;
 
 struct WindowProps {
     std::string title = {};

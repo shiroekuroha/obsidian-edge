@@ -4,7 +4,7 @@ project(obsidian-fragments VERSION 0.0.1 LANGUAGES C CXX)
 
 set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/edge.cpp
-    
+
     ${PROJECT_SOURCE_DIR}/modules/deck.cpp
     ${PROJECT_SOURCE_DIR}/modules/card.cpp
     ${PROJECT_SOURCE_DIR}/modules/game_master.cpp
