@@ -4,7 +4,7 @@ project(obsidian-fragments VERSION 0.0.1 LANGUAGES C CXX)
 
 set(SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/edge.cpp
-    
+
     ${PROJECT_SOURCE_DIR}/modules/deck.cpp
     ${PROJECT_SOURCE_DIR}/modules/card.cpp
     ${PROJECT_SOURCE_DIR}/modules/game_master.cpp
@@ -13,6 +13,10 @@ set(SOURCE_FILES
 
 add_executable(obsidian-fragments ${SOURCE_FILES})
 target_link_libraries(obsidian-fragments obsidian-cluster)
+
+set_target_properties(obsidian-fragments PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
 
 target_compile_definitions(obsidian-cluster
     PUBLIC

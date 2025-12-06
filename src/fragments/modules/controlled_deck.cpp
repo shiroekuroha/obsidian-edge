@@ -54,7 +54,7 @@ void ControlledDeck::drawCards(Vector2 showAreaOrigin, float showAreaWidth, Deck
 
     switch (drawMode) {
     case DeckDrawMode::ShowAll:
-        for (int i = 0; i < count(); i++) {
+        for (unsigned int i = 0; i < count(); i++) {
             float cardPosX = startX + (float)i * (Card::cardSize_x + gap);
             float cardPosY = startY;
 
@@ -63,7 +63,7 @@ void ControlledDeck::drawCards(Vector2 showAreaOrigin, float showAreaWidth, Deck
 
         break;
     case DeckDrawMode::HideAll:
-        for (int i = 0; i < count(); i++) {
+        for (unsigned int i = 0; i < count(); i++) {
             float cardPosX = startX + (float)i * (Card::cardSize_x + gap);
             float cardPosY = startY;
 
@@ -74,7 +74,7 @@ void ControlledDeck::drawCards(Vector2 showAreaOrigin, float showAreaWidth, Deck
     case DeckDrawMode::ShowFirst:
         drawCard(getCard(0), Vector2(startX, showAreaOrigin.y), false);
 
-        for (int i = 1; i < count(); i++) {
+        for (unsigned int i = 1; i < count(); i++) {
             float cardPosX = startX + (float)i * (Card::cardSize_x + gap);
             float cardPosY = startY;
 

@@ -199,15 +199,15 @@ auto Card::getCardObject() -> std::shared_ptr<Image> {
         break;
 
     case CardRank::Jack:
-        cardTexturePath = "textures/cards/jack.png";
+        cardTexturePath = "textures/cards/alt/jack.png";
         break;
 
     case CardRank::Queen:
-        cardTexturePath = "textures/cards/queen.png";
+        cardTexturePath = "textures/cards/alt/queen.png";
         break;
 
     case CardRank::King:
-        cardTexturePath = "textures/cards/king.png";
+        cardTexturePath = "textures/cards/alt/king.png";
         break;
     }
 

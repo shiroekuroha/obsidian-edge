@@ -214,8 +214,8 @@ void GameMaster::drawWinScreen() {
     static const float sX = 400.0f;
     static const float sY = 400.0f;
 
-    static const float oX = (getRenderEngine().getViewportSize().x - sX) / 2;
-    static const float oY = (getRenderEngine().getViewportSize().y - sY) / 2;
+    float oX = (getRenderEngine().getViewportSize().x - sX) / 2;
+    float oY = (getRenderEngine().getViewportSize().y - sY) / 2;
 
     addChild(std::shared_ptr<Entity>(new Image(Vector3(oX, oY, 0.0f), 0.0f, Vector3(1.0f), Vector2(sX, sY), Vector4(1.0f),
                                                Texture(playerWinLast ? "textures/user_win.png" : "textures/user_lost.png"))));
