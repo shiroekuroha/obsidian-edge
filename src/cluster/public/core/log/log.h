@@ -115,17 +115,20 @@ private:
 
 #else
 
-#    define OE_CORE_TRACE(...)
-#    define OE_CORE_INFO(...)
-#    define OE_CORE_WARN(...)
-#    define OE_CORE_ERROR(...)
-#    define OE_CORE_FATAL(...)
+#    define OE_CORE_TRACE(...) while(0) {}
+#    define OE_CORE_INFO(...) while(0) {}
+#    define OE_CORE_WARN(...) while(0) {}
+#    define OE_CORE_ERROR(...) while(0) {}
+#    define OE_CORE_FATAL(...) while(0) {}
 
-#    define OE_TRACE(...)
-#    define OE_INFO(...)
-#    define OE_WARN(...)
-#    define OE_ERROR(...)
-#    define OE_FATAL(...)
+#    define OE_TRACE(...) while(0) {}
+#    define OE_INFO(...) while(0) {}
+#    define OE_WARN(...) while(0) {}
+#    define OE_ERROR(...) while(0) {}
+#    define OE_FATAL(...) while(0) {}
+
+#        define OE_CORE_ASSERT(x, ...) while(0) {}
+#        define OE_ASSERT(x, ...) while(0) {}
 
 #endif
 

@@ -13,9 +13,7 @@
 namespace ObsidianEdge {
 bool Window::s_glfwInitialized = false;
 
-static void glfwErrorCallback(int error, const char *msg){
-
-    OE_CORE_ERROR("GLFW Error (code {0}): {1}", error, msg)}
+static void glfwErrorCallback(int error, const char *msg){OE_CORE_ERROR("GLFW Error (code {0}): {1}", error, msg)}
 
 Window::Window(const WindowProps &props) {
     m_data.title = props.title;
