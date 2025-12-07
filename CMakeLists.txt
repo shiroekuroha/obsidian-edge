@@ -33,8 +33,8 @@ elseif(UNIX)
     # Unix-like platform (Linux, BSD, etc.) configuration
     message("Configuring for Unix-like platform...")
 
-    set(CMAKE_C_COMPILER /usr/bin/clang)
-    set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+    # set(CMAKE_C_COMPILER /usr/bin/clang)
+    # set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
 endif()
 

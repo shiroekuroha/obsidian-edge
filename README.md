@@ -44,3 +44,15 @@ This project works best with VSCode.
 
 #### Optional Extension for debugging with gdb
 - C/C++ Debug (gdb): [Redirect](https://open-vsx.org/vscode/item?itemName=KylinIdeTeam.cppdebug)
+
+# Building project using CMake CLI (Linux)
+
+*Remember to use `git clone --recurse-submodules https://github.com/shiroekuroha/obsidian-edge.git` to also clone the submodules or otherwise it will fail!*
+
+1. Run CMake config command: `cmake -S . -B build`
+
+2. Run CMake build command: `cmake --build build --config Debug --target all --`
+
+    1. If you want the release version without debugger, use: `cmake --build build --config Release --target all --`
+
+3. Your executable should be located in `build/bin/PLATFORM_NAME/obsidian-edge/obsidian-fragments`

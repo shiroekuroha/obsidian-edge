@@ -95,7 +95,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/gsl)
 add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/miniaudio)
 
 add_library(obsidian-cluster STATIC ${SOURCE_FILES})
-target_link_libraries(obsidian-cluster glad glfw glm spdlog imgui stb $<$<PLATFORM_ID:Linux>:gsl> miniaudio)
+target_link_libraries(obsidian-cluster glad glfw glm spdlog imgui stb miniaudio)
 
 target_precompile_headers(obsidian-cluster PUBLIC ${PROJECT_SOURCE_DIR}/public/pch.h)
 
