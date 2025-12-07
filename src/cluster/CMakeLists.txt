@@ -22,14 +22,14 @@ set(IMGUI_SOURCE_FILES
 )
 
 add_library(imgui ${IMGUI_SOURCE_FILES})
-target_link_libraries(imgui $<$<PLATFORM_ID:Windows>:${X11_LIBRARIES}>)
+target_link_libraries(imgui $<$<PLATFORM_ID:Linux>:${X11_LIBRARIES}>)
 
 target_include_directories(imgui
     PUBLIC
 
     ${PROJECT_SOURCE_DIR}/vendor/imgui
     ${PROJECT_SOURCE_DIR}/vendor/glfw/include
-    $<$<PLATFORM_ID:Windows>:${X11_INCLUDE_DIR}>
+    $<$<PLATFORM_ID:Linux>:${X11_INCLUDE_DIR}>
 )
 
 set(GLFW_BUILD_WAYLAND ON CACHE BOOL "Force Wayland backend")
@@ -95,7 +95,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/gsl)
 add_subdirectory(${PROJECT_SOURCE_DIR}/vendor/miniaudio)
 
 add_library(obsidian-cluster STATIC ${SOURCE_FILES})
-target_link_libraries(obsidian-cluster glad glfw glm spdlog imgui stb miniaudio)
+target_link_libraries(obsidian-cluster glad glfw glm spdlog imgui stb $<$<PLATFORM_ID:Linux>:gsl> miniaudio)
 
 target_precompile_headers(obsidian-cluster PUBLIC ${PROJECT_SOURCE_DIR}/public/pch.h)
 
