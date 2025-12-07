@@ -14,7 +14,7 @@ set(SOURCE_FILES
 add_executable(obsidian-fragments ${SOURCE_FILES})
 target_link_libraries(obsidian-fragments obsidian-cluster)
 
-target_compile_definitions(obsidian-cluster
+target_compile_definitions(obsidian-fragments
     PUBLIC
 )
 
@@ -37,7 +37,6 @@ target_compile_options(obsidian-fragments
 )
 
 add_dependencies(obsidian-fragments obsidian-cluster)
-
 
 set(COPY_FILES_TO_BUILD_FOLDER ON)
 
