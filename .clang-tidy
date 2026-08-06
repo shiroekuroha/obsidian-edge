@@ -1,0 +1,113 @@
+Checks: >
+    clang-analyzer-*,
+    bugprone-*,
+    performance-*,
+    modernize-*,
+    readability-*,
+    cppcoreguidelines-*,
+    concurrency-*,
+    -modernize-use-trailing-return-type,
+    -modernize-use-std-format,
+    -modernize-use-designated-initializers,
+    -cppcoreguidelines-owning-memory,
+    -cppcoreguidelines-pro-type-union-access,
+    -llvm-include-order,
+    -unused-includes
+
+HeaderFilterRegex: ""
+
+WarningsAsErrors: ""
+
+CheckOptions:
+    # --------------------------------------------------------------------------
+    # Naming conventions
+    # --------------------------------------------------------------------------
+
+    - key: readability-identifier-naming.ClassCase
+      value: CamelCase
+
+    - key: readability-identifier-naming.StructCase
+      value: CamelCase
+
+    - key: readability-identifier-naming.EnumCase
+      value: CamelCase
+
+    - key: readability-identifier-naming.EnumConstantCase
+      value: CamelCase
+
+    - key: readability-identifier-naming.FunctionCase
+      value: camelBack
+
+    - key: readability-identifier-naming.MethodCase
+      value: camelBack
+
+    - key: readability-identifier-naming.VariableCase
+      value: camelBack
+
+    - key: readability-identifier-naming.ParameterCase
+      value: camelBack
+
+    - key: readability-identifier-naming.ConstantCase
+      value: UPPER_CASE
+
+    - key: readability-identifier-naming.MemberCase
+      value: camelBack
+
+    - key: readability-identifier-naming.ClassMemberPrefix
+      value: m_
+
+    - key: readability-identifier-naming.PrivateMemberPrefix
+      value: m_
+
+    - key: readability-identifier-naming.PrivateStaticMemberPrefix
+      value: s_
+
+    # --------------------------------------------------------------------------
+    # Modern C++
+    # --------------------------------------------------------------------------
+
+    - key: modernize-use-nullptr.NullMacros
+      value: "NULL"
+
+    - key: modernize-loop-convert.MinConfidence
+      value: reasonable
+
+    - key: modernize-pass-by-value.IncludeStyle
+      value: llvm
+
+    # --------------------------------------------------------------------------
+    # Readability
+    # --------------------------------------------------------------------------
+
+    - key: readability-function-cognitive-complexity.IgnoreMacros
+      value: "true"
+
+    - key: readability-implicit-bool-conversion.AllowIntegerConditions
+      value: "true"
+
+    # --------------------------------------------------------------------------
+    # Misc
+    # --------------------------------------------------------------------------
+
+    - key: misc-unused-parameters.StrictMode
+      value: "false"
+
+    - key: misc-unused-using-decls.IgnoreMacros
+      value: "true"
+
+    - key: misc-use-anonymous-namespace.StrictMode
+      value: "false"
+
+    # --------------------------------------------------------------------------
+    # Include cleanup
+    # --------------------------------------------------------------------------
+
+    - key: misc-unused-include
+      value: 0
+
+    # --------------------------------------------------------------------------
+    # Performance
+    # --------------------------------------------------------------------------
+
+    - key: performance-move-const-arg.CheckTriviallyCopyableMove
+      value: "false"

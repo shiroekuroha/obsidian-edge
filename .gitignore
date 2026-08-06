@@ -37,5 +37,12 @@
 *.out
 *.app
 
-# debug information files
+# Debug information files
 *.dwo
+
+# User defines
+.vscode/
+.cache/
+build
+
+*.log

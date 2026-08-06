@@ -1,0 +1,69 @@
+Language: Cpp
+
+BasedOnStyle: LLVM
+
+# C++ standard
+Standard: c++17
+
+# Indentation
+IndentWidth: 4
+ContinuationIndentWidth: 4
+AccessModifierOffset: -4
+IndentPPDirectives: AfterHash
+
+# Line length
+ColumnLimit: 128
+
+# Braces
+BreakBeforeBraces: Attach
+BraceWrapping:
+    AfterClass: false
+    AfterEnum: false
+    AfterFunction: false
+    AfterNamespace: false
+    AfterStruct: false
+    AfterControlStatement: Never
+
+# Pointers and references
+DerivePointerAlignment: false
+PointerAlignment: Left
+ReferenceAlignment: Pointer
+
+# Functions
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortLambdasOnASingleLine: Empty
+BinPackArguments: false
+BinPackParameters: false
+
+# Constructors
+BreakConstructorInitializers: BeforeComma
+ConstructorInitializerIndentWidth: 4
+
+# Includes
+SortIncludes: true
+IncludeBlocks: Preserve
+
+# Operators and alignment
+BreakBeforeBinaryOperators: None
+AlignOperands: Align
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignEscapedNewlines: Left
+
+# C++ style
+SpaceBeforeParens: ControlStatements
+SpacesInAngles: false
+SpacesInContainerLiterals: true
+
+# Comments
+ReflowComments: true
+CommentPragmas: "^ IWYU pragma:"
+
+# Empty lines
+EmptyLineBeforeAccessModifier: Always
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+
+# Tabs
+UseTab: Never

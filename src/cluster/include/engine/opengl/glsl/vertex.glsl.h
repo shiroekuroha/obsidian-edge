@@ -1,0 +1,13 @@
+static const char* const s_default_vertex_shader = "#version 330\n"
+"\n"
+"layout(location=0)in vec4 in_Position;\n"
+"layout(location=1)in vec2 in_TexCoord;\n"
+"out vec2 ex_TexCoord;\n"
+"\n"
+"void main()\n"
+"{\n"
+"    gl_Position = in_Position;\n"
+"    ex_TexCoord = in_TexCoord;\n"
+"};\n"
+"\n"
+;

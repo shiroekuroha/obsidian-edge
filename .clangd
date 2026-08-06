@@ -1,0 +1,28 @@
+CompileFlags:
+    Add:
+        - -std=c++17
+        - -ferror-limit=0
+        - -Wno-unused-includes
+
+    Remove:
+        - -Werror
+
+Index:
+    Background: Build
+
+Diagnostics:
+    ClangTidy:
+        Add:
+            - bugprone-*
+            - performance-*
+            - modernize-*
+            - readability-*
+        Remove:
+            - modernize-use-trailing-return-type
+            - cppcoreguidelines-owning-memory
+
+Completion:
+    AllScopes: true
+
+Hover:
+    ShowAKA: true

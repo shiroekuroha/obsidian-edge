@@ -1,0 +1,6 @@
+[submodule "src/cluster/vendor/glfw"]
+	path = src/cluster/vendor/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "src/cluster/vendor/spdlog"]
+	path = src/cluster/vendor/spdlog
+	url = https://github.com/gabime/spdlog.git
