@@ -1,250 +1,299 @@
 #pragma once
 
-#define OE_VECTOR_VEC_3_HEX_STR_LEN 7
-#define OE_VECTOR_VEC_4_HEX_STR_LEN 9
+#include "core.h"
 
-#define OE_VECTOR_BOILER_PLATE_DEFINE(t, n)                                         \
-    constexpr VectorBase() {}                                                       \
-    constexpr VectorBase(const VectorBase& other) = default;                        \
-    constexpr VectorBase(VectorBase&& other) noexcept = default;                    \
-    constexpr auto operator=(const VectorBase& other)->VectorBase& = default;       \
-    constexpr auto operator=(VectorBase&& other) noexcept -> VectorBase& = default; \
-    constexpr VectorBase(t scalar) {                                                \
-        for (unsigned int i = 0; i < n; i++)                                        \
-            this->data[i] = scalar;                                                 \
-    }                                                                               \
-    static constexpr auto ZERO() -> VectorBase {                                    \
-        return VectorBase(static_cast<t>(0));                                       \
-    }                                                                               \
-    constexpr auto operator==(const VectorBase& other) const->bool {                \
-        for (unsigned int i = 0; i < n; i++) {                                      \
-            if (this->data[i] != other[i])                                          \
-                return false;                                                       \
-        }                                                                           \
-        return true;                                                                \
-    }                                                                               \
-    constexpr auto operator!=(const VectorBase& other) const->bool {                \
-        return !((*this) == other);                                                 \
-    }                                                                               \
-    constexpr auto operator*=(t scalar)->VectorBase& {                              \
-        for (unsigned int i = 0; i < n; i++)                                        \
-            this->data[i] *= scalar;                                                \
-        return *this;                                                               \
-    }                                                                               \
-    constexpr auto operator/=(t scalar)->VectorBase& {                              \
-        for (unsigned int i = 0; i < n; i++)                                        \
-            this->data[i] /= scalar;                                                \
-        return *this;                                                               \
-    }                                                                               \
-    constexpr auto operator*(t scalar)->VectorBase {                                \
-        VectorBase ret = (*this);                                                   \
-        ret *= scalar;                                                              \
-        return ret;                                                                 \
-    }                                                                               \
-    constexpr auto operator/(t scalar)->VectorBase {                                \
-        VectorBase ret = (*this);                                                   \
-        ret /= scalar;                                                              \
-        return ret;                                                                 \
-    }                                                                               \
-    constexpr auto operator+=(const VectorBase& other)->VectorBase& {               \
-        for (unsigned int i = 0; i < n; i++)                                        \
-            this->data[i] += other[i];                                              \
-        return *this;                                                               \
-    }                                                                               \
-    constexpr auto operator-=(const VectorBase& other)->VectorBase& {               \
-        for (unsigned int i = 0; i < n; i++)                                        \
-            this->data[i] -= other[i];                                              \
-        return *this;                                                               \
-    }                                                                               \
-    constexpr auto operator+(const VectorBase& other) const->VectorBase {           \
-        VectorBase ret = *this;                                                     \
-        ret += other;                                                               \
-        return ret;                                                                 \
-    }                                                                               \
-    constexpr auto operator-(const VectorBase& other) const->VectorBase {           \
-        VectorBase ret = *this;                                                     \
-        ret -= other;                                                               \
-        return ret;                                                                 \
-    }                                                                               \
-    constexpr auto operator-() const->VectorBase {                                  \
-        VectorBase ret = *this;                                                     \
-        for (unsigned int i = 0; i < n; i++)                                        \
-            ret[i] = -ret[i];                                                       \
-        return ret;                                                                 \
-    }                                                                               \
-    constexpr auto operator[](const unsigned int index) const->const t& {           \
-        return data[index];                                                         \
-    }                                                                               \
-    constexpr auto operator[](const unsigned int index)->t& {                       \
-        return data[index];                                                         \
+#define OE_VECTOR_BOILER_PLATE_DEFINE(t, n)                                                   \
+    static_assert(std::is_arithmetic_v<t>, "Cannot create vector with non-arithmetic type."); \
+    static_assert(n > 0, "Cannot create vector with 0 length");                               \
+    constexpr VectorBase(){};                                                                 \
+    ~VectorBase() = default;                                                                  \
+    constexpr VectorBase(const VectorBase& other) = default;                                  \
+    constexpr VectorBase(VectorBase&& other) noexcept = default;                              \
+    constexpr auto operator=(const VectorBase& other)->VectorBase& = default;                 \
+    constexpr auto operator=(VectorBase&& other) noexcept -> VectorBase& = default;           \
+    constexpr VectorBase(const VectorBase<t, n - 1>& minor) {                                 \
+        for (unsigned int i = 0; i < n - 1; i++) {                                            \
+            this->data[i] = minor.data[i];                                                    \
+        }                                                                                     \
+    }                                                                                         \
+    constexpr VectorBase(t scalar) {                                                          \
+        for (unsigned int i = 0; i < n; i++)                                                  \
+            this->data[i] = scalar;                                                           \
+    }                                                                                         \
+    static constexpr auto zero() -> VectorBase {                                              \
+        return VectorBase(static_cast<t>(0));                                                 \
+    }                                                                                         \
+    constexpr auto operator==(const VectorBase& other) const->bool {                          \
+        if (this == &other) {                                                                 \
+            return true;                                                                      \
+        }                                                                                     \
+        for (unsigned int i = 0; i < n; i++) {                                                \
+            if (this->data[i] != other[i])                                                    \
+                return false;                                                                 \
+        }                                                                                     \
+        return true;                                                                          \
+    }                                                                                         \
+    constexpr auto operator!=(const VectorBase& other) const->bool {                          \
+        if (this == &other) {                                                                 \
+            return false;                                                                     \
+        }                                                                                     \
+        return !(*this == other);                                                             \
+    }                                                                                         \
+    constexpr auto operator*=(t scalar)->VectorBase& {                                        \
+        for (unsigned int i = 0; i < n; i++)                                                  \
+            this->data[i] *= scalar;                                                          \
+        return *this;                                                                         \
+    }                                                                                         \
+    constexpr auto operator/=(t scalar)->VectorBase& {                                        \
+        if (scalar == t(0)) {                                                                 \
+            OE_CORE_ERROR("Division by zero is not allowed.");                                \
+            throw std::runtime_error("Division by zero is not allowed.");                     \
+        }                                                                                     \
+        for (unsigned int i = 0; i < n; i++)                                                  \
+            this->data[i] /= scalar;                                                          \
+        return *this;                                                                         \
+    }                                                                                         \
+    constexpr auto operator*(t scalar)->VectorBase {                                          \
+        VectorBase ret = (*this);                                                             \
+        ret *= scalar;                                                                        \
+        return ret;                                                                           \
+    }                                                                                         \
+    constexpr auto operator/(t scalar)->VectorBase {                                          \
+        if (scalar == t(0)) {                                                                 \
+            OE_CORE_ERROR("Division by zero is not allowed.");                                \
+            throw std::runtime_error("Division by zero is not allowed.");                     \
+        }                                                                                     \
+        VectorBase ret = (*this);                                                             \
+        ret /= scalar;                                                                        \
+        return ret;                                                                           \
+    }                                                                                         \
+    constexpr auto operator+=(const VectorBase& other)->VectorBase& {                         \
+        for (unsigned int i = 0; i < n; i++)                                                  \
+            this->data[i] += other[i];                                                        \
+        return *this;                                                                         \
+    }                                                                                         \
+    constexpr auto operator-=(const VectorBase& other)->VectorBase& {                         \
+        for (unsigned int i = 0; i < n; i++)                                                  \
+            this->data[i] -= other[i];                                                        \
+        return *this;                                                                         \
+    }                                                                                         \
+    constexpr auto operator+(const VectorBase& other) const->VectorBase {                     \
+        VectorBase ret = *this;                                                               \
+        ret += other;                                                                         \
+        return ret;                                                                           \
+    }                                                                                         \
+    constexpr auto operator-(const VectorBase& other) const->VectorBase {                     \
+        VectorBase ret = *this;                                                               \
+        ret -= other;                                                                         \
+        return ret;                                                                           \
+    }                                                                                         \
+    constexpr auto operator-() const->VectorBase {                                            \
+        VectorBase ret = *this;                                                               \
+        for (unsigned int i = 0; i < n; i++)                                                  \
+            ret[i] = -ret[i];                                                                 \
+        return ret;                                                                           \
+    }                                                                                         \
+    constexpr auto operator[](const unsigned int index) const->const t& {                     \
+        if (index >= n) {                                                                     \
+            OE_CORE_ERROR("Accessing vector's element out of bound.");                        \
+            throw std::out_of_range("Accessing vector's element out of bound.");              \
+        }                                                                                     \
+        return data[index];                                                                   \
+    }                                                                                         \
+    constexpr auto operator[](const unsigned int index)->t& {                                 \
+        if (index >= n) {                                                                     \
+            OE_CORE_ERROR("Accessing vector's element out of bound.");                        \
+            throw std::out_of_range("Accessing vector's element out of bound.");              \
+        }                                                                                     \
+        return data[index];                                                                   \
     }
 
 namespace ObsidianEdge {
-constexpr auto hexValue(char c) -> unsigned int {
+static constexpr auto isHexDigit(char c) -> bool {
+    return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
+}
+
+static constexpr auto hexValue(char c) -> unsigned int {
     return (c >= '0' && c <= '9')   ? (c - '0')
            : (c >= 'A' && c <= 'F') ? (c - 'A' + 10)
            : (c >= 'a' && c <= 'f') ? (c - 'a' + 10)
                                     : 0;
 }
 
-constexpr auto hexToDec(char digit1, char digit2) -> unsigned int {
+static constexpr auto hexToDec(char digit1, char digit2) -> unsigned int {
     return (hexValue(digit1) << 4) | hexValue(digit2);
 }
 
-template <typename T, unsigned int N> struct VectorBase {
+template <typename T, unsigned int N> struct OE_API VectorBase {
     OE_VECTOR_BOILER_PLATE_DEFINE(T, N)
 
-    T data[N];
+    T data[N]{};
 };
 
-template <typename T> struct VectorBase<T, 2> {
-    VectorBase(T x_, T y_)
-        : x(x_)
-        , y(y_) {}
+template <typename T> struct OE_API VectorBase<T, 2> {
+    VectorBase(T x, T y)
+        : x(x)
+        , y(y) {}
 
     OE_VECTOR_BOILER_PLATE_DEFINE(T, 2)
 
     union {
-        T data[2];
+        T data[2]; // ! Intentionally unsafe.
         struct {
-            T /*x=*/x, /*y=*/y;
+            T x, y;
         };
         struct {
-            T /*u=*/u, /*v=*/v;
+            T u, v;
+        };
+        struct {
+            T col, row;
         };
     };
 };
 
-template <> struct VectorBase<float, 3> {
-    constexpr VectorBase(float x_, float y_, float z_)
-        : x(x_)
-        , y(y_)
-        , z(z_) {}
+template <> struct OE_API VectorBase<float, 3> {
+    static constexpr unsigned int HEX_STR_LEN = 7;
+
+    constexpr VectorBase(float x, float y, float z)
+        : x(x)
+        , y(y)
+        , z(z) {}
 
     OE_VECTOR_BOILER_PLATE_DEFINE(float, 3)
 
-    VectorBase(const char* hexStr) {
+    VectorBase(const char* hexStr)
+        : VectorBase(1.0F) {
+        static constexpr float RGBA_CHANNEL_MAX = 255.0F;
+
         if (hexStr[0] == '#') {
             unsigned int j = 0;
 
-            if (strlen(hexStr) != OE_VECTOR_VEC_3_HEX_STR_LEN)
+            if (strlen(hexStr) != HEX_STR_LEN)
                 throw std::invalid_argument("Invalid hex string length, expected string length of 7.");
 
-            for (unsigned int i = 1; i < OE_VECTOR_VEC_3_HEX_STR_LEN; i++) {
-                if ((hexStr[i] < 'a' || hexStr[i] > 'z') && (hexStr[i] < 'A' || hexStr[i] > 'Z') &&
-                    (hexStr[i] < '0' || hexStr[i] > '9')) {
-                    throw std::out_of_range("Invalid hex string digit, 0-9 or a-z or A-Z.");
+            for (unsigned int i = 1; i < HEX_STR_LEN; i++) {
+                if (isHexDigit(hexStr[i])) {
+                    OE_CORE_ERROR("Invalid hex string: unexpected digit #RRGGBBAA(/^#[a-fA-F0-9]{6}$/).");
+                    throw std::invalid_argument("Invalid hex string: unexpected digit #RRGGBBAA(/^#[a-fA-F0-9]{6}$/).");
                 }
             }
 
-            for (unsigned int i = 1; i < OE_VECTOR_VEC_3_HEX_STR_LEN; i += 2) {
-                data[j++] = static_cast<float>(hexToDec(hexStr[i], hexStr[i + 1])) / 255.0F;
+            for (unsigned int i = 1; i < HEX_STR_LEN; i += 2) {
+                data[j++] = static_cast<float>(hexToDec(hexStr[i], hexStr[i + 1])) / RGBA_CHANNEL_MAX;
             }
         } else {
-            throw std::invalid_argument("Invalid hex string for color, #dddddd where d is 0-9 or a-f.");
+            OE_CORE_ERROR("Invalid hex string: the hex string must begin with an octothorpe (#).");
+            throw std::invalid_argument("Invalid hex string: the hex string must begin with an octothorpe (#).");
         }
     }
 
     union {
-        float data[3]{};
+        float data[3]{}; // ! Intentionally unsafe.
         struct {
-            float /*x=*/x, /*y=*/y, /*z=*/z;
+            float x, y, z;
         };
         struct {
-            float /*r=*/r, /*g=*/g, /*b=*/b;
+            float r, g, b;
         };
     };
 };
 
-template <typename T> struct VectorBase<T, 3> {
-    constexpr VectorBase(T x_, T y_, T z_)
-        : x(x_)
-        , y(y_)
-        , z(z_) {}
+template <typename T> struct OE_API VectorBase<T, 3> {
+    constexpr VectorBase(T x, T y, T z)
+        : x(x)
+        , y(y)
+        , z(z) {}
 
     OE_VECTOR_BOILER_PLATE_DEFINE(T, 3)
 
     union {
-        T data[3];
+        T data[3]{}; // ! Intentionally unsafe.
         struct {
-            T /*x=*/x, /*y=*/y, /*z=*/z;
+            T x, y, z;
         };
         struct {
-            T /*r=*/r, /*g=*/g, /*b=*/b;
+            T r, g, b;
         };
     };
 };
 
-template <> struct VectorBase<float, 4> {
-    constexpr VectorBase(float x_, float y_, float z_, float w_)
-        : x(x_)
-        , y(y_)
-        , z(z_)
-        , w(w_) {}
+template <> struct OE_API VectorBase<float, 4> {
+    static constexpr unsigned int HEX_STR_LEN = 7;
+    static constexpr unsigned int HEX_STR_LEN_EX = 9;
+
+    constexpr VectorBase(float x, float y, float z, float w)
+        : x(x)
+        , y(y)
+        , z(z)
+        , w(w) {}
 
     OE_VECTOR_BOILER_PLATE_DEFINE(float, 4)
 
-    VectorBase(const char* hexStr) {
+    constexpr VectorBase(const char* hexStr)
+        : VectorBase(1.0F) {
+        static constexpr float RGBA_CHANNEL_MAX = 255.0F;
+
         if (hexStr[0] == '#') {
             unsigned int j = 0;
             unsigned int hexStrLen = strlen(hexStr);
 
             for (unsigned int i = 1; i < hexStrLen; i++) {
-                if (!((hexStr[i] >= 'a' && hexStr[i] <= 'z') || (hexStr[i] >= 'A' && hexStr[i] <= 'Z') ||
-                      (hexStr[i] >= '0' && hexStr[i] <= '9'))) {
-                    throw std::out_of_range("Invalid hex string digit, 0-9 or a-z or A-Z.");
+                if (isHexDigit(hexStr[i])) {
+                    OE_CORE_ERROR("Invalid hex string: unexpected digit #RRGGBBAA(/^#[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$/).");
+                    throw std::invalid_argument(
+                        "Invalid hex string: unexpected digit #RRGGBBAA(/^#[a-fA-F0-9]{6}([a-fA-F0-9]{2})?$/).");
                 }
             }
 
             switch (hexStrLen) {
-            case OE_VECTOR_VEC_3_HEX_STR_LEN:
-                for (unsigned int i = 1; i < OE_VECTOR_VEC_3_HEX_STR_LEN; i += 2) {
-                    data[j++] = static_cast<float>(hexToDec(hexStr[i], hexStr[i + 1])) / 255.0f;
+            case HEX_STR_LEN:
+                for (unsigned int i = 1; i < HEX_STR_LEN; i += 2) {
+                    data[j++] = static_cast<float>(hexToDec(hexStr[i], hexStr[i + 1])) / RGBA_CHANNEL_MAX;
                 }
-                data[j] = 1.0f;
                 break;
 
-            case OE_VECTOR_VEC_4_HEX_STR_LEN:
-                for (unsigned int i = 1; i < OE_VECTOR_VEC_4_HEX_STR_LEN; i += 2) {
-                    data[j++] = static_cast<float>(hexToDec(hexStr[i], hexStr[i + 1])) / 255.0f;
+            case HEX_STR_LEN_EX:
+                for (unsigned int i = 1; i < HEX_STR_LEN_EX; i += 2) {
+                    data[j++] = static_cast<float>(hexToDec(hexStr[i], hexStr[i + 1])) / RGBA_CHANNEL_MAX;
                 }
                 break;
             default:
-                throw std::invalid_argument("Invalid hex string length, expected string length of 7 or 9.");
-                break;
+                OE_CORE_ERROR("Invalid hex string: the hex string must have a length of 7 or 9.");
+                throw std::invalid_argument("Invalid hex string: the hex string must have a length of 7 or 9.");
             }
         } else {
-            throw std::invalid_argument("Invalid hex string for color, #dddddddd where d is 0-9 or a-f.");
+            OE_CORE_ERROR("Invalid hex string: the hex string must begin with an octothorpe (#).");
+            throw std::invalid_argument("Invalid hex string: the hex string must begin with an octothorpe (#).");
         }
     }
 
     union {
-        float data[4]{};
+        float data[4]{}; // ! Intentionally unsafe.
         struct {
-            float /*x=*/x, /*y=*/y, /*z=*/z, /*w=*/w;
+            float x, y, z, w;
         };
         struct {
-            float /*r=*/r, /*g=*/g, /*b=*/b, /*a=*/a;
+            float r, g, b, a;
         };
     };
 };
 
-template <typename T> struct VectorBase<T, 4> {
-    constexpr VectorBase(T x_, T y_, T z_, T w_)
-        : x(x_)
-        , y(y_)
-        , z(z_)
-        , w(w_) {}
+template <typename T> struct OE_API VectorBase<T, 4> {
+    constexpr VectorBase(T x, T y, T z, T w)
+        : x(x)
+        , y(y)
+        , z(z)
+        , w(w) {}
 
     OE_VECTOR_BOILER_PLATE_DEFINE(T, 4)
 
     union {
-        T data[4];
+        T data[4]{}; // ! Intentionally unsafe.
         struct {
-            T /*x=*/x, /*y=*/y, /*z=*/z, /*w=*/w;
+            T x, y, z, w;
         };
         struct {
-            T /*r=*/r, /*g=*/g, /*b=*/b, /*a=*/a;
+            T r, g, b, a;
         };
     };
 };
@@ -260,17 +309,7 @@ template <typename T, unsigned int N> auto dot(const VectorBase<T, N>& src, cons
 }
 
 template <typename T> auto cross(const VectorBase<T, 3>& src, const VectorBase<T, 3>& des) -> VectorBase<T, 3> {
-    VectorBase<T, 3> ret(src.y * des.z - src.z * des.y, src.z * des.x - src.x * des.z, src.x * des.y - src.y * des.x);
-
-    return ret;
-}
-
-template <typename T> auto length(const VectorBase<T, 2>& vec) -> T {
-    return std::sqrt(vec.x * vec.x + vec.y * vec.y);
-}
-
-template <typename T> auto length(const VectorBase<T, 3>& vec) -> T {
-    return std::sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
+    return Vector(-(src.y * des.z - src.z * des.y), -(src.z * des.x - src.x * des.z), -(src.x * des.y - src.y * des.x));
 }
 
 template <typename T> auto lengthSquared(const VectorBase<T, 2>& vec) -> T {
@@ -281,91 +320,131 @@ template <typename T> auto lengthSquared(const VectorBase<T, 3>& vec) -> T {
     return (vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
 }
 
-template <typename T, unsigned int N> auto distance(const VectorBase<T, N>& src, const VectorBase<T, N>& des) -> T {
-    return length(src - des);
+template <typename T> auto length(const VectorBase<T, 2>& vec) -> T {
+    return std::sqrt(lengthSquared(vec));
+}
+
+template <typename T> auto length(const VectorBase<T, 3>& vec) -> T {
+    return std::sqrt(lengthSquared(vec));
 }
 
 template <typename T, unsigned int N> auto distanceSquared(const VectorBase<T, N>& src, const VectorBase<T, N>& des) -> T {
     return lengthSquared(src - des);
 }
 
-template <typename T, unsigned int N> auto normalized(const VectorBase<T, N>& vec) -> VectorBase<T, N> {
-    static_assert(N >= 2 && N <= 3, "Normalized doesn't support vector of size other than 2 and 3.");
+template <typename T, unsigned int N> auto distance(const VectorBase<T, N>& src, const VectorBase<T, N>& des) -> T {
+    return length(src - des);
+}
 
-    if (length(vec))
-        return VectorBase<T, N>::ZERO();
+template <typename T, unsigned int N> auto normalize(const VectorBase<T, N>& vec) -> VectorBase<T, N> {
+    static_assert(N >= 2 && N <= 3, "Normalize doesn't support vector of size other than 2 or 3.");
+
+    if (length(vec) == T(0)) {
+        OE_CORE_WARN("Cannot normalize a zero-length vector. Returning 0.");
+
+        return T(0);
+    }
 
     return vec / length(vec);
 }
 
 template <typename T, unsigned int N> auto angle(const VectorBase<T, N>& src, const VectorBase<T, N>& des) -> T {
-    T value = std::clamp(dot(src, des), T(-1), T(1));
-    T lengths = (length(src) * length(des));
+    static_assert(N >= 2 && N <= 3, "Normalize doesn't support vector of size other than 2 or 3.");
 
-    if (lengths == 0)
-        return 0;
+    auto lengths = length(src) * length(des);
 
-    return std::acos(value / lengths);
+    if (lengths == T(0)) {
+        OE_CORE_WARN("Cannot find angle of a zero-length vector. Returning 0.");
+
+        return T(0);
+    }
+
+    auto value = dot(src, des) / lengths;
+    value = std::clamp(value, T(-1), T(1));
+
+    return std::acos(value);
 }
 
 template <typename T, unsigned int N>
 auto project(const VectorBase<T, N>& src, const VectorBase<T, N>& des) -> VectorBase<T, N> {
     T denom = lengthSquared(des);
 
-    if (denom == 0.0)
-        return VectorBase<T, N>::ZERO();
+    if (denom == T(0)) {
+        OE_CORE_WARN("Cannot project a zero-length vector. Returning the zero vector.");
+
+        return VectorBase<T, N>::zero();
+    }
 
     auto scale = dot(src, des) / denom;
 
     return des * scale;
 }
 
-template <typename T, unsigned int N> auto toString(const VectorBase<T, N>& vec) -> std::string {
-    throw std::out_of_range("Vector does not support vector size outside of 2, 3, or 4.");
+template <typename T, unsigned int N> auto toString(const VectorBase<T, N>& vec, bool alt = false) -> std::string {
+    std::stringstream sstream;
+
+    // * NOTE: No alternative version yet.
+
+    sstream << "Custom length vector: ";
+
+    for (unsigned int i = 0; i < vec.data.size(); i++) {
+        if (i != 0) {
+            sstream << ", ";
+        }
+        sstream << "[" << std::to_string(i) << "]: " << vec.data[i];
+    }
+
+    return sstream.str();
 }
 
 template <typename T> auto toString(const VectorBase<T, 2>& vec, bool alt = false) -> std::string {
-    std::stringstream ss;
+    std::stringstream sstream;
 
-    if (alt)
-        ss << "u: " << vec.x << ", v: " << vec.y;
-    else
-        ss << "x: " << vec.x << ", y: " << vec.y;
+    if (alt) {
+        sstream << "u: " << vec.x << ", v: " << vec.y;
+    } else {
+        sstream << "x: " << vec.x << ", y: " << vec.y;
+    }
 
-    return ss.str();
+    return sstream.str();
 }
 
 template <typename T> auto toString(const VectorBase<T, 3>& vec, bool alt = false) -> std::string {
-    std::stringstream ss;
+    std::stringstream sstream;
 
-    if (alt)
-        ss << "r: " << vec.x << ", g: " << vec.y << ", b: " << vec.z;
-    else
-        ss << "x: " << vec.x << ", y: " << vec.y << ", z: " << vec.z;
+    if (alt) {
+        sstream << "r: " << vec.x << ", g: " << vec.y << ", b: " << vec.z;
+    } else {
+        sstream << "x: " << vec.x << ", y: " << vec.y << ", z: " << vec.z;
+    }
 
-    return ss.str();
+    return sstream.str();
 }
 
 template <typename T> auto toString(const VectorBase<T, 4>& vec, bool alt = false) -> std::string {
-    std::stringstream ss;
+    std::stringstream sstream;
 
-    if (alt)
-        ss << "r: " << vec.x << ", g: " << vec.y << ", b: " << vec.z << ", a: " << vec.w;
-    else
-        ss << "x: " << vec.x << ", y: " << vec.y << ", z: " << vec.z << ", w: " << vec.w;
+    if (alt) {
+        sstream << "r: " << vec.x << ", g: " << vec.y << ", b: " << vec.z << ", a: " << vec.w;
+    } else {
+        sstream << "x: " << vec.x << ", y: " << vec.y << ", z: " << vec.z << ", w: " << vec.w;
+    }
 
-    return ss.str();
+    return sstream.str();
 }
 
 using Point2 = VectorBase<unsigned int, 2>;
 using Vector2 = VectorBase<float, 2>;
+using Vector2p = VectorBase<double, 2>;
 using Vector2i = VectorBase<int, 2>;
 
 using Point3 = VectorBase<unsigned int, 3>;
 using Vector3 = VectorBase<float, 3>;
+using Vector3p = VectorBase<double, 3>;
 using Vector3i = VectorBase<int, 3>;
 
 using Point4 = VectorBase<unsigned int, 4>;
 using Vector4 = VectorBase<float, 4>;
+using Vector4p = VectorBase<double, 4>;
 using Vector4i = VectorBase<int, 4>;
 } // namespace ObsidianEdge
