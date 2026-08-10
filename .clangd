@@ -23,6 +23,7 @@ Diagnostics:
 
 Completion:
     AllScopes: true
+    HeaderInsertion: Never
 
 Hover:
     ShowAKA: true
