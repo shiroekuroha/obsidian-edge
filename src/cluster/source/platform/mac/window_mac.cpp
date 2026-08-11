@@ -12,6 +12,7 @@ MacWindow::MacWindow(const WindowProps& props)
 }
 
 MacWindow::~MacWindow() {
+    Window::~Window();
     /**
      * To be implemented when doing multi-platform instructions
      */

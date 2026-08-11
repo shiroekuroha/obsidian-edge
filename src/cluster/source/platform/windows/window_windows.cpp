@@ -12,6 +12,7 @@ WindowsWindow::WindowsWindow(const WindowProps& props)
 }
 
 WindowsWindow::~WindowsWindow() {
+    Window::~Window();
     /**
      * To be implemented when doing multi-platform instructions
      */

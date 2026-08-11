@@ -12,6 +12,7 @@ LinuxWindow::LinuxWindow(const WindowProps& props)
 }
 
 LinuxWindow::~LinuxWindow() {
+    Window::~Window();
     /**
      * To be implemented when doing multi-platform instructions
      */
