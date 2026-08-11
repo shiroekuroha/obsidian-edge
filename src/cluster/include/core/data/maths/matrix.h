@@ -2,10 +2,9 @@
 
 #include "core.h"
 
-#include "vector.h"
+#include "core/data/maths/vector.h"
 
 #include "core/data/maths/common.h"
-#include "core/log/log.h"
 
 namespace ObsidianEdge {
 template <typename T, unsigned int Rows, unsigned int Cols> struct OE_API MatrixBase {

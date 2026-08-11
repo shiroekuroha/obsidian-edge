@@ -19,8 +19,9 @@
         }                                                                                     \
     }                                                                                         \
     constexpr VectorBase(t scalar) {                                                          \
-        for (unsigned int i = 0; i < n; i++)                                                  \
+        for (unsigned int i = 0; i < n; i++) {                                                \
             this->data[i] = scalar;                                                           \
+        }                                                                                     \
     }                                                                                         \
     static constexpr auto zero() -> VectorBase {                                              \
         return VectorBase(static_cast<t>(0));                                                 \
@@ -48,6 +49,11 @@
         }                                                                                     \
         return *this;                                                                         \
     }                                                                                         \
+    constexpr auto operator*(t scalar)->VectorBase {                                          \
+        VectorBase ret = (*this);                                                             \
+        ret *= scalar;                                                                        \
+        return ret;                                                                           \
+    }                                                                                         \
     constexpr auto operator/=(t scalar)->VectorBase& {                                        \
         if (scalar == t(0)) {                                                                 \
             OE_CORE_ERROR("Division by zero is not allowed.");                                \
@@ -57,11 +63,6 @@
             this->data[i] /= scalar;                                                          \
         }                                                                                     \
         return *this;                                                                         \
-    }                                                                                         \
-    constexpr auto operator*(t scalar)->VectorBase {                                          \
-        VectorBase ret = (*this);                                                             \
-        ret *= scalar;                                                                        \
-        return ret;                                                                           \
     }                                                                                         \
     constexpr auto operator/(t scalar) const->VectorBase {                                    \
         if (scalar == t(0)) {                                                                 \
@@ -78,16 +79,16 @@
         }                                                                                     \
         return *this;                                                                         \
     }                                                                                         \
+    constexpr auto operator+(const VectorBase& other) const->VectorBase {                     \
+        VectorBase ret = *this;                                                               \
+        ret += other;                                                                         \
+        return ret;                                                                           \
+    }                                                                                         \
     constexpr auto operator-=(const VectorBase& other)->VectorBase& {                         \
         for (unsigned int i = 0; i < n; i++) {                                                \
             this->data[i] -= other[i];                                                        \
         }                                                                                     \
         return *this;                                                                         \
-    }                                                                                         \
-    constexpr auto operator+(const VectorBase& other) const->VectorBase {                     \
-        VectorBase ret = *this;                                                               \
-        ret += other;                                                                         \
-        return ret;                                                                           \
     }                                                                                         \
     constexpr auto operator-(const VectorBase& other) const->VectorBase {                     \
         VectorBase ret = *this;                                                               \
@@ -95,9 +96,9 @@
         return ret;                                                                           \
     }                                                                                         \
     constexpr auto operator-() const->VectorBase {                                            \
-        VectorBase ret = *this;                                                               \
+        VectorBase ret;                                                                       \
         for (unsigned int i = 0; i < n; i++) {                                                \
-            ret[i] = -ret[i];                                                                 \
+            ret[i] = -this->data[i];                                                          \
         }                                                                                     \
         return ret;                                                                           \
     }                                                                                         \
