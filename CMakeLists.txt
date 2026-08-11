@@ -64,7 +64,7 @@ option(OBSIDIAN_BUILD_DOCS
 
 option(OBSIDIAN_BUILD_TESTS
     "Enable building tests"
-    ON
+    OFF
 )
 
 
