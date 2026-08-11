@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef defined(OE_PLATFORM_WINDOWS)
+#ifdef OE_PLATFORM_WINDOWS
 #    ifdef OE_LIB_EXPORT
 #        define OE_API __declspec(dllexport)
 #    else
@@ -9,7 +9,7 @@
 
 #    define OE_DEBUG_BREAK() __debugbreak()
 
-#elif defined(OE_PLATFORM_LINUX)
+#elif OE_PLATFORM_LINUX
 #    ifdef OE_LIB_EXPORT
 #        define OE_API __attribute__((visibility("default")))
 #    else
@@ -19,7 +19,7 @@
 #    include <csignal> // IWYU pragma: keep
 #    define OE_DEBUG_BREAK() raise(SIGTRAP)
 
-#elif defined(OE_PLATFORM_DARWIN)
+#elif OE_PLATFORM_DARWIN
 #    ifdef OE_LIB_EXPORT
 #        define OE_API __attribute__((visibility("default")))
 #    else
