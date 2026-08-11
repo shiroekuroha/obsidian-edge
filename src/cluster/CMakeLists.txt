@@ -44,12 +44,12 @@ add_library(obsidian-cluster
     ${CMAKE_CURRENT_SOURCE_DIR}/source/core/log/log.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/source/core/data/maths/build.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/core/data/maths/quaternion.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/source/engine/opengl/engine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/engine/opengl/shader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/engine/opengl/texture.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/source/engine/render.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/engine/handler_default.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/source/engine/handler.cpp
 )
 
 target_link_libraries(obsidian-cluster glad glfw spdlog stb)
@@ -84,12 +84,10 @@ target_compile_options(obsidian-cluster
     # GCC / Clang
     $<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:GNU,Clang>>:-O0>
     $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:GNU,Clang>>:-O2>
-    $<$<AND:$<CONFIG:Distribute>,$<CXX_COMPILER_ID:GNU,Clang>>:-O3>
 
     # MSVC
     $<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:MSVC>>:/Od>
     $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:MSVC>>:/O2>
-    $<$<AND:$<CONFIG:Distribute>,$<CXX_COMPILER_ID:MSVC>>:/O2>
 )
 
 # Embed GLSL

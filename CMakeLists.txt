@@ -3,11 +3,11 @@ cmake_minimum_required(VERSION 3.12.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(obsidian-fragments VERSION 0.0.1 LANGUAGES C CXX)
+project(obsidian-edge VERSION 0.0.1 LANGUAGES C CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Distribute")
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 set(CMAKE_DOCS_BUILD_DIR "${CMAKE_CURRENT_SOURCE_DIR}/docs")
 
 # Platform dependant configs
@@ -47,7 +47,7 @@ set_target_properties(obsidian-cluster PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_BASE}/lib/${BUILD_OUTPUT}
 )
 
-set_target_properties(obsidian-fragments PROPERTIES
+set_target_properties(obsidian-fragment PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_BASE}/bin/${BUILD_OUTPUT}
     LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_BASE}/lib/${BUILD_OUTPUT}
     ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_BASE}/lib/${BUILD_OUTPUT}
@@ -64,7 +64,7 @@ option(OBSIDIAN_BUILD_DOCS
 
 option(OBSIDIAN_BUILD_TESTS
     "Enable building tests"
-    OFF
+    ON
 )
 
 
@@ -73,11 +73,9 @@ option(OBSIDIAN_BUILD_TESTS
 # ------------------------------------------------------------------------------
 
 if(OBSIDIAN_BUILD_DOCS)
-
     find_package(Doxygen REQUIRED)
 
     if(DOXYGEN_FOUND)
-
         set(DOXYFILE_IN
             "${PROJECT_SOURCE_DIR}/Doxyfile.in"
         )
@@ -120,71 +118,19 @@ endif()
 # ------------------------------------------------------------------------------
 
 if(OBSIDIAN_BUILD_TESTS)
-
     enable_testing()
 
-    find_package(Threads REQUIRED)
+    include(CTest)
+    include(FetchContent)
 
-    add_subdirectory(test/vendor/gtest)
-
-    add_executable(test_modules
-        test/modules/main.cpp
+    FetchContent_Declare(
+        Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v3.15.3
     )
 
-    target_link_libraries(test_modules
-        PRIVATE
-        gtest
-        gtest_main
-        Threads::Threads
-        obsidian-cluster
-    )
+    FetchContent_MakeAvailable(Catch2)
 
-    target_include_directories(test_modules
-        PRIVATE
-        ${PROJECT_SOURCE_DIR}/src/cluster/private
-        ${PROJECT_SOURCE_DIR}/src/cluster/public
-    )
-
-
-    add_test(
-        NAME Modules
-        COMMAND test_modules
-    )
-
-
-    add_test(
-        NAME Modules_Memcheck
-        COMMAND valgrind
-        --error-exitcode=1
-        --tool=memcheck
-        --leak-check=full
-        --show-leak-kinds=definite
-        $<TARGET_FILE:test_modules>
-    )
-
-
-    set_tests_properties(Modules_Memcheck
-        PROPERTIES
-        ENVIRONMENT
-        "DEBUGINFOD_URLS=https://debuginfod.archlinux.org;G_SLICE=always-malloc"
-    )
-
-
-    add_test(
-        NAME Fragments_Memcheck
-        COMMAND valgrind
-        --error-exitcode=1
-        --tool=memcheck
-        --leak-check=full
-        --show-leak-kinds=definite
-        $<TARGET_FILE:obsidian-fragments>
-    )
-
-
-    set_tests_properties(Fragments_Memcheck
-        PROPERTIES
-        ENVIRONMENT
-        "DEBUGINFOD_URLS=https://debuginfod.archlinux.org;G_SLICE=always-malloc"
-    )
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
 
 endif()
