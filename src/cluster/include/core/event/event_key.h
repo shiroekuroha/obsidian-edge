@@ -7,7 +7,7 @@ namespace ObsidianEdge {
 /**
  * @brief Modifier key encapsulated, for internal use only
  */
-enum class OE_API ModKey : uint8_t { None = 0, Shift, Control, Alt, Super, Caps_lock, Num_lock };
+enum class OE_API ModKey : uint8_t { Shift, Control, Alt, Super, Caps_lock, Num_lock };
 
 /**
  * @brief General key event
