@@ -1,6 +1,7 @@
 #pragma once
 
 #include "core.h"
+
 #include "spdlog/async.h"
 #include "spdlog/sinks/rotating_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
@@ -28,19 +29,21 @@ public:
      */
     static void yeet();
 
-    static inline auto getCoreLogger() -> std::shared_ptr<spdlog::logger>& {
+#ifdef OE_DEBUG
+    static auto getCoreLogger() -> std::shared_ptr<spdlog::logger>& {
         return s_coreLogger;
     };
 
-    static inline auto getCoreFileLogger() -> std::shared_ptr<spdlog::logger>& {
+    static auto getCoreFileLogger() -> std::shared_ptr<spdlog::logger>& {
         return s_coreFileLogger;
     };
+#endif
 
-    static inline auto getClientLogger() -> std::shared_ptr<spdlog::logger>& {
+    static auto getClientLogger() -> std::shared_ptr<spdlog::logger>& {
         return s_clientLogger;
     };
 
-    static inline auto getClientFileLogger() -> std::shared_ptr<spdlog::logger>& {
+    static auto getClientFileLogger() -> std::shared_ptr<spdlog::logger>& {
         return s_clientFileLogger;
     };
 
@@ -125,14 +128,29 @@ private:
 #    define OE_CORE_TRACE(...)
 #    define OE_CORE_INFO(...)
 #    define OE_CORE_WARN(...)
-#    define OE_CORE_ERROR(...)
-#    define OE_CORE_FATAL(...)
+
+#    define OE_CORE_ERROR(...)                                        \
+        ::ObsidianEdge::Log::getCoreFileLogger()->error(__VA_ARGS__); \
+        OE_DEBUG_BREAK();
+
+#    define OE_CORE_FATAL(...)                                           \
+        ::ObsidianEdge::Log::getCoreFileLogger()->critical(__VA_ARGS__); \
+        OE_DEBUG_BREAK();
 
 #    define OE_TRACE(...)
 #    define OE_INFO(...)
 #    define OE_WARN(...)
-#    define OE_ERROR(...)
-#    define OE_FATAL(...)
+
+#    define OE_ERROR(...)                                               \
+        ::ObsidianEdge::Log::getClientFileLogger()->error(__VA_ARGS__); \
+        OE_DEBUG_BREAK();
+
+#    define OE_FATAL(...)                                                  \
+        ::ObsidianEdge::Log::getClientFileLogger()->critical(__VA_ARGS__); \
+        OE_DEBUG_BREAK();
+
+#    define OE_CORE_ASSERT(...)
+#    define OE_ASSERT(...)
 
 #endif
 
