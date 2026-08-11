@@ -9,7 +9,7 @@
 
 namespace ObsidianEdge {
 template <typename T, unsigned int Rows, unsigned int Cols> struct OE_API MatrixBase {
-    static_assert(std::is_arithmetic_v<T>(), "Cannot create matrix with non-arithmetic type.");
+    static_assert(std::is_arithmetic_v<T>, "Cannot create matrix with non-arithmetic type.");
     static_assert(Rows > 0, "Matrix must have at least one row");
     static_assert(Cols > 0, "Matrix must have at least one column");
 
@@ -222,6 +222,7 @@ public:
 };
 
 template <typename T, unsigned int N> struct OE_API MatrixSquare : public MatrixBase<T, N, N> {
+    static_assert(std::is_arithmetic_v<T>, "Cannot create matrix with non-arithmetic type.");
     static_assert(N > 1, "Matrix must have at least dimension of 2");
 
 private:
@@ -253,7 +254,8 @@ public:
         return *this;
     }
 
-    constexpr auto operator=(MatrixBase<T, N, N>&& other) noexcept -> MatrixSquare& {
+    constexpr auto operator=(MatrixBase<T, N, N>&& other) noexcept // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
+        -> MatrixSquare& {
         for (unsigned int row = 0; row < N; row++) {
             (*this)[row] = std::move(other[row]);
         }
@@ -269,13 +271,16 @@ public:
         }
     }
 
-    template <typename... Args> constexpr MatrixSquare(Args... args) {
-        static_assert(sizeof...(Args) == TOTAL_ELEMENTS, "Wrong number of matrix elements");
+    constexpr MatrixSquare(const std::initializer_list<T>& init) {
+        if (init.size() != TOTAL_ELEMENTS) {
+            OE_CORE_ERROR("Wrong number of matrix elements");
+            throw std::out_of_range("Wrong number of matrix elements");
+        }
 
-        auto array = std::array<T, TOTAL_ELEMENTS>{T(std::forward<Args>(args))...};
-
-        for (unsigned int i = 0; i < TOTAL_ELEMENTS; i++) {
-            this->at(i) = array[i];
+        unsigned int index = 0;
+        for (const T& value : init) {
+            this->at(index) = value;
+            index++;
         }
     }
 
@@ -423,7 +428,7 @@ constexpr auto operator*(const VectorBase<T, N>& vec, const MatrixSquare<T, N>& 
 
     for (unsigned int col = 0; col < N; col++) {
         for (unsigned int row = 0; row < N; row++) {
-            ret.at(col) += vec.at(row) * mat(row, col);
+            ret.at(col) += vec.at(row) * mat.at(row, col);
         }
     }
 
