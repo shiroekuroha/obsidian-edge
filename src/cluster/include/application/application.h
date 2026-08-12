@@ -4,12 +4,8 @@
 
 #include "application/window.h"
 #include "core/layer/layer_stack.h"
-#include "core/log/log.h"
 
 namespace ObsidianEdge {
-/**
- * @brief Application object, singleton.
- */
 class OE_API Application {
 public:
     Application();
@@ -46,14 +42,14 @@ public:
 
     void updateDeltaClock();
 
-    auto getViewportDimensions() -> Point2 {
+    [[nodiscard]] auto getViewportDimensions() const -> Point2 {
         return getWindow().getViewportDimensions();
     }
-    auto getWindowDimensions() -> Point2 {
+
+    [[nodiscard]] auto getWindowDimensions() const -> Point2 {
         return getWindow().getWindowDimensions();
     }
 
-public:
     /**
      * @brief return global reference to singleton of Application.
      * @return Application& reference to application singleton.
@@ -69,13 +65,11 @@ public:
 private:
     bool m_init = false;
     bool m_loop = false;
-    std::chrono::high_resolution_clock::time_point m_time = std::chrono::high_resolution_clock::now();
 
-    std::unique_ptr<Window> m_window;
     LayerStack m_layerStack;
 
-private:
-    static Application* s_application;
+    Window* m_window;
+    static Application* m_application;
 };
 
 auto createApplication() -> ObsidianEdge::Application*;
