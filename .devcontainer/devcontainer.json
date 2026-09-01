@@ -1,0 +1,23 @@
+{
+	"name": "C++ for Obsidian Edge",
+	"build": {
+		"dockerfile": "Dockerfile",
+    "context": ".."
+	},
+  "features": {
+    "ghcr.io/devcontainers-extra/features/cmake": {"version": "latest"},
+    "ghcr.io/devcontainers/features/git": {},
+    "ghcr.io/devcontainers/features/github-cli": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscodellvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.cmake-tools"
+      ]
+    }
+  },
+  "mounts": [
+    "source=cpp-cmake-build,target=/workspace/build,type=volume"
+  ]
+}
