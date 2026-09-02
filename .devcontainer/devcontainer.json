@@ -1,19 +1,31 @@
 {
-	"name": "C++ for Obsidian Edge",
-	"build": {
-		"dockerfile": "Dockerfile",
+  "name": "C++ for Obsidian Edge",
+  "build": {
+    "dockerfile": "Dockerfile",
     "context": ".."
-	},
+  },
+  "runArgs": [
+    "--env=DISPLAY=${localEnv:DISPLAY}",
+    "--env=WAYLAND_DISPLAY=${localEnv:WAYLAND_DISPLAY}",
+    "--env=XDG_RUNTIME_DIR=/tmp/runtime-${localEnv:USER}",
+    "--volume=/tmp/.X11-unix:/tmp/.X11-unix:rw",
+    "--volume=${localEnv:XDG_RUNTIME_DIR}/${localEnv:WAYLAND_DISPLAY}:/tmp/runtime-${localEnv:USER}/${localEnv:WAYLAND_DISPLAY}",
+    "--device=/dev/dri"
+  ],
   "features": {
-    "ghcr.io/devcontainers-extra/features/cmake": {"version": "latest"},
+    "ghcr.io/devcontainers-extra/features/cmake": {
+      "version": "latest"
+    },
     "ghcr.io/devcontainers/features/git": {},
     "ghcr.io/devcontainers/features/github-cli": {}
   },
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-vscodellvm-vs-code-extensions.vscode-clangd",
-        "ms-vscode.cmake-tools"
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-vscode.cmake-tools",
+        "aaron-bond.better-comments",
+        "cschlosser.doxdocgen"
       ]
     }
   },

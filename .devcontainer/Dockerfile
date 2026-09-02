@@ -11,6 +11,7 @@ RUN apt-get update \
         doxygen \
         gdb \
         libx11-dev \
+        libwayland-dev \
         libxinerama-dev \
         libxcursor-dev \
         libxi-dev \
@@ -19,6 +20,4 @@ RUN apt-get update \
         ninja-build \
         pkg-config \
         valgrind \
-        libwayland-dev \
-        libvulkan1 \
     && rm -rf /var/lib/apt/lists/*
