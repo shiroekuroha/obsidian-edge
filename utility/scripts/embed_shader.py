@@ -1,7 +1,6 @@
 import pathlib
 import argparse
 
-
 def embed_shader(srcDirPath: str, dstDirPath: str):
     srcDir = pathlib.Path(srcDirPath)
     dstDir = pathlib.Path(dstDirPath)
@@ -16,7 +15,7 @@ def embed_shader(srcDirPath: str, dstDirPath: str):
 
     # Header file string
     for file in srcFiles:
-        varPrefix = "static const char* const s_default_{}_shader = ".format(str(file.name).split('.')[0])
+        varPrefix = "#pragma once\n" + "static const char* const s_default_{}_shader = ".format(str(file.name).split('.')[0])
         text = pathlib.Path(file).read_text(encoding="utf-8")
         lines = text.split('\n')
 
